@@ -1,0 +1,27 @@
+{
+  "name": "yazawa-nico-js",
+  "version": "1.0.0",
+  "description": "Discord Bot",
+  "main": "index.js",
+  "scripts": {
+    "test": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Nicocchi/Yazawa-Nico-JS.git"
+  },
+  "author": "Jeremy Boggs",
+  "license": "GPL-2.0",
+  "bugs": {
+    "url": "https://github.com/Nicocchi/Yazawa-Nico-JS/issues"
+  },
+  "homepage": "https://github.com/Nicocchi/Yazawa-Nico-JS#readme",
+  "dependencies": {
+    "better-sqlite-pool": "^0.1.2",
+    "chalk": "^2.4.1",
+    "discord.js": "^11.4.2",
+    "enmap": "^4.3.2",
+    "moment": "^2.22.2",
+    "moment-duration-format": "^2.2.2"
+  }
+}
