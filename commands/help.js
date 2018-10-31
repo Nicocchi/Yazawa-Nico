@@ -1,51 +1,66 @@
 //  Description: Displays all the available commands for your permission level.
 //  Usage: prefix arg1 arg2
+const Discord = require("discord.js");
 
 exports.run = async (client, message, args, level) => {
-    // If no specific command is called, show all filtered commands.
-    if (!args[0]) {
-        // Filter all commands by which are available for teh user's level, using <Collection>.filter() method.
-        const myCommands = message.guild ? client.commands.filter(cmd => client.levelCache[cmd.conf.permLevel] <= level): client.commands.filter(cmd => client.levelCache[cmd.conf.permLevel] <= level && cmd.conf.guildOnly !== true);
+  const defaults = client.config.defaultSettings;
+  if (!client.settings.has(message.guild.id))
+    client.settings.set(message.guild.id, defaults);
+  const settings = client.settings.get(message.guild.id);
 
-        // Get the command names only and use that array to get the longest name
-        // This makes the help commands "aligned" in the output
-        const commandNames = myCommands.keyArray();
-        const longest = commandNames.reduce((long, str) => Math.max(long, str.length), 0);
+  let embed = new Discord.RichEmbed()
+    .setAuthor(`${client.user.username}'s Commands`, `${client.user.avatarURL}`)
+    .setDescription(
+      `Nico Nico Nii~ Here is a list of all the commands I can do~`
+    )
+    .setTimestamp()
+    .setColor("#FF4D9C")
+    .setFooter(
+      `Server member since ${message.member.joinedAt}`,
+      message.author.displayAvatarURL
+    )
+    .addField("Prefix", `${settings.prefix}`, true)
+    .addField(
+      "Support Server",
+      `[Support Server](https://discord.gg/uWRCmkE)`,
+      true
+    )
+    .addField(`Version`, `v3.0`, true)
+    .addField(`Core`, "`help`, `helpdm`", false)
+    .addField(
+      `Images`,
+      "`angry`, `bad`, `badass`, `bite`, `blush`, `congrats`, `cry`, `cuddle`, `evil`, `excited`, `highfive`, `hug`, " +
+        "`kiss`, `laugh`, `lewd`, `lick`, `niconii`, `no`, `nosebleed`, `pat`, `peek`, `poke`, `sad`, `scared`, " +
+        "`slap`, `sleepy`, `tantrum`, `washi`, `wasted`, `wow`, `yes`",
+      false
+    )
+    .addField(`Currency`, "`daily`, `profile`, `send`", false)
+    .addField(
+      `Fun`,
+      "`choose`, `cucumber`, `divorce`, `give`, `marry`, `notice`, `rip`, `say`, `senpai`, `wisdom`",
+      false
+    )
+    .addField(`Games`, "`8ball`, `rps`", false)
+    .addField(`Moderation`, "`set`", false)
+    .addField(
+      `Info`,
+      "`afk`, `avatar`, `botinfo`, `userinfo`, `serverinfo`",
+      false
+    );
 
-        let currentCategory = "";
-        let output = `= Command List =\n\n[Use ${message.settings.prefix}help <commandname> for details]\n`;
-        const sorted = myCommands.array().sort((p, c) => p.help.category > c.help.category ? 1 : p.help.name > c.help.name && p.help.category === c.help.category ? 1 : -1);
-        sorted.forEach(c => {
-            const cat = c.help.category.toProperCase();
-            if(currentCategory !== cat) {
-                output += `\u200b\n== ${cat} ==\n`;
-                currentCategory = cat;
-            }
-            output += `${message.settings.prefix}${c.help.name}${' '.repeat(longest - c.help.name.length)} :: ${c.help.description}\n`;
-        });
-        
-        message.channel.send(output, {code: 'asciidoc', split: {char: '\u200b'}});
-    } else {
-        // Show individual command's help.
-        let command = args[0];
-        if (client.commands.has(command)) {
-            command = client.commands.get(command);
-            if (level < client.levelCache[command.conf.permLevel]) return;
-            message.channel.send(`= ${command.help.name} = \n${command.help.description}\nusage:: ${command.help.usage}\naliases:: ${command.conf.aliases.join(", ")}\n= ${command.help.name} =`, {code:'asciidoc'});
-        }
-    }
+  message.channel.send(embed);
 };
 
 exports.conf = {
-     enabled: 'true',
-     guildOnly: 'false',
-     aliases: '["h", "help"]',
-     permLevel: 'User'
+  enabled: "true",
+  guildOnly: "false",
+  aliases: '["h", "help"]',
+  permLevel: "User"
 };
 
 exports.help = {
-     name: 'help',
-     category: 'System',
-     description: 'Displays all the available commands for your permission level.',
-     usage: 'help [command]'
+  name: "help",
+  category: "System",
+  description: "Displays all the available commands for your permission level.",
+  usage: "help [command]"
 };

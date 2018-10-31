@@ -4,7 +4,7 @@
   "description": "Discord Bot",
   "main": "index.js",
   "scripts": {
-    "test": "node index.js"
+    "start": "node index.js"
   },
   "repository": {
     "type": "git",
@@ -20,8 +20,12 @@
     "better-sqlite-pool": "^0.1.2",
     "chalk": "^2.4.1",
     "discord.js": "^11.4.2",
+    "dotenv": "^6.1.0",
     "enmap": "^4.3.2",
     "moment": "^2.22.2",
     "moment-duration-format": "^2.2.2"
+  },
+  "devDependencies": {
+    "prettier": "^1.14.3"
   }
 }
