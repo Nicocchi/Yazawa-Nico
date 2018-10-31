@@ -44,3 +44,7 @@ typings/
 
 # IntelliJ IDEA & Webstorm settings
 .idea/
+
+# Secrets
+.env
+_Secrets
