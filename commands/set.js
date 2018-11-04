@@ -22,7 +22,10 @@ exports.run = async (client, message, [action, key, ...value], level) => {
     if (!client.settings.has(message.guild.id)) client.settings.set(message.guild.id, {});
 
     const settings = client.settings.get(message.guild.id);
-    
+
+    if(!message.member.hasPermission('ADMINISTRATOR')) return message.channel.send('Can\'t edit guild configuration because you don\'t have permission');
+
+
     // Edit an existing key value
     if (action === "edit") {
       // User must specify a key.
@@ -85,7 +88,7 @@ exports.run = async (client, message, [action, key, ...value], level) => {
     enabled: true,
     guildOnly: true,
     aliases: ["setting", "settings", "conf"],
-    permLevel: "Administrator"
+    permLevel: "User"
   };
   
   exports.help = {
