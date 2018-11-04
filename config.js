@@ -85,6 +85,7 @@ const config = {
           const modRole = message.guild.roles.find(
             r => r.name.toLowerCase() === message.settings.modRole.toLowerCase()
           );
+          console.log(modRole);
           if (modRole && message.member.roles.has(modRole.id)) return true;
         } catch (e) {
           return false;
@@ -104,6 +105,7 @@ const config = {
                 message.settings.adminRole.toLowerCase()
             )
           );
+            console.log(adminRole)
           return adminRole && message.member.roles.has(adminRole.id);
         } catch (e) {
           return false;
@@ -122,7 +124,7 @@ const config = {
           : false
     },
 
-    // Bot Support is a special inbetween level that has the equivalent of server owner access
+    // Bot Support is a special in between level that has the equivalent of server owner access
     // to any server they joins, in order to help troubleshoot the bot on behalf of the owner.
     {
       level: 8,
