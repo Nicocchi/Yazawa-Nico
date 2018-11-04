@@ -15,9 +15,11 @@ exports.run = async (client, message, args, level) => {
     let reason = args.join(' ').slice(22);
 
     let embed = new Discord.RichEmbed()
+        .setAuthor(`${client.user.username}'s ModLog`, `${client.user.avatarURL}`)
         .setDescription('Kick')
+        .setTimestamp()
         .setColor('#FF4D9C')
-        .addField('Kicked User', `${user} with ID ${user.id}`)
+        .addField('Kicked User', `${user.user.username} with ID ${user.id}`)
         .addField('Kicked By', `<@${message.author.id}> with ID ${message.author.id}`)
         .addField('Kicked In', message.channel)
         .addField('Time', message.createdAt)

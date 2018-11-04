@@ -19,7 +19,7 @@ exports.run = async (client, message, [action, key, ...value], level) => {
     // const settings = message.settings;
     const overrides = client.settings.get(message.guild.id);
     const defaults = client.config.defaultSettings;
-    if (!client.settings.has(message.guild.id)) client.settings.set(message.guild.id, {});
+    if (!client.settings.has(message.guild.id)) client.settings.set(message.guild.id, defaults);
 
     const settings = client.settings.get(message.guild.id);
 

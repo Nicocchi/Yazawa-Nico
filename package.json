@@ -23,7 +23,8 @@
     "dotenv": "^6.1.0",
     "enmap": "^4.3.2",
     "moment": "^2.22.2",
-    "moment-duration-format": "^2.2.2"
+    "moment-duration-format": "^2.2.2",
+    "ms": "^2.1.1"
   },
   "devDependencies": {
     "prettier": "^1.14.3"

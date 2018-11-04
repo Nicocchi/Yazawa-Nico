@@ -62,7 +62,7 @@ module.exports = async (client, message) => {
         // Display level message
         // If level message is disabled, don't proceed
         if (settings.levelEnabled === 'true') {
-            message.channel.send(`${message.author.tag}, You have leveled up to ${updatedUser.level}!`).then(msg => {msg.delete(5000)});
+            message.channel.send(`${message.author.tag}, You have leveled up to ${updatedUser.level}!`);
         } else { return };
 
     }

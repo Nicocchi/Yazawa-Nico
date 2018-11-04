@@ -30,10 +30,10 @@ const config = {
     leaveMessage: "Sorry to see you leave {{user}}",
     leaveEnabled: "false",
     numberOfWarnings: 0,
-    warningsBan: "false",
-    warningsKick: "false",
-    warningsMute: "false",
-    levelEnabled: "false"
+    warningsBan: 3,
+    warningsMute: 2,
+    levelEnabled: "false",
+    warnings: {}
   },
 
   // Default per-user settings. New users have these settings.
