@@ -10,22 +10,24 @@ exports.run = async (client, message, args, level) => {
 
     if(!message.member.hasPermission('BAN_MEMBERS')) return message.channel.send('Can\'t ban users because you don\'t have permission');
 
-    let bUser = message.guild.member(message.mentions.users.first() || message.guild.members.get(args[0]));
-    if(!bUser) return message.channel.send('Couldn\'t find user');
+    let user = message.guild.member(message.mentions.users.first() || message.guild.members.get(args[0]));
+    if(!user) return message.channel.send('Couldn\'t find user');
     let reason = args.join(' ').slice(22);
 
-    let banEmbed = new Discord.RichEmbed()
+    let embed = new Discord.RichEmbed()
         .setDescription('Ban')
         .setColor('#FF4D9C')
-        .addField('Banned User', `${bUser} with ID ${bUser.id}`)
+        .addField('Banned User', `${user} with ID ${user.id}`)
         .addField('Banned By', `<@${message.author.id}> with ID ${message.author.id}`)
         .addField('Banned In', message.channel)
         .addField('Time', message.createdAt)
         .addField('Reason', reason);
 
-    bUser.send(banEmbed);
-    message.guild.member(bUser).ban(reason);
-    message.guild.channels.find(c => c.id === settings.modLogChannel).send(banEmbed).catch(console.error);
+    if(user) user.send(embed);
+    message.guild.member(user).ban(reason);
+    const channel = message.guild.channels.find(c => c.id === settings.modLogChannel)
+    if(!channel) return message.channel.send(embed);
+    channel.send(embed);
 };
 
 exports.conf = {
