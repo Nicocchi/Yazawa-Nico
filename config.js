@@ -33,7 +33,7 @@ const config = {
     warningsBan: "false",
     warningsKick: "false",
     warningsMute: "false",
-    levelModule: "false"
+    levelEnabled: "false"
   },
 
   // Default per-user settings. New users have these settings.

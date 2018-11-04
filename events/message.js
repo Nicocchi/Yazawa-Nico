@@ -60,7 +60,11 @@ module.exports = async (client, message) => {
         const updatedUser = client.getUserSettings(message.author.id);
 
         // Display level message
-        message.channel.send(`${message.author.tag}, You have leveled up to ${updatedUser.level}!`).then(msg => {msg.delete(5000)});
+        // If level message is disabled, don't proceed
+        if (settings.levelEnabled === 'true') {
+            message.channel.send(`${message.author.tag}, You have leveled up to ${updatedUser.level}!`).then(msg => {msg.delete(5000)});
+        } else { return };
+
     }
 
     // Ignore any message that does not start with the prefix

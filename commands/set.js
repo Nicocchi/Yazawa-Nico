@@ -16,10 +16,12 @@
 exports.run = async (client, message, [action, key, ...value], level) => {
 
     // Retrieve current guild settings (merged) and overrides only.
-    const settings = message.settings;
-    const defaults = client.config.defaultSettings;
+    // const settings = message.settings;
     const overrides = client.settings.get(message.guild.id);
+    const defaults = client.config.defaultSettings;
     if (!client.settings.has(message.guild.id)) client.settings.set(message.guild.id, {});
+
+    const settings = client.settings.get(message.guild.id);
     
     // Edit an existing key value
     if (action === "edit") {

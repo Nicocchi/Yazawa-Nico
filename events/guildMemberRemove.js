@@ -2,7 +2,10 @@
 
 module.exports = (client, member) => {
     // Load the guild's settings
-    const settings = client.getSettings(member.guild.id);
+    const defaults = client.config.defaultSettings;
+    if (!client.settings.has(member.guild.id)) client.settings.set(member.guild.id, defaults);
+
+    const settings = client.settings.get(member.guild.id);
     const username = member.user.username;
 
     // If leave is off, don't proceed
@@ -12,5 +15,5 @@ module.exports = (client, member) => {
     const leaveMessage = settings.leaveMessage.replace('{{user}}', username);
 
     // Send the leave message to the leave channel
-    member.guild.channels.find(c => c.name === settings.leaveChannel).send(leaveMessage).catch(console.error);
+    member.guild.channels.find(c => c.id === settings.leaveChannel).send(leaveMessage).catch(console.error);
 };
