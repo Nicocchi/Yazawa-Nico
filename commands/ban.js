@@ -15,9 +15,10 @@ exports.run = async (client, message, args, level) => {
     let reason = args.join(' ').slice(22);
 
     let embed = new Discord.RichEmbed()
+        .setAuthor(`${client.user.username}'s ModLog`, `${client.user.avatarURL}`)
         .setDescription('Ban')
         .setColor('#FF4D9C')
-        .addField('Banned User', `${user} with ID ${user.id}`)
+        .addField('Banned User', `${user.user.username} with ID ${user.id}`)
         .addField('Banned By', `<@${message.author.id}> with ID ${message.author.id}`)
         .addField('Banned In', message.channel)
         .addField('Time', message.createdAt)
