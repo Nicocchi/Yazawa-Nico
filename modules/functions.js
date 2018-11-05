@@ -1,3 +1,5 @@
+
+
 module.exports = (client) => {
 
     /**
@@ -153,6 +155,14 @@ module.exports = (client) => {
          * MISCELANEOUS NON-CRITICAL FUNCTIONS
          * 
          */
+
+        client.parseJSON = async (file) => {
+            const fs = require('fs');
+            const data = fs.readFileSync(file, 'utf8');
+            const arr = JSON.parse(data).file;
+
+            return arr.random();
+        }
 
          // <String>.toPropercase() returns a proper-cased string such as:
          // "Mary had a little lamb".toProperCase() returns "Mary Had A Little Lamb"
