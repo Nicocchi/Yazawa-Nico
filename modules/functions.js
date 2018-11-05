@@ -65,132 +65,145 @@ module.exports = (client) => {
         return returnObject;
     };
 
-      /**
-       * SINGLE-LINE AWAITMESSAGE
-       * 
-       * A simple way to grab a single reply, from the suer that initiated
-       * the command. Useful to get "precisions" on certain things...
-       * 
-       * USAGE
-       * 
-       * const response = await client.awaitReply(msg, "Favourite Color?");
-       * msg.reply(`Oh, I really love ${response} too!);
-       * 
-       */
+  /**
+   * SINGLE-LINE AWAITMESSAGE
+   *
+   * A simple way to grab a single reply, from the suer that initiated
+   * the command. Useful to get "precisions" on certain things...
+   *
+   * USAGE
+   *
+   * const response = await client.awaitReply(msg, "Favourite Color?");
+   * msg.reply(`Oh, I really love ${response} too!);
+   *
+   */
 
-       client.awaitReply = async (msg, question, limit = 60000) => {
-           const filter = m => m.author.id === msg.author.id;
-           await msg.channel.send(question);
-           try {
-               const collected = await msg.channel.awaitMessages(filter, { max: 1, time: limit, errors: ['time']});
-               return collected.first().content;
-           } catch(e) {
-               return false;
-           }
-       };
+   client.awaitReply = async (msg, question, limit = 60000) => {
+       const filter = m => m.author.id === msg.author.id;
+       await msg.channel.send(question);
+       try {
+           const collected = await msg.channel.awaitMessages(filter, { max: 1, time: limit, errors: ['time']});
+           return collected.first().content;
+       } catch(e) {
+           return false;
+       }
+   };
 
-       /**
-        * MESSAGE CLEAN FUNCTION
-        * 
-        * "Clean" removes @everyone pings, as well as tokens, and makes code blocks
-        * escaped so they're shown more easily. As a bonus it resolves promises
-        * and stringifies objects!
-        * This is mostly only used by the Eval and Exec commands.
-        * 
-        */
+   /**
+    * MESSAGE CLEAN FUNCTION
+    *
+    * "Clean" removes @everyone pings, as well as tokens, and makes code blocks
+    * escaped so they're shown more easily. As a bonus it resolves promises
+    * and stringifies objects!
+    * This is mostly only used by the Eval and Exec commands.
+    *
+    */
 
-        client.clean = async (client, text) => {
-            if(text && text.constructor.name == 'Promise') text = await text;
-            if(typeof evaled !== 'string') text = require('util').inspect(text, {depth: 1});
+    client.clean = async (client, text) => {
+        if(text && text.constructor.name == 'Promise') text = await text;
+        if(typeof evaled !== 'string') text = require('util').inspect(text, {depth: 1});
 
-            text = text
-                .replace(/`/g, "`" + String.fromCharCode(8203))
-                .replace(/@/g, "@" + String.fromCharCode(8203))
-                .replace(client.token, "NDYwMjY4MTg5OTY0Njk3NjUw.Dp1dcg.-ZE3jFxpYbR_M2vUOnYURco_qm0");
+        text = text
+            .replace(/`/g, "`" + String.fromCharCode(8203))
+            .replace(/@/g, "@" + String.fromCharCode(8203))
+            .replace(client.token, "NDYwMjY4MTg5OTY0Njk3NjUw.Dp1dcg.-ZE3jFxpYbR_M2vUOnYURco_qm0");
 
-            return text;
-        };
+        return text;
+    };
 
-        client.loadCommand = (commandName) => {
-            try {
-                client.logger.log(`Loading Command: ${commandName}`);
-                const props = require(`../commands/${commandName}`);
-                if(props.init) {
-                    props.init(client);
-                }
-                client.commands.set(props.help.name, props);
-                props.conf.aliases.forEach(alias => {
-                    client.aliases.set(alias, props.help.name);
-                });
-                return false;
-            } catch(e) {
-                return `Unable to load command ${commandName}: ${e}`;
+    client.loadCommand = (commandName) => {
+        try {
+            client.logger.log(`Loading Command: ${commandName}`);
+            const props = require(`../commands/${commandName}`);
+            if(props.init) {
+                props.init(client);
             }
-        };
-
-        client.unloadCommand = async (commandName) => {
-            let command;
-            if(client.commands.has(commandName)) {
-                command = client.commands.get(commandName);
-            } else if (client.aliases.has(commandName)) {
-                command = client.commands.get(client.aliases.get(commandName));
-            }
-            if(!command) return `The command \`${commandName}\` doesn\'t seem to exist, nor is it an alias. Try again!`;
-
-            if(command.shutdown) {
-                await command.shutdown(client);
-            }
-            const mod = requie.cache[require.resolve(`../commands/${commandName}`)];
-            delete require.chache[require.resolve(`../commands/${commandName}.js`)];
-            for (let i = o; i < mod.parent.children.length; i++) {
-                if(mod.parent.children[i] === mod) {
-                    mod.parent.children.splice(i, 1);
-                    break;
-                }
-            }
+            client.commands.set(props.help.name, props);
+            props.conf.aliases.forEach(alias => {
+                client.aliases.set(alias, props.help.name);
+            });
             return false;
-        };
+        } catch(e) {
+            return `Unable to load command ${commandName}: ${e}`;
+        }
+    };
 
-        /**
-         * MISCELANEOUS NON-CRITICAL FUNCTIONS
-         * 
-         */
+    client.unloadCommand = async (commandName) => {
+        let command;
+        if(client.commands.has(commandName)) {
+            command = client.commands.get(commandName);
+        } else if (client.aliases.has(commandName)) {
+            command = client.commands.get(client.aliases.get(commandName));
+        }
+        if(!command) return `The command \`${commandName}\` doesn\'t seem to exist, nor is it an alias. Try again!`;
 
-        client.parseJSON = async (file) => {
+        if(command.shutdown) {
+            await command.shutdown(client);
+        }
+        const mod = requie.cache[require.resolve(`../commands/${commandName}`)];
+        delete require.chache[require.resolve(`../commands/${commandName}.js`)];
+        for (let i = o; i < mod.parent.children.length; i++) {
+            if(mod.parent.children[i] === mod) {
+                mod.parent.children.splice(i, 1);
+                break;
+            }
+        }
+        return false;
+    };
+
+    /**
+     * MISCELANEOUS NON-CRITICAL FUNCTIONS
+     *
+     */
+
+    /**
+     * Return a random value from the array from a given JSON
+     * @param file - the location of the JSON file
+     * @returns {Promise<any | any[] | V | V[] | number>}
+     */
+    client.parseJSON = async (file) => {
             const fs = require('fs');
             const data = fs.readFileSync(file, 'utf8');
             const arr = JSON.parse(data).file;
 
             return arr.random();
-        }
+    }
 
-         // <String>.toPropercase() returns a proper-cased string such as:
-         // "Mary had a little lamb".toProperCase() returns "Mary Had A Little Lamb"
-         Object.defineProperty(String.prototype, 'toProperCase', {
-             value: function() {
-                 return this.replace(/([^\W_]+[^\s-]*) */g, (txt) => txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase());
-             }
-         });
+    /**
+     * <String>.toPropercase() returns a proper-cased string such as:
+     * "Mary had a little lamb".toProperCase() returns "Mary Had A Little Lamb"
+     */
+    Object.defineProperty(String.prototype, 'toProperCase', {
+         value: function() {
+             return this.replace(/([^\W_]+[^\s-]*) */g, (txt) => txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase());
+         }
+     });
 
-         // <Array>.random() returns a single random element from an array
-         // [1, 2, 3, 4, 5].random() can return 1, 2, 3, 4 or 5
-         Object.defineProperty(Array.prototype, 'random', {
-             value: function() {
-                 return this[Math.floor(Math.random() * this.length)];
-             }
-         });
+    /**
+     * <Array>.random() returns a single random element from an array
+     * [1, 2, 3, 4, 5].random() can return 1, 2, 3, 4 or 5
+     */
+     Object.defineProperty(Array.prototype, 'random', {
+         value: function() {
+             return this[Math.floor(Math.random() * this.length)];
+         }
+     });
 
-         // `await client.wait(1000);` to "pause" for 1 second
-         client.wait = require('util').promisify(setTimeout);
+    /**
+     * `await client.wait(1000);` to "pause" for 1 second
+     */
+     client.wait = require('util').promisify(setTimeout);
 
-         // These 2 process methods will catch execptions and give *more details* about the error and stack trace.
-         process.on('uncaughtException', (err) => {
-             const errorMsg = err.stack.replace(new RegExp(`${__dirname}/`, "g"), "./");
-             client.logger.error(`Uncaught Exception: ${errorMsg}`);
-             process.exit(1);
-         });
+    /**
+     * These 2 process methods will catch execptions and give *more details* about the error and stack trace.
+     */
+     process.on('uncaughtException', (err) => {
+         const errorMsg = err.stack.replace(new RegExp(`${__dirname}/`, "g"), "./");
+         client.logger.error(`Uncaught Exception: ${errorMsg}`);
+         process.exit(1);
+     });
 
-         process.on('unhandledRejection', err => {
-             client.logger.error(`Unhandled rejection: ${err}`);
-         });
+     process.on('unhandledRejection', err => {
+         client.logger.error(`Unhandled rejection: ${err}`);
+     });
 };
