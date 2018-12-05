@@ -64,6 +64,16 @@ module.exports = client => {
     return returnObject;
   };
 
+  client.getGlobalSettings = () => {
+    const defaults = client.config.defaultGlobalSettings || {};
+    const globalData = client.settings.get("GlobalSettings") || {};
+    const returnObject = {};
+    Object.keys(defaults).forEach(key => {
+      returnObject[key] = globalData[key] ? globalData[key] : defaults[key];
+    });
+    return returnObject;
+  };
+
   /**
    * SINGLE-LINE AWAITMESSAGE
    *
