@@ -53,10 +53,10 @@ module.exports = client => {
    *
    */
 
-  client.getUserSettings = user => {
+  client.getUserSettings = userId => {
     const defaults = client.config.defaultUserSettings || {};
-    if (!user) return defaults;
-    const userData = client.settings.get(user) || {};
+    if (!userId) return defaults;
+    const userData = client.settings.get(userId) || {};
     const returnObject = {};
     Object.keys(defaults).forEach(key => {
       returnObject[key] = userData[key] ? userData[key] : defaults[key];
