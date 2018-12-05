@@ -60,6 +60,12 @@ const config = {
     isBuyingSlot: "false"
   },
 
+  defaultGlobalSettings: {
+    totalRips: 0,
+    todaysRips: 0,
+    ripDateTime: 0
+  },
+
   // PERMISSION LEVEL DEFINITIONS
 
   permLevels: [
@@ -105,7 +111,7 @@ const config = {
                 message.settings.adminRole.toLowerCase()
             )
           );
-            console.log(adminRole)
+          console.log(adminRole);
           return adminRole && message.member.roles.has(adminRole.id);
         } catch (e) {
           return false;
