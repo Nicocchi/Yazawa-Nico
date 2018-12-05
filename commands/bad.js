@@ -1,22 +1,24 @@
 const Discord = require("discord.js");
-//  Description: Display the angry image.
-//  Usage: angry arg1
+//  Description: Display the bad image.
+//  Usage: bad arg1
 exports.run = async (client, message, args, level) => {
   let user =
     message.guild.member(message.mentions.users.first()) ||
     message.guild.members.get(args[0]);
 
   client
-    .parseJSON("./JSON/angry.json")
+    .parseJSON("./JSON/bad.json")
     .then(res => {
       if (!user) {
-        var msg = `${message.author} is angry!`;
+        var msg = `${message.author} is being bad!`;
       } else {
-        var msg = `${message.author} is angry at ${user.user}!`;
+        var msg = `${message.author} is punishing ${
+          user.user
+        }, because they have been bad!`;
       }
 
       let embed = new Discord.RichEmbed()
-        .addField(`((╬◣﹏◢))`, msg)
+        .addField(`＼('0')/／`, msg)
         .setColor("#FF4D9C")
         .setImage(res);
 
@@ -33,8 +35,8 @@ exports.conf = {
 };
 
 exports.help = {
-  name: "angry",
+  name: "bad",
   category: "Image",
-  description: "Display the angry image",
-  usage: "angry <user>"
+  description: "Display the bad image",
+  usage: "bad <user>"
 };
