@@ -26,8 +26,6 @@ exports.run = async (client, message, args, level) => {
     isBuyingSlot: "false"
   };
   const overrides = client.settings.get(message.author.id);
-  const niiEmote = client.emojis.find("name", "niconii");
-  const niiLoveEmote = client.emojis.find("name", "nicolove");
   if (!client.settings.has(message.author.id))
     client.settings.set(message.author.id, defaults);
 
@@ -45,7 +43,7 @@ exports.run = async (client, message, args, level) => {
       `${overrides.level} [${overrides.xp}/${overrides.level * 300}]`,
       true
     )
-    .addField("Love Gems", `${overrides.points} ${niiEmote}`, true)
+    .addField("Love Gems", `${overrides.points}`, true)
     .addField(`Marriages <:nicolove:506940178246533120>`, `None`);
 
   message.channel.send(embed);
