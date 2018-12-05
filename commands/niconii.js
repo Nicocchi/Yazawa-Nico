@@ -22,7 +22,7 @@ exports.run = async (client, message, args, level) => {
       }
 
       let embed = new Discord.RichEmbed()
-        .addField(`<:niconii:451873490883313664>`, msg)
+        .addField(`<:niconi:506940178204721162>`, msg)
         .setColor("#FF4D9C")
         .setImage(res);
 
