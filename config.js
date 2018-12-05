@@ -47,17 +47,17 @@ const config = {
     xp: 0,
     level: 1,
     daily: "time", // Time of daily
-    dailyB: "true",
-    isMuted: "false",
-    afk: "false",
+    isMuted: false,
+    afk: false,
     afkMessage: "I am AFK right now.",
-    isRPS: "false",
-    isRPSGamble: "false",
+    isRPS: false,
+    isRPSGamble: false,
+    gambleAmount: 0,
     marriageProposals: [],
     sentMarriageProposals: [],
     marriages: [],
     marriageSlots: 0,
-    isBuyingSlot: "false"
+    isBuyingSlot: false
   },
 
   defaultGlobalSettings: {
