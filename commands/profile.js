@@ -42,10 +42,10 @@ exports.run = async (client, message, args, level) => {
     )
     .addField(
       "Level & EXP",
-      `${overrides.level}[${overrides.xp}/${overrides.level * 300}]`,
+      `${overrides.level} [${overrides.xp}/${overrides.level * 300}]`,
       true
     )
-    .addField("Nico Nii's", `${overrides.points} ${niiEmote}`, true)
+    .addField("Love Gems", `${overrides.points} ${niiEmote}`, true)
     .addField(`Marriages <:nicolove:506940178246533120>`, `None`);
 
   message.channel.send(embed);
