@@ -1,12 +1,10 @@
 const Discord = require("discord.js");
-//  Description: Give a cucumber to someone
-//  Usage: cucumber arg1
+//  Description: Give an item to someone
+//  Usage: give arg1 arg2
 exports.run = async (client, message, args, level) => {
   let user =
     message.guild.member(message.mentions.users.first()) ||
     message.guild.members.get(args[0]);
-
-  client.logger.log(args);
 
   if (!user) {
     let item = args[0];
