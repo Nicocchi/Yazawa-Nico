@@ -60,7 +60,7 @@ exports.conf = {
 
 exports.help = {
   name: "profile",
-  category: "Miscelaneous",
+  category: "Miscellaneous",
   description: "Display User Profile Stats",
   usage: "profile"
 };
