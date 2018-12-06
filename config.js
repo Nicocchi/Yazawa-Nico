@@ -56,7 +56,7 @@ const config = {
     marriageProposals: [],
     sentMarriageProposals: [],
     marriages: [],
-    marriageSlots: 0,
+    marriageSlots: 5,
     isBuyingSlot: false
   },
 
