@@ -13,21 +13,39 @@ exports.run = async (client, message, args, level) => {
     xp: 0,
     level: 1,
     daily: "time", // Time of daily
-    dailyB: "true",
-    isMuted: "false",
-    afk: "false",
+    isMuted: false,
+    afk: false,
     afkMessage: "I am AFK right now.",
-    isRPS: "false",
-    isRPSGamble: "false",
+    isRPS: false,
+    isRPSGamble: false,
     marriageProposals: [],
     sentMarriageProposals: [],
     marriages: [],
-    marriageSlots: 0,
-    isBuyingSlot: "false"
+    marriageSlots: 5,
+    isBuyingSlot: false
   };
-  const overrides = client.settings.get(message.author.id);
+
   if (!client.settings.has(message.author.id))
     client.settings.set(message.author.id, defaults);
+
+  const overrides = client.settings.get(message.author.id);
+
+  const marriageIds = overrides.marriages;
+  let marriages = [];
+  let marriageString = "None";
+
+  if (marriageIds.length > 0) {
+    marriageIds.forEach(usrId => {
+      client.logger.log(usrId);
+      let usrSettings = client.settings.get(usrId);
+      client.logger.log(usrSettings);
+      if (usrSettings) {
+        marriages.push(usrSettings.username);
+      }
+    });
+
+    marriageString = marriages.join("\n");
+  }
 
   let embed = new Discord.RichEmbed()
     .setTitle(`${message.author.username}'s Global Profile`)
@@ -44,7 +62,7 @@ exports.run = async (client, message, args, level) => {
       true
     )
     .addField("Love Gems", `${overrides.points}`, true)
-    .addField(`Marriages <:nicolove:506940178246533120>`, `None`);
+    .addField(`Marriages <:nicolove:506940178246533120>`, marriageString);
 
   message.channel.send(embed);
 };

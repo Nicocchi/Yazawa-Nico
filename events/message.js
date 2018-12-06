@@ -10,17 +10,16 @@ module.exports = async (client, message) => {
     xp: 0,
     level: 1,
     daily: "time", // Time of daily
-    dailyB: "true",
-    isMuted: "false",
-    afk: "false",
+    isMuted: false,
+    afk: false,
     afkMessage: "I am AFK right now.",
-    isRPS: "false",
-    isRPSGamble: "false",
+    isRPS: false,
+    isRPSGamble: false,
     marriageProposals: [],
     sentMarriageProposals: [],
     marriages: [],
-    marriageSlots: 0,
-    isBuyingSlot: "false"
+    marriageSlots: 5,
+    isBuyingSlot: false
   };
 
   // Ignore bots
@@ -76,7 +75,6 @@ module.exports = async (client, message) => {
   if (userSettings.isRPS) {
     const ranNum = client.randomNumber(1, 4);
     let answer = message.content;
-    client.logger.log(answer);
 
     switch (ranNum) {
       case 1:
