@@ -62,7 +62,8 @@ exports.run = async (client, message, args, level) => {
       true
     )
     .addField("Love Gems", `${overrides.points}`, true)
-    .addField(`Marriages <:nicolove:506940178246533120>`, marriageString);
+    .addField(`Marriages <:nicolove:506940178246533120>`, marriageString, true)
+    .addField(`Marriage Slots`, `${overrides.marriageSlots}/10`, true);
 
   message.channel.send(embed);
 };
