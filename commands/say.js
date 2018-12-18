@@ -5,11 +5,7 @@ exports.run = async (client, message, args, level) => {
   let msg = args.join(" ");
 
   message.delete().catch();
-  if (message.member.hasPermission("MENTION_EVERYONE")) {
-    return message.channel.send(msg);
-  }
   msg = msg.replace("@everyone", "everyone");
-  client.logger.log(msg);
   message.channel.send(msg);
 };
 
