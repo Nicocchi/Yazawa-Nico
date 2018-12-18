@@ -25,7 +25,6 @@ module.exports = (client, member) => {
   }
 
   // ModLog
-  client.logger.log(settings.modlog);
   if (!settings.modlog) return;
   const modLogChannel = member.guild.channels.find(
     c => c.id === settings.modLogChannel
