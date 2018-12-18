@@ -2,7 +2,6 @@
 const Discord = require("discord.js");
 
 module.exports = (client, channel) => {
-  client.logger.log(client.user.username);
   // Load the guild's settings
   const defaults = client.config.defaultSettings;
   if (!client.settings.has(channel.guild.id))
