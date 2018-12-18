@@ -181,10 +181,11 @@ module.exports = client => {
    */
   client.parseJSON = async file => {
     const fs = require("fs");
-    const data = fs.readFileSync(file, "utf8");
+    let data = fs.readFileSync(file, "utf8");
+    data = data.trim();
     const arr = JSON.parse(data).file;
-
-    return arr.random();
+    const result = arr[Math.floor(Math.random() * arr.length)];
+    return result;
   };
 
   /**
