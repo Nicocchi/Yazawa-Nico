@@ -11,25 +11,24 @@ module.exports = (client, member) => {
   const settings = client.settings.get(member.guild.id);
 
   // If welcome is off, don't proceed
-  if (settings.welcomeEnabled !== "true") return;
+  if (settings.welcomeEnabled) {
+    // Replace the placeholders in the welcome message with actual data
+    const welcomeMessage = settings.welcomeMessage
+      .replace("<user>", `<@${member.user.id}>`)
+      .replace("<guild>", `${member.guild.name}`);
 
-  // Replace the placeholders in the welcome message with actual data
-  const welcomeMessage = settings.welcomeMessage
-    .replace("<user>", `<@${member.user.id}>`)
-    .replace("<guild>", `${member.guild.name}`);
-
-  client.logger.log(welcomeMessage);
-
-  // Send the welcome message to the welcome channel
-  const greetChannel = member.guild.channels.find(
-    c => c.id === settings.welcomeChannel
-  );
-  if (greetChannel) {
-    greetChannel.send(welcomeMessage).catch(console.error);
-  } else {
+    // Send the welcome message to the welcome channel
+    const greetChannel = member.guild.channels.find(
+      c => c.id === settings.welcomeChannel
+    );
+    if (greetChannel) {
+      greetChannel.send(welcomeMessage).catch(console.error);
+    }
   }
 
   // ModLog
+  client.logger.log(settings.modlog);
+  if (!settings.modlog) return;
   const modLogChannel = member.guild.channels.find(
     c => c.id === settings.modLogChannel
   );
@@ -37,6 +36,7 @@ module.exports = (client, member) => {
   let embed = new Discord.RichEmbed()
     .setAuthor(`Member Joined`)
     .setDescription(`${member.user.username}`)
+    .setThumbnail(member.user.avatarURL)
     .setTimestamp()
     .setFooter(`ID: ${member.user.id}`)
     .setColor("#FF4D9C");

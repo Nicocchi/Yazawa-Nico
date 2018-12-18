@@ -97,7 +97,12 @@ exports.run = async (client, message, args, level) => {
   }
 
   // MODLOG
-  if (key === "modelogchannel") {
+  if (key === "modlog") {
+    client.settings.set(message.guild.id, action, "modlog");
+    message.reply(`ModLog has been set to **${action}**`);
+  }
+
+  if (key === "modlogchannel") {
     client.settings.set(message.guild.id, action, "modLogChannel");
     message.reply(`ModLog channel has been set to **${action}**`);
   }
