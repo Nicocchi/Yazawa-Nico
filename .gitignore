@@ -46,7 +46,7 @@ typings/
 .idea/
 
 # Data
-data/
+/data
 
 # Secrets
 .env
