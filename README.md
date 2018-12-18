@@ -1,4 +1,4 @@
-# Yazawa-Nico-JS
+# Yazawa-Nico
 JS version of Yazawa Nico Discord Bot
 
 <p align="center">
