@@ -22,17 +22,17 @@ const config = {
     modLogChannel: "mod-log",
     modRole: "Moderator",
     adminRole: "Administrator",
-    systemNotice: "true", // This gives notice when a user tries to run a command that they do not have permission to use.
+    systemNotice: true, // This gives notice when a user tries to run a command that they do not have permission to use.
     welcomeChannel: "welcome",
     welcomeMessage: "Say hello to {{user}}, everyone! Nico Nico Nii~",
-    welcomeEnabled: "false",
+    welcomeEnabled: false,
     leaveChannel: "welcome",
     leaveMessage: "Sorry to see you leave {{user}}",
-    leaveEnabled: "false",
+    leaveEnabled: false,
     numberOfWarnings: 0,
     warningsBan: 3,
     warningsMute: 2,
-    levelEnabled: "false",
+    levelEnabled: false,
     warnings: {}
   },
 
