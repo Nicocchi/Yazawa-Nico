@@ -41,7 +41,13 @@ exports.run = async (client, message, args, level) => {
       false
     )
     .addField(`Games`, "`8ball`, `rps`", false)
-    .addField(`Moderation`, "`set`", false)
+    .addField(`Moderation`, "`ban`, `clear`, `kick`, `set`, `warn` ", false)
+    .addField(
+      `Set`,
+      "`adminrole`, `get`, `leave`, `leavechannel`, `leavemessage`, `level`,`modlog`, " +
+        "`modlogchannel`, `modrole`, `prefix`, `warningsban`, `warningsmute`, `welcome`, `welcomechannel`, " +
+        "`welcomemessage` "
+    )
     .addField(
       `Info`,
       "`afk`, `avatar`, `botinfo`, `userinfo`, `serverinfo`",

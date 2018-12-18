@@ -19,15 +19,16 @@ const config = {
 
   defaultSettings: {
     prefix: "$",
-    modLogChannel: "mod-log",
+    modlog: false,
+    modLogChannel: "channelID",
     modRole: "Moderator",
     adminRole: "Administrator",
     systemNotice: true, // This gives notice when a user tries to run a command that they do not have permission to use.
-    welcomeChannel: "welcome",
-    welcomeMessage: "Say hello to {{user}}, everyone! Nico Nico Nii~",
+    welcomeChannel: "channelID",
+    welcomeMessage: "Welcome <user>, to <guild>! Nico Nico Nii~",
     welcomeEnabled: false,
-    leaveChannel: "welcome",
-    leaveMessage: "Sorry to see you leave {{user}}",
+    leaveChannel: "channelID",
+    leaveMessage: "Sorry to see you leave <user>",
     leaveEnabled: false,
     numberOfWarnings: 0,
     warningsBan: 3,

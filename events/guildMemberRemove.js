@@ -11,21 +11,22 @@ module.exports = (client, member) => {
   const username = member.user.username;
 
   // If leave is off, don't proceed
-  if (settings.leaveEnabled !== "true") return;
+  if (settings.leaveEnabled) {
+    // Replace the placeholders in the leave message with actual data
+    const leaveMessage = settings.leaveMessage.replace("<user>", username);
 
-  // Replace the placeholders in the leave message with actual data
-  const leaveMessage = settings.leaveMessage.replace("<user>", username);
-
-  // Send the leave message to the leave channel
-  const greetChannel = member.guild.channels.find(
-    c => c.id === settings.leaveChannel
-  );
-  if (greetChannel) {
-    greetChannel.send(leaveMessage).catch(console.error);
-  } else {
+    // Send the leave message to the leave channel
+    const greetChannel = member.guild.channels.find(
+      c => c.id === settings.leaveChannel
+    );
+    if (greetChannel) {
+      greetChannel.send(leaveMessage).catch(console.error);
+    }
   }
 
   // ModLog
+  client.logger.log(settings.modlog);
+  if (!settings.modlog) return;
   const modLogChannel = member.guild.channels.find(
     c => c.id === settings.modLogChannel
   );
@@ -33,6 +34,7 @@ module.exports = (client, member) => {
   let embed = new Discord.RichEmbed()
     .setAuthor(`Member Left`)
     .setDescription(`${member.user.username}`)
+    .setThumbnail(member.user.avatarURL)
     .setTimestamp()
     .setFooter(`ID: ${member.user.id}`)
     .setColor("#FF4D9C");
