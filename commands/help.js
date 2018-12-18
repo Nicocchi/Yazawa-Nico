@@ -22,7 +22,7 @@ exports.run = async (client, message, args, level) => {
     .addField("Prefix", `${settings.prefix}`, true)
     .addField(
       "Support Server",
-      `[Support Server](https://discord.gg/uWRCmkE)`,
+      `[Support Server](https://discord.gg/cs9Sv8N)`,
       true
     )
     .addField(`Version`, `v3.0`, true)
@@ -41,7 +41,13 @@ exports.run = async (client, message, args, level) => {
       false
     )
     .addField(`Games`, "`8ball`, `rps`", false)
-    .addField(`Moderation`, "`set`", false)
+    .addField(`Moderation`, "`ban`, `clear`, `kick`, `set`, `warn` ", false)
+    .addField(
+      `Set`,
+      "`adminrole`, `get`, `leave`, `leavechannel`, `leavemessage`, `level`,`modlog`, " +
+        "`modlogchannel`, `modrole`, `prefix`, `warningsban`, `warningsmute`, `welcome`, `welcomechannel`, " +
+        "`welcomemessage` "
+    )
     .addField(
       `Info`,
       "`afk`, `avatar`, `botinfo`, `userinfo`, `serverinfo`",

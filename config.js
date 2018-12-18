@@ -19,21 +19,22 @@ const config = {
 
   defaultSettings: {
     prefix: "$",
-    modLogChannel: "mod-log",
+    modlog: false,
+    modLogChannel: "channelID",
     modRole: "Moderator",
     adminRole: "Administrator",
-    systemNotice: "true", // This gives notice when a user tries to run a command that they do not have permission to use.
-    welcomeChannel: "welcome",
-    welcomeMessage: "Say hello to {{user}}, everyone! Nico Nico Nii~",
-    welcomeEnabled: "false",
-    leaveChannel: "welcome",
-    leaveMessage: "Sorry to see you leave {{user}}",
-    leaveEnabled: "false",
+    systemNotice: true, // This gives notice when a user tries to run a command that they do not have permission to use.
+    welcomeChannel: "channelID",
+    welcomeMessage: "Welcome <user>, to <guild>! Nico Nico Nii~",
+    welcomeEnabled: false,
+    leaveChannel: "channelID",
+    leaveMessage: "Sorry to see you leave <user>",
+    leaveEnabled: false,
     numberOfWarnings: 0,
-    warningsBan: "false",
-    warningsKick: "false",
-    warningsMute: "false",
-    levelModule: "false"
+    warningsBan: 3,
+    warningsMute: 2,
+    levelEnabled: false,
+    warnings: {}
   },
 
   // Default per-user settings. New users have these settings.
@@ -47,17 +48,23 @@ const config = {
     xp: 0,
     level: 1,
     daily: "time", // Time of daily
-    dailyB: "true",
-    isMuted: "false",
-    afk: "false",
+    isMuted: false,
+    afk: false,
     afkMessage: "I am AFK right now.",
-    isRPS: "false",
-    isRPSGamble: "false",
+    isRPS: false,
+    isRPSGamble: false,
+    gambleAmount: 0,
     marriageProposals: [],
     sentMarriageProposals: [],
     marriages: [],
-    marriageSlots: 0,
-    isBuyingSlot: "false"
+    marriageSlots: 5,
+    isBuyingSlot: false
+  },
+
+  defaultGlobalSettings: {
+    totalRips: 0,
+    todaysRips: 0,
+    ripDateTime: 0
   },
 
   // PERMISSION LEVEL DEFINITIONS
@@ -85,6 +92,7 @@ const config = {
           const modRole = message.guild.roles.find(
             r => r.name.toLowerCase() === message.settings.modRole.toLowerCase()
           );
+          console.log(modRole);
           if (modRole && message.member.roles.has(modRole.id)) return true;
         } catch (e) {
           return false;
@@ -104,6 +112,7 @@ const config = {
                 message.settings.adminRole.toLowerCase()
             )
           );
+          console.log(adminRole);
           return adminRole && message.member.roles.has(adminRole.id);
         } catch (e) {
           return false;
@@ -122,7 +131,7 @@ const config = {
           : false
     },
 
-    // Bot Support is a special inbetween level that has the equivalent of server owner access
+    // Bot Support is a special in between level that has the equivalent of server owner access
     // to any server they joins, in order to help troubleshoot the bot on behalf of the owner.
     {
       level: 8,
