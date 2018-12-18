@@ -7,7 +7,7 @@ exports.run = async (client, message, args, level) => {
     .then(res => {
       message.channel.send(res);
     })
-    .catch(err => client.logger.log(err, "Error"));
+    .catch(err => client.logger.log(err));
 };
 
 exports.conf = {
