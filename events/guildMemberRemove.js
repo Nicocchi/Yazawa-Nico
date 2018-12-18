@@ -2,37 +2,41 @@
 const Discord = require("discord.js");
 
 module.exports = (client, member) => {
-    // Load the guild's settings
-    const defaults = client.config.defaultSettings;
-    if (!client.settings.has(member.guild.id)) client.settings.set(member.guild.id, defaults);
+  // Load the guild's settings
+  const defaults = client.config.defaultSettings;
+  if (!client.settings.has(member.guild.id))
+    client.settings.set(member.guild.id, defaults);
 
-    const settings = client.settings.get(member.guild.id);
-    const username = member.user.username;
+  const settings = client.settings.get(member.guild.id);
+  const username = member.user.username;
 
-    // If leave is off, don't proceed
-    if (settings.leaveEnabled !== 'true') return;
+  // If leave is off, don't proceed
+  if (settings.leaveEnabled !== "true") return;
 
-    // Replace the placeholders in the leave message with actual data
-    const leaveMessage = settings.leaveMessage.replace('{{user}}', username);
+  // Replace the placeholders in the leave message with actual data
+  const leaveMessage = settings.leaveMessage.replace("<user>", username);
 
-    // Send the leave message to the leave channel
-    const greetChannel = member.guild.channels.find(c => c.id === settings.leaveChannel);
-    if( greetChannel) {
-        greetChannel.send(leaveMessage).catch(console.error);
-    } else {};
+  // Send the leave message to the leave channel
+  const greetChannel = member.guild.channels.find(
+    c => c.id === settings.leaveChannel
+  );
+  if (greetChannel) {
+    greetChannel.send(leaveMessage).catch(console.error);
+  } else {
+  }
 
-    // ModLog
-    const modLogChannel = member.guild.channels.find(c => c.id === settings.modLogChannel)
-    if(!modLogChannel) return;
-    let embed = new Discord.RichEmbed()
-        .setAuthor(`Member Left`)
-        .setDescription(`${member.user.username}`)
-        .setTimestamp()
-        .setFooter(
-            `ID: ${member.user.id}`
-        )
-        .setColor("#FF4D9C");
+  // ModLog
+  const modLogChannel = member.guild.channels.find(
+    c => c.id === settings.modLogChannel
+  );
+  if (!modLogChannel) return;
+  let embed = new Discord.RichEmbed()
+    .setAuthor(`Member Left`)
+    .setDescription(`${member.user.username}`)
+    .setTimestamp()
+    .setFooter(`ID: ${member.user.id}`)
+    .setColor("#FF4D9C");
 
-    // Send the joined message to the modlog channel
-    modLogChannel.send(embed).catch(console.error);
+  // Send the joined message to the modlog channel
+  modLogChannel.send(embed).catch(console.error);
 };

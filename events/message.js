@@ -63,14 +63,12 @@ module.exports = async (client, message) => {
     client.settings.set(message.author.id, curlvl + 1, "level");
     const updatedUser = client.getUserSettings(message.author.id);
 
-    // Display level message
-    message.channel
-      .send(
+    // Display level message if guild has it enabled
+    if (settings.levelEnabled) {
+      message.channel.send(
         `${message.author.tag}, You have leveled up to ${updatedUser.level}!`
-      )
-      .then(msg => {
-        msg.delete(5000);
-      });
+      );
+    }
   }
 
   // RPS
