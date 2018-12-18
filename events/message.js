@@ -50,7 +50,7 @@ module.exports = async (client, message) => {
 
   let curxp = userSettings.xp;
   let curlvl = userSettings.level;
-  let nxtlvl = curlvl * 300;
+  let nxtlvl = curlvl * 600;
 
   const newxp = curxp + xpAdd;
 
