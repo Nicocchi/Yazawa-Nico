@@ -7,7 +7,7 @@ exports.run = async (client, message, args, level) => {
     message.guild.members.get(args[0]);
 
   client
-    .parseJSON("./JSON/sad.json")
+    .parseJSON("./JSON/scared.json")
     .then(res => {
       if (!user) {
         var msg = `${message.author} is scared!!`;
