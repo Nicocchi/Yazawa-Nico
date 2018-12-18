@@ -22,7 +22,7 @@ exports.run = async (client, message, args, level) => {
     .addField("Prefix", `${settings.prefix}`, true)
     .addField(
       "Support Server",
-      `[Support Server](https://discord.gg/uWRCmkE)`,
+      `[Support Server](https://discord.gg/cs9Sv8N)`,
       true
     )
     .addField(`Version`, `v3.0`, true)

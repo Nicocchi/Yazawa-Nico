@@ -26,6 +26,28 @@ Yazawa Nico is a multipurpose bot with moderation, custom prefix, basic leveling
 * A leveling and credit system for added fun!
 * Marriage system
 
+## Moderation
+
+Modlog features as follows:
+
+* Channel creation
+* Channel deletion
+* User ban
+* User ban revoke
+* Message deletion
+* User joined
+* User left
+
+Currently working on individual modlog feature enable and disable each one.
+
+Moderation commands as follows:
+
+* Ban
+* Kick
+* Warn
+* clear (up to 100 at a time)
+* Set (Set allows the admin to set guild preferences)
+
 ## Build Source Code
 
 You will need Node 8 or higher
