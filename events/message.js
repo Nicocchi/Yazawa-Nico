@@ -2,6 +2,8 @@
 // Note: Due to the binding of client to every event, every event
 // goes `client, other, args` when this function is run.
 
+const Discord = require("discord.js");
+
 module.exports = async (client, message) => {
   const defaults = {
     id: message.author.id,
@@ -218,6 +220,72 @@ module.exports = async (client, message) => {
       default:
         break;
     }
+  }
+
+  // AFK
+  // Get a user if there is one mentioned
+  let user = message.guild.member(message.mentions.users.first());
+
+  // Check if there is a user, if so, check if need to call the user's afk message
+  if (user) {
+    const userDefaults = {
+      id: user.user.id,
+      username: `${user.user.username}`,
+      points: 0,
+      xp: 0,
+      level: 1,
+      daily: "time", // Time of daily
+      isMuted: false,
+      afk: false,
+      afkMessage: "I am AFK right now.",
+      isRPS: false,
+      isRPSGamble: false,
+      marriageProposals: [],
+      sentMarriageProposals: [],
+      marriages: [],
+      marriageSlots: 5,
+      isBuyingSlot: false
+    };
+
+    if (!client.settings.has(user.user.id))
+      client.settings.set(user.user.id, userDefaults);
+
+    const userSettings2 = (message.settings = client.getUserSettings(
+      user.user.id
+    ));
+
+    // If user is afk, send user's afk message
+    if (userSettings2.afk) {
+      let embed = new Discord.RichEmbed()
+        .setTitle(`AFK`)
+        .setTimestamp()
+        .setColor("#FF4D9C")
+        .setThumbnail(user.user.avatarURL)
+        .setDescription(
+          `**${
+            user.user.username
+          }** is currently away. They left this message:\n\n**${
+            userSettings2.afkMessage
+          }**`
+        );
+
+      message.channel.send(embed);
+    }
+  }
+
+  // If the author is afk, set as back and return message
+  if (userSettings.afk) {
+    client.settings.set(message.author.id, false, "afk");
+    let embed = new Discord.RichEmbed()
+      .setTitle(`AFK`)
+      .setTimestamp()
+      .setColor("#FF4D9C")
+      .setThumbnail(message.author.displayAvatarURL)
+      .setDescription(
+        `You are now set as back **${message.author.username}!**`
+      );
+
+    message.channel.send(embed);
   }
 
   // Ignore any message that does not start with the prefix
