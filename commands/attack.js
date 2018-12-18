@@ -22,7 +22,7 @@ exports.run = async (client, message, args, level) => {
 
       message.channel.send({ embed: embed });
     })
-    .catch(err => client.logger.log(err, "Error"));
+    .catch(err => client.logger.log(err));
 };
 
 exports.conf = {
