@@ -12,9 +12,6 @@ module.exports = async client => {
     client.logger.log(token);
     const dbl = new DBL(token, client);
 
-    // Test
-    dbl.postStats(client.guilds.size);
-
     // Post stats every 30 minutes
     setInterval(() => {
       dbl.postStats(client.guilds.size);
