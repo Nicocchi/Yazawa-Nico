@@ -8,18 +8,16 @@ module.exports = async client => {
     // Make the bot have an activity
     client.user.setActivity(`${client.config.defaultSettings.prefix}help`, {type: 'PLAYING'});
 
-    const token = process.env.DBL_TOKEN || 'DBL Token'
+    const token = process.env.DBL_TOKEN || 'DBL Token';
+    client.logger.log(token);
     const dbl = new DBL(token, client);
 
+    // Test
+    dbl.postStats(client.guilds.size);
+
+    // Post stats every 30 minutes
     setInterval(() => {
-        dbl.postStats(client.guilds.size);
+      dbl.postStats(client.guilds.size);
+      client.logger.log(`Server count posted. Currently serving in ${client.guilds.size} servers!`)
     }, 1800000);
-
-    dbl.on('posted', () => {
-        client.logger.log('Server count posted');
-    });
-
-    dbl.on('error', e => {
-        client.logger.error(`DBL: ${e}`);
-    });
 };
