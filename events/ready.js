@@ -9,7 +9,6 @@ module.exports = async client => {
     client.user.setActivity(`${client.config.defaultSettings.prefix}help`, {type: 'PLAYING'});
 
     const token = process.env.DBL_TOKEN || 'DBL Token';
-    client.logger.log(token);
     const dbl = new DBL(token, client);
 
     // Post stats every 30 minutes
