@@ -58,7 +58,7 @@ exports.run = async (client, message, args, level) => {
     )
     .addField(
       "Level & EXP",
-      `${overrides.level} [${overrides.xp}/${overrides.level * 300}]`,
+      `${overrides.level} [${overrides.xp}/${overrides.level * 600}]`,
       true
     )
     .addField("Love Gems", `${overrides.points}`, true)

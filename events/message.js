@@ -57,8 +57,10 @@ module.exports = async (client, message) => {
   // Update the xp
   client.settings.set(message.author.id, newxp, "xp");
 
+  const uUser = client.getUserSettings(message.author.id);
+
   // // Check level status and update levels/display level if needed
-  if (nxtlvl <= userSettings.xp) {
+  if (uUser.xp >= nxtlvl) {
     // Update level
     client.settings.set(message.author.id, curlvl + 1, "level");
     const updatedUser = client.getUserSettings(message.author.id);
