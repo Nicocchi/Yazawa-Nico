@@ -136,7 +136,9 @@ module.exports = client => {
         props.init(client);
       }
       client.commands.set(props.help.name, props);
+
       props.conf.aliases.forEach(alias => {
+        client.logger.log(`Setting Alias: ${alias}`);
         client.aliases.set(alias, props.help.name);
       });
       return false;
