@@ -30,7 +30,10 @@ module.exports = async (client, message) => {
   // Grab the settings for this server from Enmap
   // If there is no guild, get default conf (DMs)
   const settings = (message.settings = client.getSettings(message.guild.id));
-  client.user.setActivity(`${settings.prefix}help | ${client.guilds.size} servers`, {type: 'PLAYING'});
+  client.user.setActivity(
+    `${settings.prefix}help | ${client.guilds.size} servers`,
+    { type: "PLAYING" }
+  );
 
   // Check user settings, if none, set default user settings to defaults
   if (!client.settings.has(message.author.id))
@@ -40,7 +43,7 @@ module.exports = async (client, message) => {
     message.author.id
   ));
 
-  // Checks if the bot was mentioned, with no message after it, retursn the prefix.
+  // Checks if the bot was mentioned, with no message after it, returns the prefix.
   const prefixMention = new RegExp(`^<@!?${client.user.id}>( |)$`);
   if (message.content.match(prefixMention)) {
     return message.reply(`My prefix on this guild is \`${settings.prefix}\``);
@@ -290,9 +293,10 @@ module.exports = async (client, message) => {
   }
 
   // Ignore any message that does not start with the prefix
-  if (message.content.indexOf(settings.prefix) !== 0) return;
+  // if (message.content.indexOf(settings.prefix) !== 0) return;
+  if (!message.content.startsWith(settings.prefix)) return;
 
-  // Seperate the 'command' name, and the 'arguments' for teh command.
+  // Seperate the 'command' name, and the 'arguments' for the command.
   const args = message.content
     .slice(settings.prefix.length)
     .trim()
