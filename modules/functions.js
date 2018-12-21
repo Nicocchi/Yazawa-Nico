@@ -186,7 +186,6 @@ module.exports = client => {
     const dispatcher = serverQueue.connection
       .playStream(ytdl(song.url))
       .on("end", () => {
-        client.logger.log("Song Ended!");
         serverQueue.songs.shift();
         client.play(guild, serverQueue.songs[0]);
       })

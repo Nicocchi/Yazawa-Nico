@@ -1,4 +1,4 @@
-const Discord = require("discord.js");
+const { Discord, Util } = require("discord.js");
 const ytdl = require("ytdl-core");
 
 //  Description: Play a song from YouTube
@@ -26,7 +26,7 @@ exports.run = async (client, message, args, level) => {
 
   const songInfo = await ytdl.getInfo(args[0]);
   const song = {
-    title: songInfo.title,
+    title: Util.escapeMarkdown(songInfo.title),
     url: songInfo.video_url,
     thumbnail: songInfo.thumbnail_url
   };
@@ -56,8 +56,6 @@ exports.run = async (client, message, args, level) => {
   } else {
     serverQueue.songs.push(song);
     message.channel.send(`**${song.title}** has been added to the queue!`);
-    client.logger.log(`${song.title} has been added to the queue!`);
-    client.logger.log(serverQueue.songs);
   }
 };
 
