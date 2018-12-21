@@ -128,10 +128,11 @@ module.exports = client => {
     return text;
   };
 
-  client.loadCommand = commandName => {
+  client.loadCommand = (commandName, dir) => {
     try {
       client.logger.log(`Loading Command: ${commandName}`);
-      const props = require(`../commands/${commandName}`);
+
+      const props = require(`../${dir}/${commandName}`);
       if (props.init) {
         props.init(client);
       }
@@ -142,6 +143,7 @@ module.exports = client => {
         client.aliases.set(alias, props.help.name);
       });
       return false;
+
     } catch (e) {
       return `Unable to load command ${commandName}: ${e}`;
     }

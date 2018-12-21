@@ -16,12 +16,17 @@ module.exports = (client, guild, user) => {
 
   if (!modLogChannel) return;
 
-  let embed = new Discord.RichEmbed()
-    .setDescription(`Ban revoked: ${user.username}`)
-    .setThumbnail(user.avatarURL)
-    .setTimestamp()
-    .setColor("#FF4D9C");
+  try {
+    let embed = new Discord.RichEmbed()
+      .setDescription(`Ban revoked: ${user.username}`)
+      .setThumbnail(user.avatarURL)
+      .setTimestamp()
+      .setColor("#FF4D9C");
 
-  // Send the deleted message to the modlog channel
-  modLogChannel.send(embed).catch(console.error);
+    // Send the deleted message to the modlog channel
+    modLogChannel.send(embed).catch(console.error);
+  } catch (e) {
+    client.logger.error(e);
+  }
+
 };

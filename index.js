@@ -21,13 +21,30 @@ client.settings = new Enmap({name: 'settings'});
 
 const init = async () => {
     // Load commands into memory as a collection
-    const cmdFiles = await readdir('./commands/');
-    client.logger.log(`Loading a total of ${cmdFiles.length} commands.`);
+
+  // An array to store the base directory of the commands
+    const cmdDirs = ['./commands/core', './commands/currency', './commands/fun', './commands/games', './commands/images',
+      './commands/info', './commands/moderation', './commands/set'];
+
+    // Loop thru the directories and then load the commands
+  cmdDirs.forEach(async dir => {
+      // Read each file in the directory
+    const cmdFiles = await readdir(dir);
+
+    // Log the process
+    client.logger.log(`Loading a total of ${cmdFiles.length} commands in ${dir.substr(11)}`, 'title');
+
+    // Loop thru each file in the directory and then load the command into the client
     cmdFiles.forEach(f => {
-        if(!f.endsWith('.js')) return;
-        const response = client.loadCommand(f);
-        if(response) console.log(response);
+        // If the file is not a js file, return
+      if (!f.endsWith('.js')) return;
+
+      // Loads the file into the client with the command's name and directory
+      const response = client.loadCommand(f, dir);
+      if (response) client.logger.log(response);
     });
+  });
+
 
     // Load events, which will include message & ready event
     const evtFiles = await readdir('./events/');

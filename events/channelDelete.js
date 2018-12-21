@@ -16,12 +16,16 @@ module.exports = (client, channel) => {
   );
 
   if (!modLogChannel) return;
+  try {
+    let embed = new Discord.RichEmbed()
+      .setDescription(`Channel Deleted: ${channel.name}`)
+      .setTimestamp()
+      .setColor("#FF4D9C");
 
-  let embed = new Discord.RichEmbed()
-    .setDescription(`Channel Deleted: ${channel.name}`)
-    .setTimestamp()
-    .setColor("#FF4D9C");
+    // Send the deleted message to the modlog channel
+    modLogChannel.send(embed).catch(console.error);
+  } catch (e) {
+    client.logger.error(e);
+  }
 
-  // Send the deleted message to the modlog channel
-  modLogChannel.send(embed).catch(console.error);
 };
