@@ -8,6 +8,11 @@ const moment = require("moment");
 exports.log = (content, type = "log") => {
   const timestamp = `[${moment().format("YYYY-MM-DD HH:mm:ss")}]:`;
   switch (type) {
+    case "title": {
+      return console.log(
+        `${timestamp} ${chalk.black.bgCyan(type.toUpperCase())} ${content.toUpperCase()} `
+      );
+    }
     case "log": {
       return console.log(
         `${timestamp} ${chalk.bgBlue(type.toUpperCase())} ${content} `

@@ -122,6 +122,7 @@ exports.run = async (client, message, args, level) => {
   // PREFIX
   if (key === "prefix") {
     client.settings.set(message.guild.id, action, "prefix");
+    client.user.setActivity(`${action}help | ${client.guilds.size} servers`, {type: 'PLAYING'});
     message.reply(`Prefix has been set to **${action}**`);
   }
 

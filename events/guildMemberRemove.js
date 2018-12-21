@@ -30,14 +30,20 @@ module.exports = (client, member) => {
     c => c.id === settings.modLogChannel
   );
   if (!modLogChannel) return;
-  let embed = new Discord.RichEmbed()
-    .setAuthor(`Member Left`)
-    .setDescription(`${member.user.username}`)
-    .setThumbnail(member.user.avatarURL)
-    .setTimestamp()
-    .setFooter(`ID: ${member.user.id}`)
-    .setColor("#FF4D9C");
 
-  // Send the joined message to the modlog channel
-  modLogChannel.send(embed).catch(console.error);
+  try {
+    let embed = new Discord.RichEmbed()
+      .setAuthor(`Member Left`)
+      .setDescription(`${member.user.username}`)
+      .setThumbnail(member.user.avatarURL)
+      .setTimestamp()
+      .setFooter(`ID: ${member.user.id}`)
+      .setColor("#FF4D9C");
+
+    // Send the joined message to the modlog channel
+    modLogChannel.send(embed).catch(console.error);
+  } catch (e) {
+    client.logger.error(e);
+  }
+
 };

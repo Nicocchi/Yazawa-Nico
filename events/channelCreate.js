@@ -16,7 +16,7 @@ module.exports = (client, channel) => {
   );
 
   if (!modLogChannel) return;
-
+try {
   let embed = new Discord.RichEmbed()
     .setDescription(`Channel Created: <#${channel.id}>`)
     .setTimestamp()
@@ -24,4 +24,8 @@ module.exports = (client, channel) => {
 
   // Send the deleted message to the modlog channel
   modLogChannel.send(embed).catch(console.error);
+} catch (e) {
+  client.logger.error(e);
+}
+
 };
