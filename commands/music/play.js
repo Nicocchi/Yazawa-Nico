@@ -20,7 +20,7 @@ exports.run = async (client, message, args, level) => {
 
   if (!permissions.has("SPEAK"))
     return message.channel.send(
-      "I cannot to speack in this voice channel, " +
+      "I cannot to speak in this voice channel, " +
         "please make sure I have the proper permissions."
     );
 
@@ -49,7 +49,7 @@ exports.run = async (client, message, args, level) => {
       queueConstruct.connection = connection;
       client.play(message.guild, queueConstruct.songs[0]);
     } catch (e) {
-      client.logger.error(e);
+      client.logger.error(`PLAY: ${e}`);
       client.queue.delete(message.guild.id);
       return message.channel.send("I could not join the voice channel.");
     }
@@ -62,7 +62,7 @@ exports.run = async (client, message, args, level) => {
 exports.conf = {
   enabled: "true",
   guildOnly: "false",
-  aliases: [],
+  aliases: ["p"],
   permLevel: "User"
 };
 

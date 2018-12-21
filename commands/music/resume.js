@@ -1,7 +1,7 @@
 const Discord = require("discord.js");
 const ytdl = require("ytdl-core");
 
-//  Description: Pause the currently playing song
+//  Description: Resume the currently playing song
 //  Usage: prefix arg1
 
 exports.run = async (client, message, args, level) => {
@@ -9,29 +9,25 @@ exports.run = async (client, message, args, level) => {
     return message.channel.send("You are not in a voice channel.");
 
   const serverQueue = client.queue.get(message.guild.id);
-  if (serverQueue && serverQueue.playing) {
-    serverQueue.playing = false;
-    serverQueue.connection.dispatcher.pause();
-    return message.channel.send("The music is paused.");
+  if (serverQueue && !serverQueue.playing) {
+    serverQueue.playing = true;
+    serverQueue.connection.dispatcher.resume();
+    return message.channel.send("The music has resumed.");
   }
 
   return message.channel.send("There is nothing playing.");
-
-  serverQueue.playing = false;
-  serverQueue.connection.dispatcher.pause();
-  return message.channel.send("The music is paused.");
 };
 
 exports.conf = {
   enabled: "true",
   guildOnly: "false",
-  aliases: ["ps"],
+  aliases: ["r"],
   permLevel: "User"
 };
 
 exports.help = {
-  name: "pause",
+  name: "resume",
   category: "Music",
-  description: "Pause the currently playing song",
-  usage: "pause"
+  description: "Resume the currently playing song",
+  usage: "resume"
 };
