@@ -193,6 +193,8 @@ module.exports = client => {
       .on("Error", e => client.logger.error(e));
 
     dispatcher.setVolumeLogarithmic(serverQueue.volume / 5);
+
+    serverQueue.textChannel.send(`Started Playing: **${song.title}**`);
   };
 
   /**
