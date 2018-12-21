@@ -24,7 +24,7 @@ const init = async () => {
 
   // An array to store the base directory of the commands
     const cmdDirs = ['./commands/core', './commands/currency', './commands/fun', './commands/games', './commands/images',
-      './commands/info', './commands/moderation', './commands/set'];
+      './commands/info', './commands/moderation', './commands/music', './commands/set'];
 
     // Loop thru the directories and then load the commands
   cmdDirs.forEach(async dir => {
