@@ -189,7 +189,7 @@ module.exports = client => {
         serverQueue.songs.shift();
         client.play(guild, serverQueue.songs[0]);
       })
-      .on("Error", e => client.logger.error(e));
+      .on("Error", e => client.logger.error(`CLIENT_PLAY: ${e}`));
 
     dispatcher.setVolumeLogarithmic(serverQueue.volume / 5);
 

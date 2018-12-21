@@ -14,7 +14,7 @@ exports.run = async (client, message, args, level) => {
       "There is nothing playing that I could skip for you."
     );
 
-  message.channel.send(`${serverQueue.songs[0].title} was skipped.`);
+  message.channel.send(`**${serverQueue.songs[0].title}** was skipped.`);
 
   serverQueue.connection.dispatcher.end();
 };
