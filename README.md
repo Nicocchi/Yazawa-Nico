@@ -1,11 +1,15 @@
 # Yazawa-Nico
-JS version of Yazawa Nico Discord Bot
+Yazawa Nico Multipurpose Discord Bot
 
 <p align="center">
-    <img src="https://yazawanico.maverikstudios.com/images/bots/niconii/niconii01.gif">
+    <img src="https://media.giphy.com/media/gQf1tsNi1mG40/source.gif">
 </p>
 
-[![Discord Bots](https://discordbots.org/api/widget/status/449664260637982720.svg)](https://discordbots.org/bot/449664260637982720) [![Discord Bots](https://discordbots.org/api/widget/servers/449664260637982720.svg)](https://discordbots.org/bot/449664260637982720) [![Discord Bots](https://discordbots.org/api/widget/lib/449664260637982720.svg)](https://discordbots.org/bot/449664260637982720) [![Discord](https://discordapp.com/api/guilds/451841814501261333/embed.png)](https://discord.gg/hMXMpqv)
+[![Discord Bots](https://discordbots.org/api/widget/status/506839796921139203.svg)](https://discordbots.org/bot/506839796921139203)
+[![Discord Bots](https://discordbots.org/api/widget/servers/506839796921139203.svg)](https://discordbots.org/bot/506839796921139203)
+[![Discord Bots](https://discordbots.org/api/widget/upvotes/506839796921139203.svg)](https://discordbots.org/bot/506839796921139203)
+[![Discord Bots](https://discordbots.org/api/widget/lib/506839796921139203.svg)](https://discordbots.org/bot/506839796921139203)
+[![Discord Bots](https://discordbots.org/api/widget/owner/506839796921139203.svg)](https://discordbots.org/bot/506839796921139203)
 
 
 ## About Yazawa Nico
@@ -13,7 +17,10 @@ Yazawa Nico is a multipurpose bot with moderation, custom prefix, basic leveling
 
 ## Invite
 
-<a href="https://discordapp.com/oauth2/authorize?client_id=449664260637982720&scope=bot&permissions=268827774">Invite Nico</a> <a href="https://discord.gg/hMXMpqv">Support Server</a> <a href="https://yazawanico.maverikstudios.com/">Website</a>
+<a href="https://discordapp.com/oauth2/authorize?client_id=506839796921139203&scope=bot&permissions=2146827775">Invite Nico</a> <a href="https://discord.gg/cs9Sv8N">Support Server</a>
+
+## Like the bot? Give us a vote!
+<a href="https://discordbots.org/bot/506839796921139203">Vote</a>
 
 ## Main Features
 
@@ -28,7 +35,7 @@ Yazawa Nico is a multipurpose bot with moderation, custom prefix, basic leveling
 
 ## Moderation
 
-Modlog features as follows:
+Mod-log features as follows:
 
 * Channel creation
 * Channel deletion
@@ -38,7 +45,7 @@ Modlog features as follows:
 * User joined
 * User left
 
-Currently working on individual modlog feature enable and disable each one.
+Currently working on individual mod-log feature enable and disable each one.
 
 Moderation commands as follows:
 
@@ -47,6 +54,18 @@ Moderation commands as follows:
 * Warn
 * clear (up to 100 at a time)
 * Set (Set allows the admin to set guild preferences)
+
+Using Set to set guild preferences
+
+`<prefix>set <action> <value>`
+
+- Prefix is the guild's prefix for the bot
+- Action is the key you want to modify. Such as: welcome channel or mod-log channel, etc.
+- Value is the value you want to channel the key. Such as: welcome channel to channel ID.
+
+Example: `!set welcomechannel 3492830498249`
+
+For a complete list of set commands, view the help command. `<prefix>help`
 
 ## Build Source Code
 
