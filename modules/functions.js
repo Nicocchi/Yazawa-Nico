@@ -1,3 +1,5 @@
+const Discord = require("discord.js");
+const ytdl = require("ytdl-core");
 module.exports = client => {
   /**
    * PERMISSION LEVEL FUNCTION
@@ -143,7 +145,6 @@ module.exports = client => {
         client.aliases.set(alias, props.help.name);
       });
       return false;
-
     } catch (e) {
       return `Unable to load command ${commandName}: ${e}`;
     }
@@ -171,6 +172,27 @@ module.exports = client => {
       }
     }
     return false;
+  };
+
+  client.play = async (guild, song) => {
+    const serverQueue = client.queue.get(guild.id);
+
+    if (!song) {
+      serverQueue.voiceChannel.leave();
+      client.queue.delete(guild.id);
+      return;
+    }
+
+    const dispatcher = serverQueue.connection
+      .playStream(ytdl(song.url))
+      .on("end", () => {
+        client.logger.log("Song Ended!");
+        serverQueue.songs.shift();
+        client.play(guild, serverQueue.songs[0]);
+      })
+      .on("Error", e => client.logger.error(e));
+
+    dispatcher.setVolumeLogarithmic(serverQueue.volume / 5);
   };
 
   /**

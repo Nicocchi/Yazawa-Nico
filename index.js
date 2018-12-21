@@ -18,6 +18,7 @@ client.commands = new Enmap();
 client.aliases = new Enmap();
 
 client.settings = new Enmap({ name: "settings" });
+client.queue = new Map();
 
 const init = async () => {
   // Load commands into memory as a collection

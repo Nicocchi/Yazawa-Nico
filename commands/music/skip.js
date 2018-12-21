@@ -1,7 +1,7 @@
 const Discord = require("discord.js");
 const ytdl = require("ytdl-core");
 
-//  Description: Stop a song from playing
+//  Description: Skip a song from the queue
 //  Usage: prefix arg1
 
 exports.run = async (client, message, args, level) => {
@@ -14,7 +14,8 @@ exports.run = async (client, message, args, level) => {
       "There is nothing playing that I could skip for you."
     );
 
-  serverQueue.songs = [];
+  message.channel.send(`${serverQueue.songs[0].title} was skipped.`);
+
   serverQueue.connection.dispatcher.end();
 };
 
@@ -26,8 +27,8 @@ exports.conf = {
 };
 
 exports.help = {
-  name: "stop",
+  name: "skip",
   category: "Music",
-  description: "Stop a song from playing",
-  usage: "stop"
+  description: "Skip a song from the queue",
+  usage: "skip"
 };
