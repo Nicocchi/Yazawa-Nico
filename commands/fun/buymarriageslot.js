@@ -33,7 +33,7 @@ exports.run = async (client, message, args, level) => {
 
   switch (marriageslots) {
     case 5:
-      amount = 10;
+      amount = 2500;
       break;
     case 6:
       amount = 4500;
