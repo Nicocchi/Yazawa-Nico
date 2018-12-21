@@ -10,7 +10,7 @@ Yazawa Nico Multipurpose Discord Bot
 [![Discord Bots](https://discordbots.org/api/widget/upvotes/506839796921139203.svg)](https://discordbots.org/bot/506839796921139203)
 [![Discord Bots](https://discordbots.org/api/widget/lib/506839796921139203.svg)](https://discordbots.org/bot/506839796921139203)
 [![Discord Bots](https://discordbots.org/api/widget/owner/506839796921139203.svg)](https://discordbots.org/bot/506839796921139203)
-
+[![Discord](https://discordapp.com/api/guilds/506841738594484226/embed.png)](https://discord.gg/cs9Sv8N)
 
 ## About Yazawa Nico
 Yazawa Nico is a multipurpose bot with moderation, custom prefix, basic leveling, games and fun commands.
