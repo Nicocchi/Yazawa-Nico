@@ -25,7 +25,7 @@ exports.run = async (client, message, args, level) => {
       `[Support Server](https://discord.gg/cs9Sv8N)`,
       true
     )
-    .addField(`Version`, `v3.0`, true)
+    .addField(`Version`, `v3.1`, true)
     .addField(`Core`, "`help`, `helpdm`", false)
     .addField(
       `Images`,
