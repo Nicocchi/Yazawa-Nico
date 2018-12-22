@@ -79,7 +79,7 @@ module.exports = client => {
   /**
    * SINGLE-LINE AWAITMESSAGE
    *
-   * A simple way to grab a single reply, from the suer that initiated
+   * A simple way to grab a single reply, from the user that initiated
    * the command. Useful to get "precisions" on certain things...
    *
    * USAGE
@@ -174,25 +174,44 @@ module.exports = client => {
     return false;
   };
 
+  /**
+   * MUSIC FUNCTIONS
+   *
+   */
+
+  /**
+   * Play the song on Discord Voice Channel
+   * @param guild - Server
+   * @param song - Song to be played
+   * @returns {Promise<void>}
+   */
   client.play = async (guild, song) => {
+    // Get the queue
     const serverQueue = client.queue.get(guild.id);
 
+    // If no song, leave the voice channel and delete the guild from the queue
     if (!song) {
       serverQueue.voiceChannel.leave();
       client.queue.delete(guild.id);
       return;
     }
 
+    // Set the dispatcher to start playing the song
     const dispatcher = serverQueue.connection
       .playStream(ytdl(song.url))
       .on("end", () => {
+        // Remove the first song from the array
         serverQueue.songs.shift();
+
+        // Recall the function with the next song
         client.play(guild, serverQueue.songs[0]);
       })
       .on("Error", e => client.logger.error(`CLIENT_PLAY: ${e}`));
 
+    // Set the volume
     dispatcher.setVolumeLogarithmic(serverQueue.volume / 5);
 
+    // Send message to the text channel with the song.
     serverQueue.textChannel.send(`Started Playing: **${song.title}**`);
   };
 
