@@ -215,6 +215,50 @@ module.exports = client => {
     serverQueue.textChannel.send(`Started Playing: **${song.title}**`);
   };
 
+  client.handleVideo = async (
+    video,
+    message,
+    voiceChannel,
+    playlist = false
+  ) => {
+    const serverQueue = client.queue.get(message.guild.id);
+    const song = {
+      id: video.id,
+      title: video.title,
+      url: `https://www.youtube.com/watch?v=${video.id}`
+    };
+
+    if (!serverQueue) {
+      const queueConstruct = {
+        textChannel: message.channel,
+        voiceChannel: voiceChannel,
+        connection: null,
+        songs: [],
+        volume: 5,
+        playing: true
+      };
+      client.queue.set(message.guild.id, queueConstruct);
+
+      queueConstruct.songs.push(song);
+
+      try {
+        var connection = await voiceChannel.join();
+        queueConstruct.connection = connection;
+        client.play(message.guild, queueConstruct.songs[0]);
+      } catch (e) {
+        client.logger.error(e);
+        client.queue.delete(message.guild.id);
+        return message.channel.send("I could not join the voice channel.");
+      }
+    } else {
+      serverQueue.songs.push(song);
+      if (playlist) return;
+      return message.channel.send(
+        `**${song.title}** has been added to the queue!`
+      );
+    }
+  };
+
   /**
    * MISCELANEOUS NON-CRITICAL FUNCTIONS
    *

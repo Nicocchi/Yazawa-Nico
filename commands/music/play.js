@@ -28,68 +28,49 @@ exports.run = async (client, message, args, level) => {
   const url = args.join(" ");
   let waited = false;
 
-  try {
-    var video = await client.youtube.getVideo(url);
-    waited = true;
-  } catch (e) {
-    try {
-      var videos = await client.youtube.searchVideos(searchString, 10);
-      const nums = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"];
+  if (url.match(/^https?:\/\/(www.youtube.com|youtube.com)\/playlist(.*)$/)) {
+    const playlist = await client.youtube.getPlaylist(url);
+    const videos = await playlist.getVideos();
 
-      const response = await client.awaitReply(
-        message,
-        `
+    for (const video of Object.values(videos)) {
+      const video2 = await client.youtube.getVideoByID(video.id);
+      await client.handleVideo(video2, message, voiceChannel, true);
+    }
+
+    return message.channel.send(
+      `Playlist: **${playlist.title}** has been added to the queue!`
+    );
+  } else {
+    try {
+      var video = await client.youtube.getVideo(url);
+      waited = true;
+    } catch (e) {
+      try {
+        var videos = await client.youtube.searchVideos(searchString, 10);
+        const nums = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"];
+
+        const response = await client.awaitReply(
+          message,
+          `
   __**Search Results:**__
   ${videos.map((song, i) => `[${i + 1}] **-** ${song.title}`).join("\n  ")}
   `
-      );
+        );
 
-      if (nums.includes(response)) {
-        const index = parseInt(response, 10);
+        if (nums.includes(response)) {
+          const index = parseInt(response, 10);
 
-        var video = videos[index - 1];
-        waited = true;
+          var video = videos[index - 1];
+          waited = true;
+        }
+      } catch (e) {
+        console.log(e);
       }
-    } catch (e) {
-      console.log(e);
     }
   }
 
   if (waited) {
-    const song = {
-      id: video.id,
-      title: video.title,
-      url: `https://www.youtube.com/watch?v=${video.id}`
-    };
-
-    console.log(song);
-
-    if (!serverQueue) {
-      const queueConstruct = {
-        textChannel: message.channel,
-        voiceChannel: voiceChannel,
-        connection: null,
-        songs: [],
-        volume: 5,
-        playing: true
-      };
-      client.queue.set(message.guild.id, queueConstruct);
-
-      queueConstruct.songs.push(song);
-
-      try {
-        var connection = await voiceChannel.join();
-        queueConstruct.connection = connection;
-        client.play(message.guild, queueConstruct.songs[0]);
-      } catch (e) {
-        client.logger.error(`PLAY: ${e}`);
-        client.queue.delete(message.guild.id);
-        return message.channel.send("I could not join the voice channel.");
-      }
-    } else {
-      serverQueue.songs.push(song);
-      message.channel.send(`**${song.title}** has been added to the queue!`);
-    }
+    return client.handleVideo(video, message, voiceChannel);
   }
 };
 
