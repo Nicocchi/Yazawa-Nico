@@ -1,3 +1,5 @@
+const Discord = require("discord.js");
+const ytdl = require("ytdl-core");
 module.exports = client => {
   /**
    * PERMISSION LEVEL FUNCTION
@@ -77,7 +79,7 @@ module.exports = client => {
   /**
    * SINGLE-LINE AWAITMESSAGE
    *
-   * A simple way to grab a single reply, from the suer that initiated
+   * A simple way to grab a single reply, from the user that initiated
    * the command. Useful to get "precisions" on certain things...
    *
    * USAGE
@@ -98,6 +100,7 @@ module.exports = client => {
       });
       return collected.first().content;
     } catch (e) {
+      msg.channel.send("Aww, you didn't select anything... Nico..");
       return false;
     }
   };
@@ -143,7 +146,6 @@ module.exports = client => {
         client.aliases.set(alias, props.help.name);
       });
       return false;
-
     } catch (e) {
       return `Unable to load command ${commandName}: ${e}`;
     }
@@ -171,6 +173,91 @@ module.exports = client => {
       }
     }
     return false;
+  };
+
+  /**
+   * MUSIC FUNCTIONS
+   *
+   */
+
+  /**
+   * Play the song on Discord Voice Channel
+   * @param guild - Server
+   * @param song - Song to be played
+   * @returns {Promise<void>}
+   */
+  client.play = async (guild, song) => {
+    // Get the queue
+    const serverQueue = client.queue.get(guild.id);
+
+    // If no song, leave the voice channel and delete the guild from the queue
+    if (!song) {
+      serverQueue.voiceChannel.leave();
+      client.queue.delete(guild.id);
+      return;
+    }
+
+    // Set the dispatcher to start playing the song
+    const dispatcher = serverQueue.connection
+      .playStream(ytdl(song.url))
+      .on("end", () => {
+        // Remove the first song from the array
+        serverQueue.songs.shift();
+
+        // Recall the function with the next song
+        client.play(guild, serverQueue.songs[0]);
+      })
+      .on("Error", e => client.logger.error(`CLIENT_PLAY: ${e}`));
+
+    // Set the volume
+    dispatcher.setVolumeLogarithmic(serverQueue.volume / 5);
+
+    // Send message to the text channel with the song.
+    serverQueue.textChannel.send(`Started Playing: **${song.title}**`);
+  };
+
+  client.handleVideo = async (
+    video,
+    message,
+    voiceChannel,
+    playlist = false
+  ) => {
+    const serverQueue = client.queue.get(message.guild.id);
+    const song = {
+      id: video.id,
+      title: video.title,
+      url: `https://www.youtube.com/watch?v=${video.id}`
+    };
+
+    if (!serverQueue) {
+      const queueConstruct = {
+        textChannel: message.channel,
+        voiceChannel: voiceChannel,
+        connection: null,
+        songs: [],
+        volume: 5,
+        playing: true
+      };
+      client.queue.set(message.guild.id, queueConstruct);
+
+      queueConstruct.songs.push(song);
+
+      try {
+        var connection = await voiceChannel.join();
+        queueConstruct.connection = connection;
+        client.play(message.guild, queueConstruct.songs[0]);
+      } catch (e) {
+        client.logger.error(e);
+        client.queue.delete(message.guild.id);
+        return message.channel.send("I could not join the voice channel.");
+      }
+    } else {
+      serverQueue.songs.push(song);
+      if (playlist) return;
+      return message.channel.send(
+        `**${song.title}** has been added to the queue!`
+      );
+    }
   };
 
   /**
