@@ -53,8 +53,11 @@ exports.run = async (client, message, args, level) => {
           message,
           `
   __**Search Results:**__
-  ${videos.map((song, i) => `[${i + 1}] **-** ${song.title}`).join("\n  ")}
-  `
+  ${videos.map((song, i) => `[${++i}] **-** ${song.title}`).join("\n  ")}
+  
+  Please select a one a song ~Nico~
+  `,
+          10000
         );
 
         if (nums.includes(response)) {
