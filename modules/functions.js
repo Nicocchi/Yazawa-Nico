@@ -100,6 +100,7 @@ module.exports = client => {
       });
       return collected.first().content;
     } catch (e) {
+      msg.channel.send("Aww, you didn't select anything... Nico..");
       return false;
     }
   };
