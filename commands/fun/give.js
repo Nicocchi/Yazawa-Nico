@@ -7,14 +7,14 @@ exports.run = async (client, message, args, level) => {
     message.guild.members.get(args[0]);
 
   if (!user) {
-    let item = args[0];
+    let item = args.join(" ");
     if (!item)
       return message.reply(
         "Command usage => <prefix>give <user> [item] (ex: !give <user> item"
       );
     var msg = `You got a ${item} from yourself\n\n(ﾉ◕ヮ◕)ﾉ*:･ﾟ✧ ${item}`;
   } else {
-    let item = args[1];
+    let item = args.splice(1).join(" ");
     if (!item) {
       message.reply(
         "Command usage => <prefix>give <user> [item] (ex: !give <user> item"
