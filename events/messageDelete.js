@@ -2,40 +2,42 @@
 const Discord = require("discord.js");
 
 module.exports = (client, message) => {
-  // Load the guild's settings
-  const defaults = client.config.defaultSettings;
-  if (!client.settings.has(message.guild.id))
-    client.settings.set(message.guild.id, defaults);
-
-  const settings = client.settings.get(message.guild.id);
-
-  // If no modLogChannel, don't proceed
-  if (!settings.modlog) return;
-  const modLogChannel = message.guild.channels.find(
-    c => c.id === settings.modLogChannel
-  );
-  if (message.author.bot) return;
-
-  if (!modLogChannel) return;
-
   try {
-    let embed = new Discord.RichEmbed()
-      .setAuthor(`${message.member.user.username}`)
-      .setDescription(
-        `Message sent by ${message.member} deleted in ${message.channel}\n ${
-          message.content
+    // Load the guild's settings
+    const defaults = client.config.defaultSettings;
+    if (!client.settings.has(message.guild.id))
+      client.settings.set(message.guild.id, defaults);
+
+    const settings = client.settings.get(message.guild.id);
+
+    // If no modLogChannel, don't proceed
+    if (!settings.modlog) return;
+    const modLogChannel = message.guild.channels.find(
+      c => c.id === settings.modLogChannel
+    );
+    if (message.author.bot) return;
+
+    if (!modLogChannel) return;
+
+    try {
+      let embed = new Discord.RichEmbed()
+        .setAuthor(`${message.member.user.username}`)
+        .setDescription(
+          `Message sent by ${message.member} deleted in ${message.channel}\n ${
+            message.content
           }`
-      )
-      .setTimestamp()
-      .setThumbnail(message.member.user.avatarURL)
-      .setFooter(`ID: ${message.member.id} | ${message.member.joinedAt}`)
-      .setColor("#FF4D9C");
+        )
+        .setTimestamp()
+        .setThumbnail(message.member.user.avatarURL)
+        .setFooter(`ID: ${message.member.id} | ${message.member.joinedAt}`)
+        .setColor("#FF4D9C");
 
-    // Send the deleted message to the modlog channel
-    modLogChannel.send(embed).catch(console.error);
+      // Send the deleted message to the modlog channel
+      modLogChannel.send(embed).catch(console.error);
+    } catch (e) {
+      client.logger.error(e);
+    }
   } catch (e) {
-    client.logger.error(e);
+    client.logger.log(e);
   }
-
-
 };
