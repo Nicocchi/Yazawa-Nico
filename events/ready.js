@@ -18,20 +18,19 @@ module.exports = async client => {
     { type: "PLAYING" }
   );
 
-  const debug = process.env.DEBUG || true;
+  const debug = process.env.DEBUG || "true";
 
-  if (!debug) {
-    const token = process.env.DBL_TOKEN || "DBL Token";
-    const dbl = new DBL(token, client);
+  if (debug === "true") return client.logger.log("DEBUG MODE");
 
-    // Post stats every 30 minutes
-    setInterval(() => {
-      dbl.postStats(client.guilds.size);
-      client.logger.log(
-        `Server count posted. Currently serving in ${
-          client.guilds.size
-        } servers!`
-      );
-    }, 1800000);
-  }
+  // Set up DBL API
+  const token = process.env.DBL_TOKEN || "DBL Token";
+  const dbl = new DBL(token, client);
+
+  // Post stats every 30 minutes
+  setInterval(() => {
+    dbl.postStats(client.guilds.size);
+    client.logger.log(
+      `Server count posted. Currently serving in ${client.guilds.size} servers!`
+    );
+  }, 1800000);
 };
