@@ -17,7 +17,7 @@ exports.run = async (client, message, args, level) => {
       )
       .setColor("#FF4D9C");
 
-  const response = await client.awaitReply({embed: embed}, 10000);
+  const response = await client.awaitReply(message, {embed: embed}, 10000);
 
   const ranNum = client.randomNumber(1, 4);
 
