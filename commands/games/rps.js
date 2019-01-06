@@ -24,7 +24,7 @@ exports.run = async (client, message, args, level) => {
   switch (ranNum) {
     case 1:
       // CPU chose rock
-      if (answer === "rock") {
+      if (response === "rock") {
         message.channel.send(
           "You chose rock. I chose rock.\nHey! We came to a draw!\n\n**╮( ˘ ､ ˘ )╭**"
         );
@@ -38,7 +38,7 @@ exports.run = async (client, message, args, level) => {
         client.settings.set(message.author.id, false, "isRPS");
         client.settings.set(message.author.id, false, "isRPSGamble");
         client.settings.set(message.author.id, 0, "gambleAmount");
-      } else if (answer === "paper") {
+      } else if (response === "paper") {
         message.channel.send(
           "You chose paper. I chose rock.\nAww, you won!\n\n**｡ﾟ･ (>﹏<) ･ﾟ｡**"
         );
@@ -52,7 +52,7 @@ exports.run = async (client, message, args, level) => {
         client.settings.set(message.author.id, false, "isRPS");
         client.settings.set(message.author.id, false, "isRPSGamble");
         client.settings.set(message.author.id, 0, "gambleAmount");
-      } else if (answer === "scissors") {
+      } else if (response === "scissors") {
         message.channel.send(
           "You chose scissors. I chose rock.\nYay! I won!\n\n**(๑˃ᴗ˂)ﻭ**"
         );
@@ -71,7 +71,7 @@ exports.run = async (client, message, args, level) => {
 
     case 2:
       // CPU chose paper
-      if (answer === "paper") {
+      if (response === "paper") {
         message.channel.send(
           "You chose paper. I chose paper.\nHey! We came to a draw!\n\n**╮( ˘ ､ ˘ )╭**"
         );
@@ -85,7 +85,7 @@ exports.run = async (client, message, args, level) => {
         client.settings.set(message.author.id, false, "isRPS");
         client.settings.set(message.author.id, false, "isRPSGamble");
         client.settings.set(message.author.id, 0, "gambleAmount");
-      } else if (answer === "rock") {
+      } else if (response === "rock") {
         message.channel.send(
           "You chose rock. I chose paper.\nYay! I won!\n\n**(๑˃ᴗ˂)ﻭ**"
         );
@@ -100,7 +100,7 @@ exports.run = async (client, message, args, level) => {
         client.settings.set(message.author.id, false, "isRPS");
         client.settings.set(message.author.id, false, "isRPSGamble");
         client.settings.set(message.author.id, 0, "gambleAmount");
-      } else if (answer === "scissors") {
+      } else if (response === "scissors") {
         message.channel.send(
           "You chose scissors. I chose paper.\nAww, you won!\n\n**｡ﾟ･ (>﹏<) ･ﾟ｡**"
         );
@@ -119,7 +119,7 @@ exports.run = async (client, message, args, level) => {
 
     case 3:
       // CPU chose scissors
-      if (answer === "scissors") {
+      if (response === "scissors") {
         message.channel.send(
           "You chose scissors. I chose scissors.\nHey! We came to a draw!\n\n**╮( ˘ ､ ˘ )╭**"
         );
@@ -133,7 +133,7 @@ exports.run = async (client, message, args, level) => {
         client.settings.set(message.author.id, false, "isRPS");
         client.settings.set(message.author.id, false, "isRPSGamble");
         client.settings.set(message.author.id, 0, "gambleAmount");
-      } else if (answer === "rock") {
+      } else if (response === "rock") {
         message.channel.send(
           "You chose rock. I chose scissors.\nAww, you won!\n\n**｡ﾟ･ (>﹏<) ･ﾟ｡**"
         );
@@ -147,7 +147,7 @@ exports.run = async (client, message, args, level) => {
         client.settings.set(message.author.id, false, "isRPS");
         client.settings.set(message.author.id, false, "isRPSGamble");
         client.settings.set(message.author.id, 0, "gambleAmount");
-      } else if (answer === "scissors") {
+      } else if (response === "scissors") {
         message.channel.send(
           "You chose paper. I chose scissors.\nYay! I won!\n\n**(๑˃ᴗ˂)ﻭ**"
         );
