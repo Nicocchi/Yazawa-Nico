@@ -13,7 +13,7 @@ exports.run = async (client, message, args, level) => {
     let embed = new Discord.RichEmbed()
       .addField(
         "Let's play a game",
-        "Choose between **rock**, **paper**, or **scissors**.\n\n((≡|≡))_／ ＼_((≡|≡) )"
+        "Choose between **rock**, **paper**, or **scissors**.\n\n((≡|≡))_／ ＼_((≡|≡) )\n\n Timer closes in 10 seconds"
       )
       .setColor("#FF4D9C");
 
