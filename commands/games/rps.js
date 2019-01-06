@@ -10,7 +10,6 @@ exports.run = async (client, message, args, level) => {
 
   let amount = args[0];
 
-  if (!settings.isRPS) {
     let embed = new Discord.RichEmbed()
       .addField(
         "Let's play a game",
@@ -18,23 +17,155 @@ exports.run = async (client, message, args, level) => {
       )
       .setColor("#FF4D9C");
 
-    if (amount) {
-      if (settings.points >= amount) {
-        let loveGems = (settings.points -= amount);
+  const response = await client.awaitReply({embed: embed}, 10000);
 
-        client.settings.set(message.author.id, loveGems, "points");
-        client.settings.set(message.author.id, true, "isRPSGamble");
-        client.settings.set(message.author.id, amount, "gambleAmount");
-      } else {
-        return message.reply("You do not have enough love gems to play~");
+  const ranNum = client.randomNumber(1, 4);
+
+  switch (ranNum) {
+    case 1:
+      // CPU chose rock
+      if (answer === "rock") {
+        message.channel.send(
+          "You chose rock. I chose rock.\nHey! We came to a draw!\n\n**╮( ˘ ､ ˘ )╭**"
+        );
+
+        if (amount) {
+          const amt = amount / 2;
+          client.settings.set(message.author.id, amt, "points");
+          message.reply(`You gained ${amt} love gems!`);
+        }
+
+        client.settings.set(message.author.id, false, "isRPS");
+        client.settings.set(message.author.id, false, "isRPSGamble");
+        client.settings.set(message.author.id, 0, "gambleAmount");
+      } else if (answer === "paper") {
+        message.channel.send(
+          "You chose paper. I chose rock.\nAww, you won!\n\n**｡ﾟ･ (>﹏<) ･ﾟ｡**"
+        );
+
+        if (amount) {
+          const amt = amount * 2;
+          client.settings.set(message.author.id, amt, "points");
+          message.reply(`You gained ${amt} love gems!`);
+        }
+
+        client.settings.set(message.author.id, false, "isRPS");
+        client.settings.set(message.author.id, false, "isRPSGamble");
+        client.settings.set(message.author.id, 0, "gambleAmount");
+      } else if (answer === "scissors") {
+        message.channel.send(
+          "You chose scissors. I chose rock.\nYay! I won!\n\n**(๑˃ᴗ˂)ﻭ**"
+        );
+
+        if (amount) {
+          const amt = amount;
+          client.settings.set(message.author.id, amt, "points");
+          message.reply(`You lost ${amt} love gems!`);
+        }
+
+        client.settings.set(message.author.id, false, "isRPS");
+        client.settings.set(message.author.id, false, "isRPSGamble");
+        client.settings.set(message.author.id, 0, "gambleAmount");
       }
-    }
+      break;
 
-    client.settings.set(message.author.id, true, "isRPS");
+    case 2:
+      // CPU chose paper
+      if (answer === "paper") {
+        message.channel.send(
+          "You chose paper. I chose paper.\nHey! We came to a draw!\n\n**╮( ˘ ､ ˘ )╭**"
+        );
 
-    message.channel.send({ embed: embed });
-  } else {
-    message.reply("You are already playing RPS!");
+        if (amount) {
+          const amt = amount / 2;
+          client.settings.set(message.author.id, amt, "points");
+          message.reply(`You gained ${amt} love gems!`);
+        }
+
+        client.settings.set(message.author.id, false, "isRPS");
+        client.settings.set(message.author.id, false, "isRPSGamble");
+        client.settings.set(message.author.id, 0, "gambleAmount");
+      } else if (answer === "rock") {
+        message.channel.send(
+          "You chose rock. I chose paper.\nYay! I won!\n\n**(๑˃ᴗ˂)ﻭ**"
+        );
+
+
+        if (amount) {
+          const amt = amount * 2;
+          client.settings.set(message.author.id, amt, "points");
+          message.reply(`You gained ${amt} love gems!`);
+        }
+
+        client.settings.set(message.author.id, false, "isRPS");
+        client.settings.set(message.author.id, false, "isRPSGamble");
+        client.settings.set(message.author.id, 0, "gambleAmount");
+      } else if (answer === "scissors") {
+        message.channel.send(
+          "You chose scissors. I chose paper.\nAww, you won!\n\n**｡ﾟ･ (>﹏<) ･ﾟ｡**"
+        );
+
+        if (amount) {
+          const amt = amount;
+          client.settings.set(message.author.id, amt, "points");
+          message.reply(`You lost ${amt} love gems!`);
+        }
+
+        client.settings.set(message.author.id, false, "isRPS");
+        client.settings.set(message.author.id, false, "isRPSGamble");
+        client.settings.set(message.author.id, 0, "gambleAmount");
+      }
+      break;
+
+    case 3:
+      // CPU chose scissors
+      if (answer === "scissors") {
+        message.channel.send(
+          "You chose scissors. I chose scissors.\nHey! We came to a draw!\n\n**╮( ˘ ､ ˘ )╭**"
+        );
+
+        if (amount) {
+          const amt = amount / 2;
+          client.settings.set(message.author.id, amt, "points");
+          message.reply(`You gained ${amt} love gems!`);
+        }
+
+        client.settings.set(message.author.id, false, "isRPS");
+        client.settings.set(message.author.id, false, "isRPSGamble");
+        client.settings.set(message.author.id, 0, "gambleAmount");
+      } else if (answer === "rock") {
+        message.channel.send(
+          "You chose rock. I chose scissors.\nAww, you won!\n\n**｡ﾟ･ (>﹏<) ･ﾟ｡**"
+        );
+
+        if (amount) {
+          const amt = amount * 2;
+          client.settings.set(message.author.id, amt, "points");
+          message.reply(`You gained ${amt} love gems!`);
+        }
+
+        client.settings.set(message.author.id, false, "isRPS");
+        client.settings.set(message.author.id, false, "isRPSGamble");
+        client.settings.set(message.author.id, 0, "gambleAmount");
+      } else if (answer === "scissors") {
+        message.channel.send(
+          "You chose paper. I chose scissors.\nYay! I won!\n\n**(๑˃ᴗ˂)ﻭ**"
+        );
+
+        if (amount) {
+          const amt = amount;
+          client.settings.set(message.author.id, amt, "points");
+          message.reply(`You lost ${amt} love gems!`);
+        }
+
+        client.settings.set(message.author.id, false, "isRPS");
+        client.settings.set(message.author.id, false, "isRPSGamble");
+        client.settings.set(message.author.id, 0, "gambleAmount");
+      }
+      break;
+
+    default:
+      break;
   }
 };
 
