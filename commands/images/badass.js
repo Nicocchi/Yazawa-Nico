@@ -33,7 +33,7 @@ exports.conf = {
 };
 
 exports.help = {
-  name: "bad",
+  name: "badass",
   category: "Image",
   description: "Display the badass image",
   usage: "badass <user>"
