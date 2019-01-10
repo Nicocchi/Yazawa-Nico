@@ -7,7 +7,7 @@ exports.run = async (client, message, args, level) => {
     message.guild.members.get(args[0]);
 
   client
-    .parseJSON("./JSON/lick.json")
+    .parseJSON("./JSON/lewd.json")
     .then(res => {
       if (!user) {
         var msg = `${message.author} is lewding themself... Nani!?`;
