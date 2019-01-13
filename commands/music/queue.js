@@ -9,9 +9,9 @@ exports.run = async (client, message, args, level) => {
   if (!serverQueue) return message.channel.send("There is nothing playing.");
   return message.channel.send(`
   __**Song queue:**__
-  ${serverQueue.songs.map(song => ` **-** ${song.title}`).join("\n")}
-  
-  **Now Playing:** ${serverQueue.songs[0].title}
+  ${serverQueue.songs.map((song, i) => `\n[${i <= 8 ? `0${++i}` : `${++i}`}] - **${song.title}**`).join("")}
+  \nThere are currently **${serverQueue.songs.length}** songs in queue
+  \nNow Playing: **${serverQueue.songs[0].title}**
   `);
 };
 

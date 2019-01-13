@@ -1,6 +1,6 @@
+require("dotenv").config();
 const Discord = require("discord.js");
 const { promisify } = require("util");
-require("dotenv").config();
 const readdir = promisify(require("fs").readdir);
 const Enmap = require("enmap");
 const YouTube = require("simple-youtube-api");
@@ -26,7 +26,7 @@ client.settings = new Enmap({ name: "settings" });
 // Queue used to hold guild music queue
 client.queue = new Map();
 
-client.youtube = new YouTube(`${GOOGLE_API_KEY}`);
+client.youtube = new YouTube(`AIzaSyDtYfFZqFlhQJOICTXyMG0l1qshGzstNfs`);
 
 const init = async () => {
   // Load commands into memory as a collection
