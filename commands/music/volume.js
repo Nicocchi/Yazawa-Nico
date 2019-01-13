@@ -12,6 +12,9 @@ exports.run = async (client, message, args, level) => {
   if (!serverQueue) return message.channel.send("There is nothing playing.");
   if (!args[0])
     return message.channel.send(`The current volume is ${serverQueue.volume}`);
+
+    if(!message.member.hasPermission('ADMINISTRATOR')) return message.channel.send('You can not change volume because you do not have permission.');
+
   serverQueue.volume = args[0];
   serverQueue.connection.dispatcher.setVolumeLogarithmic(args[0] / 5);
 
