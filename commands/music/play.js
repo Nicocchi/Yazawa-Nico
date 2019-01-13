@@ -49,15 +49,16 @@ exports.run = async (client, message, args, level) => {
         var videos = await client.youtube.searchVideos(searchString, 10);
         const nums = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"];
 
+        videos.map(song => console.log(song));
+
         const response = await client.awaitReply(
-          message,
-          `
+          message, `
   __**Search Results:**__
-  ${videos.map((song, i) => `[${++i}] **-** ${song.title}`).join("\n  ")}
-  
-  Please select a one a song ~Nico~
+  ${videos.map((song, i) => `[${++i}] - ${song.title}`).join("\n  ")}
+
+  Please select a song ~Nico~
   `,
-          10000
+          30000
         );
 
         if (nums.includes(response)) {
