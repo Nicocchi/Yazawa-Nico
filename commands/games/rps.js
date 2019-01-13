@@ -9,6 +9,7 @@ exports.run = async (client, message, args, level) => {
   let settings = client.getUserSettings(message.author.id);
 
   let amount = args[0];
+  let gems = settings.points;
 
   let embed = new Discord.RichEmbed()
     .addField(
@@ -49,7 +50,8 @@ exports.run = async (client, message, args, level) => {
 
         if (amount) {
           const amt = amount / 2;
-          client.settings.set(message.author.id, amt, "points");
+          const win = gems + amt;
+          client.settings.set(message.author.id, win, "points");
           message.reply(`You gained ${amt} love gems!`);
         }
 
@@ -63,7 +65,8 @@ exports.run = async (client, message, args, level) => {
 
         if (amount) {
           const amt = amount * 2;
-          client.settings.set(message.author.id, amt, "points");
+          const win = gems + amt;
+          client.settings.set(message.author.id, win, "points");
           message.reply(`You gained ${amt} love gems!`);
         }
 
@@ -77,7 +80,8 @@ exports.run = async (client, message, args, level) => {
 
         if (amount) {
           const amt = amount;
-          client.settings.set(message.author.id, amt, "points");
+          const lose = gems - amt;
+          client.settings.set(message.author.id, lose, "points");
           message.reply(`You lost ${amt} love gems!`);
         }
 
@@ -96,7 +100,8 @@ exports.run = async (client, message, args, level) => {
 
         if (amount) {
           const amt = amount / 2;
-          client.settings.set(message.author.id, amt, "points");
+          const win = gems + amt;
+          client.settings.set(message.author.id, win, "points");
           message.reply(`You gained ${amt} love gems!`);
         }
 
@@ -110,7 +115,8 @@ exports.run = async (client, message, args, level) => {
 
         if (amount) {
           const amt = amount * 2;
-          client.settings.set(message.author.id, amt, "points");
+          const win = gems + amt;
+          client.settings.set(message.author.id, win, "points");
           message.reply(`You gained ${amt} love gems!`);
         }
 
@@ -124,7 +130,8 @@ exports.run = async (client, message, args, level) => {
 
         if (amount) {
           const amt = amount;
-          client.settings.set(message.author.id, amt, "points");
+          const lose = gems - amt;
+          client.settings.set(message.author.id, lose, "points");
           message.reply(`You lost ${amt} love gems!`);
         }
 
@@ -143,7 +150,8 @@ exports.run = async (client, message, args, level) => {
 
         if (amount) {
           const amt = amount / 2;
-          client.settings.set(message.author.id, amt, "points");
+          const win = gems + amt;
+          client.settings.set(message.author.id, win, "points");
           message.reply(`You gained ${amt} love gems!`);
         }
 
@@ -157,7 +165,8 @@ exports.run = async (client, message, args, level) => {
 
         if (amount) {
           const amt = amount * 2;
-          client.settings.set(message.author.id, amt, "points");
+          const win = gems + amt;
+          client.settings.set(message.author.id, win, "points");
           message.reply(`You gained ${amt} love gems!`);
         }
 
@@ -171,7 +180,8 @@ exports.run = async (client, message, args, level) => {
 
         if (amount) {
           const amt = amount;
-          client.settings.set(message.author.id, amt, "points");
+          const lose = gems - amt;
+          client.settings.set(message.author.id, lose, "points");
           message.reply(`You lost ${amt} love gems!`);
         }
 
