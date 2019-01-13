@@ -49,9 +49,6 @@ exports.run = async (client, message, args, level) => {
     } catch (e) {
       // Search videos
       try {
-        client.logger.log("SEARCHING VIDEOS");
-        client.logger.log(searchString);
-
         const results = await client.youtube.searchVideos(searchString, 10);
 
         const nums = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"];
