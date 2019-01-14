@@ -26,7 +26,7 @@ client.settings = new Enmap({ name: "settings" });
 // Queue used to hold guild music queue
 client.queue = new Map();
 
-client.youtube = new YouTube(`AIzaSyDtYfFZqFlhQJOICTXyMG0l1qshGzstNfs`);
+client.youtube = new YouTube(`${GOOGLE_API_KEY}`);
 
 const init = async () => {
   // Load commands into memory as a collection
