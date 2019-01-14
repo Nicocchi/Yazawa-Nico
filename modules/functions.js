@@ -187,33 +187,37 @@ module.exports = client => {
    * @returns {Promise<void>}
    */
   client.play = async (guild, song) => {
-    // Get the queue
-    const serverQueue = client.queue.get(guild.id);
+    try {
+      // Get the queue
+      const serverQueue = client.queue.get(guild.id);
 
-    // If no song, leave the voice channel and delete the guild from the queue
-    if (!song) {
-      serverQueue.voiceChannel.leave();
-      client.queue.delete(guild.id);
-      return;
+      // If no song, leave the voice channel and delete the guild from the queue
+      if (!song) {
+        serverQueue.voiceChannel.leave();
+        client.queue.delete(guild.id);
+        return;
+      }
+
+      // Set the dispatcher to start playing the song
+      const dispatcher = serverQueue.connection
+        .playStream(ytdl(song.url))
+        .on("end", () => {
+          // Remove the first song from the array
+          serverQueue.songs.shift();
+
+          // Recall the function with the next song
+          client.play(guild, serverQueue.songs[0]);
+        })
+        .on("Error", e => client.logger.error(`CLIENT_PLAY: ${e}`));
+
+      // Set the volume
+      dispatcher.setVolumeLogarithmic(serverQueue.volume / 5);
+
+      // Send message to the text channel with the song.
+      serverQueue.textChannel.send(`Started Playing: **${song.title}**`);
+    } catch (e) {
+      console.log(e);
     }
-
-    // Set the dispatcher to start playing the song
-    const dispatcher = serverQueue.connection
-      .playStream(ytdl(song.url))
-      .on("end", () => {
-        // Remove the first song from the array
-        serverQueue.songs.shift();
-
-        // Recall the function with the next song
-        client.play(guild, serverQueue.songs[0]);
-      })
-      .on("Error", e => client.logger.error(`CLIENT_PLAY: ${e}`));
-
-    // Set the volume
-    dispatcher.setVolumeLogarithmic(serverQueue.volume / 5);
-
-    // Send message to the text channel with the song.
-    serverQueue.textChannel.send(`Started Playing: **${song.title}**`);
   };
 
   client.handleVideo = async (
@@ -222,41 +226,45 @@ module.exports = client => {
     voiceChannel,
     playlist = false
   ) => {
-    const serverQueue = client.queue.get(message.guild.id);
-    const song = {
-      id: video.id,
-      title: video.title,
-      url: `https://www.youtube.com/watch?v=${video.id}`
-    };
-
-    if (!serverQueue) {
-      const queueConstruct = {
-        textChannel: message.channel,
-        voiceChannel: voiceChannel,
-        connection: null,
-        songs: [],
-        volume: 5,
-        playing: true
+    try {
+      const serverQueue = client.queue.get(message.guild.id);
+      const song = {
+        id: video.id,
+        title: video.title,
+        url: `https://www.youtube.com/watch?v=${video.id}`
       };
-      client.queue.set(message.guild.id, queueConstruct);
 
-      queueConstruct.songs.push(song);
+      if (!serverQueue) {
+        const queueConstruct = {
+          textChannel: message.channel,
+          voiceChannel: voiceChannel,
+          connection: null,
+          songs: [],
+          volume: 5,
+          playing: true
+        };
+        client.queue.set(message.guild.id, queueConstruct);
 
-      try {
-        var connection = await voiceChannel.join();
-        queueConstruct.connection = connection;
-        client.play(message.guild, queueConstruct.songs[0]);
-      } catch (e) {
-        client.logger.error(e);
-        client.queue.delete(message.guild.id);
-        return message.channel.send("I could not join the voice channel.");
+        queueConstruct.songs.push(song);
+
+        try {
+          var connection = await voiceChannel.join();
+          queueConstruct.connection = connection;
+          client.play(message.guild, queueConstruct.songs[0]);
+        } catch (e) {
+          client.logger.error(e);
+          client.queue.delete(message.guild.id);
+          return message.channel.send("I could not join the voice channel.");
+        }
+      } else {
+        serverQueue.songs.push(song);
+        if (playlist) return;
+        return message.channel.send(
+          `**${song.title}** has been added to the queue!`
+        );
       }
-    } else {
-      serverQueue.songs.push(song);
-      if (playlist) return;
-      return message.channel.send(
-        `**${song.title}** has been added to the queue!`
-      );
+    } catch (e) {
+      console.log(e);
     }
   };
 

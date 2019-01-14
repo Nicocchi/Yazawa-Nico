@@ -5,17 +5,21 @@ const ytdl = require("ytdl-core");
 //  Usage: prefix arg1
 
 exports.run = async (client, message, args, level) => {
-  if (!message.member.voiceChannel)
-    return message.channel.send("You are not in a voice channel.");
+  try {
+    if (!message.member.voiceChannel)
+      return message.channel.send("You are not in a voice channel.");
 
-  const serverQueue = client.queue.get(message.guild.id);
-  if (!serverQueue)
-    return message.channel.send(
-      "There is nothing playing that I could skip for you."
-    );
+    const serverQueue = client.queue.get(message.guild.id);
+    if (!serverQueue)
+      return message.channel.send(
+        "There is nothing playing that I could skip for you."
+      );
 
-  serverQueue.songs = [];
-  serverQueue.connection.dispatcher.end();
+    serverQueue.songs = [];
+    serverQueue.connection.dispatcher.end();
+  } catch (e) {
+    console.log(e);
+  }
 };
 
 exports.conf = {
