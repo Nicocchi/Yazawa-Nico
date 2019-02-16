@@ -50,7 +50,7 @@ module.exports = async (client, message) => {
   }
 
   // XP
-  let xpAdd = Math.floor(Math.random() * 4) + 2;
+  let xpAdd = Math.floor(Math.random() * 2) + 1;
 
   let curxp = userSettings.xp;
   let curlvl = userSettings.level;

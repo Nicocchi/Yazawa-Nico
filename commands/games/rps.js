@@ -55,8 +55,6 @@ exports.run = async (client, message, args, level) => {
           message.reply(`You gained ${amt} love gems!`);
         }
 
-        client.settings.set(message.author.id, false, "isRPS");
-        client.settings.set(message.author.id, false, "isRPSGamble");
         client.settings.set(message.author.id, 0, "gambleAmount");
       } else if (response.toLowerCase() === "paper") {
         message.channel.send(
@@ -70,8 +68,6 @@ exports.run = async (client, message, args, level) => {
           message.reply(`You gained ${amt} love gems!`);
         }
 
-        client.settings.set(message.author.id, false, "isRPS");
-        client.settings.set(message.author.id, false, "isRPSGamble");
         client.settings.set(message.author.id, 0, "gambleAmount");
       } else if (response.toLowerCase() === "scissors") {
         message.channel.send(
@@ -85,8 +81,6 @@ exports.run = async (client, message, args, level) => {
           message.reply(`You lost ${amt} love gems!`);
         }
 
-        client.settings.set(message.author.id, false, "isRPS");
-        client.settings.set(message.author.id, false, "isRPSGamble");
         client.settings.set(message.author.id, 0, "gambleAmount");
       }
       break;
@@ -105,27 +99,10 @@ exports.run = async (client, message, args, level) => {
           message.reply(`You gained ${amt} love gems!`);
         }
 
-        client.settings.set(message.author.id, false, "isRPS");
-        client.settings.set(message.author.id, false, "isRPSGamble");
         client.settings.set(message.author.id, 0, "gambleAmount");
       } else if (response.toLowerCase() === "rock") {
         message.channel.send(
           "You chose rock. I chose paper.\nYay! I won!\n\n**(๑˃ᴗ˂)ﻭ**"
-        );
-
-        if (amount) {
-          const amt = amount * 2;
-          const win = gems + amt;
-          client.settings.set(message.author.id, win, "points");
-          message.reply(`You gained ${amt} love gems!`);
-        }
-
-        client.settings.set(message.author.id, false, "isRPS");
-        client.settings.set(message.author.id, false, "isRPSGamble");
-        client.settings.set(message.author.id, 0, "gambleAmount");
-      } else if (response.toLowerCase() === "scissors") {
-        message.channel.send(
-          "You chose scissors. I chose paper.\nAww, you won!\n\n**｡ﾟ･ (>﹏<) ･ﾟ｡**"
         );
 
         if (amount) {
@@ -135,8 +112,19 @@ exports.run = async (client, message, args, level) => {
           message.reply(`You lost ${amt} love gems!`);
         }
 
-        client.settings.set(message.author.id, false, "isRPS");
-        client.settings.set(message.author.id, false, "isRPSGamble");
+        client.settings.set(message.author.id, 0, "gambleAmount");
+      } else if (response.toLowerCase() === "scissors") {
+        message.channel.send(
+          "You chose scissors. I chose paper.\nAww, you won!\n\n**｡ﾟ･ (>﹏<) ･ﾟ｡**"
+        );
+
+        if (amount) {
+          const amt = amount * 2;
+          const win = gems + amt;
+          client.settings.set(message.author.id, win, "points");
+          message.reply(`You gained ${amt} love gems!`);
+        }
+
         client.settings.set(message.author.id, 0, "gambleAmount");
       }
       break;
@@ -155,8 +143,6 @@ exports.run = async (client, message, args, level) => {
           message.reply(`You gained ${amt} love gems!`);
         }
 
-        client.settings.set(message.author.id, false, "isRPS");
-        client.settings.set(message.author.id, false, "isRPSGamble");
         client.settings.set(message.author.id, 0, "gambleAmount");
       } else if (response.toLowerCase() === "rock") {
         message.channel.send(
@@ -170,8 +156,6 @@ exports.run = async (client, message, args, level) => {
           message.reply(`You gained ${amt} love gems!`);
         }
 
-        client.settings.set(message.author.id, false, "isRPS");
-        client.settings.set(message.author.id, false, "isRPSGamble");
         client.settings.set(message.author.id, 0, "gambleAmount");
       } else if (response.toLowerCase() === "scissors") {
         message.channel.send(
@@ -185,8 +169,6 @@ exports.run = async (client, message, args, level) => {
           message.reply(`You lost ${amt} love gems!`);
         }
 
-        client.settings.set(message.author.id, false, "isRPS");
-        client.settings.set(message.author.id, false, "isRPSGamble");
         client.settings.set(message.author.id, 0, "gambleAmount");
       }
       break;
