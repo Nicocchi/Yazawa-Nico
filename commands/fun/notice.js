@@ -7,11 +7,11 @@ exports.run = async (client, message, args, level) => {
     message.guild.members.get(args[0]);
 
   if (!user) {
-    return message.reply(
+    return message.channel.send(
       "Command usage => <prefix>notice <user> (ex: !notice <user>"
     );
   } else {
-    var msg = `${message.author} has noticed ${user.user}`;
+    var msg = `${message.author.username} has noticed ${user.user.username}`;
   }
 
   let embed = new Discord.RichEmbed()

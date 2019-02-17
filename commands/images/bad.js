@@ -10,10 +10,10 @@ exports.run = async (client, message, args, level) => {
     .parseJSON("./JSON/bad.json")
     .then(res => {
       if (!user) {
-        var msg = `${message.author} is being bad!`;
+        var msg = `${message.author.username} is being bad!`;
       } else {
-        var msg = `${message.author} is punishing ${
-          user.user
+        var msg = `${message.author.username} is punishing ${
+          user.user.username
         }, because they have been bad!`;
       }
 

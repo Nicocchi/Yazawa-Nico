@@ -38,7 +38,9 @@ exports.run = async (client, message, args, level) => {
   client.settings.set(message.author.id, msg, "afkMessage");
 
   // Return a reply
-  message.reply(`Marking you as away with the msg ${msg}`);
+  message.channel.send(
+    `${message.author.username}, marking you as away with the msg: "${msg}"`
+  );
 };
 
 exports.conf = {

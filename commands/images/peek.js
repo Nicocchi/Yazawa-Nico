@@ -10,9 +10,11 @@ exports.run = async (client, message, args, level) => {
     .parseJSON("./JSON/peek.json")
     .then(res => {
       if (!user) {
-        var msg = `${message.author} is peeking~~`;
+        var msg = `${message.author.username} is peeking~~`;
       } else {
-        var msg = `${message.author} is peeking at ${user.user}~~`;
+        var msg = `${message.author.username} is peeking at ${
+          user.user.username
+        }~~`;
       }
 
       let embed = new Discord.RichEmbed()
