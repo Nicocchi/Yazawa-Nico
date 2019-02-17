@@ -15,12 +15,12 @@ exports.run = async (client, message, args, level) => {
     "Hmm, appears to be true..."
   ];
   if (!options || options.length === 0) {
-    return message.reply("Please ask a question~");
+    return message.channel.send("Please ask a question~");
   }
 
   // Randomly generate an index
   let i = client.randomNumber(0, replies.length - 1);
-  message.reply(`${replies[i]}`);
+  message.channel.send(`${replies[i]}`);
 };
 
 exports.conf = {

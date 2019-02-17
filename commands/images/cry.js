@@ -11,11 +11,11 @@ exports.run = async (client, message, args, level) => {
     .then(res => {
       if (!user) {
         var msg = `${
-          message.author
+          message.author.username
         } is crying... Aww, let Nico give you a Nico Nii~`;
       } else {
-        var msg = `${message.author} is crying because of ${
-          user.user
+        var msg = `${message.author.username} is crying because of ${
+          user.user.username
         }... Have a Nico Nii to cheer you up~ Nico Nico Nii!`;
       }
 

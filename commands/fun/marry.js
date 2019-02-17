@@ -69,10 +69,11 @@ exports.run = async (client, message, args, level) => {
 
   // If user is the author, return error
   if (user.user.id === message.author.id)
-    return message.reply("You can't marry yourself!");
+    return message.channel.send("You can't marry yourself!");
 
   // If the two users are already married, return error
-  if (isMarried) return message.reply("You are already married to that user~");
+  if (isMarried)
+    return message.channel.send("You are already married to that user~");
 
   // If the user's aren't married and the user has available marriage slots, send proposals,
   // return error if no available marriage slots
@@ -118,7 +119,7 @@ exports.run = async (client, message, args, level) => {
       .setColor("#FF4D9C");
     message.channel.send({ embed: embed });
   } else {
-    message.reply("You do not have enough marriage slots~");
+    message.channel.send("You do not have enough marriage slots~");
   }
 };
 

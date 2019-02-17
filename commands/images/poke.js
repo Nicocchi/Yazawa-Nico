@@ -10,9 +10,11 @@ exports.run = async (client, message, args, level) => {
     .parseJSON("./JSON/poke.json")
     .then(res => {
       if (!user) {
-        var msg = `${message.author} is poking thin air~~`;
+        var msg = `${message.author.username} is poking thin air~~`;
       } else {
-        var msg = `${message.author} is poking ${user.user}~~`;
+        var msg = `${message.author.username} is poking ${
+          user.user.username
+        }~~`;
       }
 
       let embed = new Discord.RichEmbed()

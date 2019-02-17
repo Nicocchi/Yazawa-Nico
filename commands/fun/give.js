@@ -9,19 +9,19 @@ exports.run = async (client, message, args, level) => {
   if (!user) {
     let item = args.join(" ");
     if (!item)
-      return message.reply(
+      return message.channel.send(
         "Command usage => <prefix>give <user> [item] (ex: !give <user> item"
       );
     var msg = `You got a ${item} from yourself\n\n(ﾉ◕ヮ◕)ﾉ*:･ﾟ✧ ${item}`;
   } else {
     let item = args.splice(1).join(" ");
     if (!item) {
-      message.reply(
+      message.channel.send(
         "Command usage => <prefix>give <user> [item] (ex: !give <user> item"
       );
       return;
     }
-    var msg = `${user.user}, you got a ${item} from ${
+    var msg = `${user.user.username}, you got a ${item} from ${
       message.author.username
     }\n\n(ﾉ◕ヮ◕)ﾉ*:･ﾟ✧ ${item}`;
   }

@@ -48,7 +48,7 @@ exports.run = async (client, message, args, level) => {
       amount = 10500;
       break;
     case 10:
-      return message.reply(
+      return message.channel.send(
         "You have the maximum number of marriage slots already~"
       );
     default:
@@ -56,7 +56,7 @@ exports.run = async (client, message, args, level) => {
   }
 
   if (authorSettings.points < amount)
-    return message.reply("You do not have enough Love Gems");
+    return message.channel.send("You do not have enough Love Gems");
   const loveGems = (authorSettings.points -= amount);
   client.settings.set(message.author.id, loveGems, "points");
   marriageslots += 1;
