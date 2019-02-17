@@ -64,7 +64,8 @@ exports.run = async (client, message, args, level) => {
     if (usr === user.user.id) return (isMarried = true);
   });
 
-  if (!isMarried) return message.reply("You are not married to this user.");
+  if (!isMarried)
+    return message.channel.send("You are not married to this user.");
 
   // Remove users from marriage lists
   let authorMarriages = authorSettings.marriages.filter(usr => {

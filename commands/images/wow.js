@@ -10,9 +10,11 @@ exports.run = async (client, message, args, level) => {
     .parseJSON("./JSON/wow.json")
     .then(res => {
       if (!user) {
-        var msg = `${message.author} is wowed!!`;
+        var msg = `${message.author.username} is wowed!!`;
       } else {
-        var msg = `${message.author} is wowed from ${user.user}!!!`;
+        var msg = `${message.author.username} is wowed from ${
+          user.user.username
+        }!!!`;
       }
 
       let embed = new Discord.RichEmbed()
