@@ -11,13 +11,13 @@ exports.run = async (client, message, args, level) => {
     .then(res => {
       if (!user) {
         var msg = `${
-          message.author
+          message.author.username
         } is saying saying Nico Nico Nii ~ Anata no heart ni Nico Nico Nii ~ Egao todokeru Yazawa Nico~ Nico Nii te oboeteru Love Nico~`;
       } else {
         var msg = `${
-          message.author
+          message.author.username
         } is saying Nico Nico Nii ~ Anata no heart ni Nico Nico Nii ~ Egao todokeru Yazawa Nico~ Nico Nii te oboeteru Love Nico~ to ${
-          user.user
+          user.user.username
         }!`;
       }
 

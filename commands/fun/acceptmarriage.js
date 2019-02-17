@@ -77,7 +77,7 @@ exports.run = async (client, message, args, level) => {
   });
 
   if (!accepted)
-    return message.reply(
+    return message.channel.send(
       "You have not proposed or you are waiting for a reply to/from this user"
     );
 
