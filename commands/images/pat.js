@@ -10,9 +10,11 @@ exports.run = async (client, message, args, level) => {
     .parseJSON("./JSON/pat.json")
     .then(res => {
       if (!user) {
-        var msg = `${message.author} is patting themself~`;
+        var msg = `${message.author.username} is patting themself~`;
       } else {
-        var msg = `${message.author} is patting ${user.user}~~`;
+        var msg = `${message.author.username} is patting ${
+          user.user.username
+        }~~`;
       }
 
       let embed = new Discord.RichEmbed()

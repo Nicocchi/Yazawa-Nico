@@ -10,9 +10,11 @@ exports.run = async (client, message, args, level) => {
     .parseJSON("./JSON/protect.json")
     .then(res => {
       if (!user) {
-        var msg = `${message.author} is protecting themself!`;
+        var msg = `${message.author.username} is protecting themself!`;
       } else {
-        var msg = `${message.author} is protecting ${user.user}!`;
+        var msg = `${message.author.username} is protecting ${
+          user.user.username
+        }!`;
       }
 
       let embed = new Discord.RichEmbed()

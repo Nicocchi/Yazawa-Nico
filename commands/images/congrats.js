@@ -11,10 +11,12 @@ exports.run = async (client, message, args, level) => {
     .then(res => {
       if (!user) {
         var msg = `${
-          message.author
+          message.author.username
         } is congratulating themself... Aww, let Nico give you a Nico Nii~`;
       } else {
-        var msg = `${message.author} is congratulating ${user.user}!`;
+        var msg = `${message.author.username} is congratulating ${
+          user.user.username
+        }!`;
       }
 
       let embed = new Discord.RichEmbed()
