@@ -21,8 +21,8 @@ exports.run = async (client, message, args, level) => {
     )
     .addField("Prefix", `${settings.prefix}`, true)
     .addField(
-      "Support Server",
-      `[Support Server](https://discord.gg/cs9Sv8N)`,
+      "Support | Invite",
+      `[Support](https://discord.gg/cs9Sv8N) | [Invite](https://discordapp.com/oauth2/authorize?client_id=506839796921139203&scope=bot&permissions=2146827775)`,
       true
     )
     .addField(`Version`, `v3.1`, true)
