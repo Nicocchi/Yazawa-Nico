@@ -7,12 +7,12 @@ exports.run = async (client, message, args, level) => {
     message.guild.members.get(args[0]);
 
   if (!user) {
-    return message.reply(
+    return message.channel.send(
       "Command usage => <prefix>senpai <user> (ex: !senpai <user>"
     );
   } else {
-    var msg = `${message.author} is trying to get ${
-      user.user
+    var msg = `${message.author.username} is trying to get ${
+      user.user.username
     } to notice them...\n\nPlease notice me senpai ಠ_ಠ`;
   }
 

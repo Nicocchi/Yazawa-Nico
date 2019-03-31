@@ -26,7 +26,6 @@ exports.run = async (client, message, args, level) => {
     diff = m.diff(dff, "hours");
   }
 
-
   // Compare the dates and add the love gems, if already claimed, return message stating user has already claimed
   // If the user is using the command for the first time or 24 hours have passed since their last time using the
   // command
@@ -36,12 +35,14 @@ exports.run = async (client, message, args, level) => {
     client.settings.set(message.author.id, daily, "daily");
     client.settings.set(message.author.id, loveGems, "points");
     message.channel.send(
-      `:white_check_mark: ${message.author}, you claimed 200 love gems!`
+      `:white_check_mark: ${
+        message.author.username
+      }, you claimed 200 love gems!`
     );
   } else {
     message.channel.send(
       `:negative_squared_cross_mark: ${
-        message.author
+        message.author.username
       }, you have already claimed your daily love gems.`
     );
   }

@@ -10,9 +10,11 @@ exports.run = async (client, message, args, level) => {
     .parseJSON("./JSON/scared.json")
     .then(res => {
       if (!user) {
-        var msg = `${message.author} is scared!!`;
+        var msg = `${message.author.username} is scared!!`;
       } else {
-        var msg = `${message.author} is scared from ${user.user}!!`;
+        var msg = `${message.author.username} is scared from ${
+          user.user.username
+        }!!`;
       }
 
       let embed = new Discord.RichEmbed()

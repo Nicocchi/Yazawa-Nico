@@ -7,7 +7,7 @@ exports.run = async (client, message, args, level) => {
 
   // Randomly generate an index
   let i = client.randomNumber(0, options.length - 1);
-  message.reply(`I choose **${options[i]}**`);
+  message.channel.send(`I choose **${options[i]}**`);
 };
 
 exports.conf = {
