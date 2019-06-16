@@ -47,6 +47,9 @@ typings/
 
 # Data
 /data
+build/
+commands/info/wallpaper.jpg
+commands/info/wallpaper.png
 
 # Secrets
 .env
