@@ -29,11 +29,11 @@ module.exports = async (client, message) => {
 
   // Grab the settings for this server from Enmap
   // If there is no guild, get default conf (DMs)
-  const settings = (message.settings = client.getSettings(message.guild.id));
-  client.user.setActivity(
-    `${settings.prefix}help | ${client.guilds.size} servers`,
-    { type: "PLAYING" }
-  );
+  // const settings = (message.settings = client.getSettings(message.guild.id));
+  // client.user.setActivity(
+  //   `${settings.prefix}help | ${client.guilds.size} servers`,
+  //   { type: "PLAYING" }
+  // );
 
   // Check user settings, if none, set default user settings to defaults
   if (!client.settings.has(message.author.id))
