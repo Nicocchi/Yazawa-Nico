@@ -4,11 +4,12 @@ const Discord = require('discord.js');
 //  Usage: prefix arg1 arg2
 exports.run = async (client, message, args) => {
 
-    client.settings.set(message.author.id, 1, 'level');
-    client.settings.set(message.author.id, args[0], 'xp');
+    // client.settings.set(message.author.id, 1, 'level');
+    // client.settings.set(message.author.id, args[0], 'xp');
 
 
-    message.channel.send(`${message.author.tag} has set current xp to ${args[0]}`);
+    // message.channel.send(`${message.author.tag} has set current xp to ${args[0]}`);
+    client.emit('guildMemberAdd', message.member || await message.guild.fetchMember(message.author));
 };
 
 exports.conf = {

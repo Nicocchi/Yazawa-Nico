@@ -24,10 +24,10 @@ const applyText = async (canvas, text, fntSize, weight = "normal") => {
 };
 
 exports.run = async (client, message, args, level) => {
-  const res = await axios.post('http://localhost:8000/users/profile', {'discord_id': message.author.id});
-  console.log('res =>', res.data);
+  const res = await axios.post('http://localhost:8000/users/profile', {'discord_id': message.author.id, 'username': message.author.username});
+  // console.log('res =>', res.data);
   // const bf = Buffer.from(profile.profileImage, 'binary').toString('base64');
-  const profile = res.data.profile.local;
+  const profile = res.data.user;
 
   const canvas = Canvas.createCanvas(700, 700);
   const ctx = canvas.getContext('2d');
@@ -113,11 +113,13 @@ exports.run = async (client, message, args, level) => {
 
   ctx.font = await applyText(canvas, `999999`, 50);
   ctx.fillStyle = '#000000';
-  ctx.fillText(`250`, 600, 480);
+  ctx.textAlign = "end";
+  ctx.fillText(profile.cards.length, 675, 480);
 
   // Draw Love Gems Text
   ctx.font = await applyText(canvas, `Love Gems`, 50);
   ctx.fillStyle = '#000000';
+  ctx.textAlign = "start";
   ctx.fillText(`Love Gems`, 230, 540);
 
   ctx.font = await applyText(canvas, `999999`, 50);
