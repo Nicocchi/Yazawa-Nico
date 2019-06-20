@@ -22,14 +22,6 @@ exports.run = async (client, message, args, level) => {
     {'discord_id': message.guild.id, 'name': message.guild.name });
   const guild = guildRes.data.guild;
 
-  // Retrieve current guild settings (merged) and overrides only.
-  // const settings = message.settings;
-  const defaults = client.config.defaultSettings;
-  if (!client.settings.has(message.guild.id))
-    client.settings.set(message.guild.id, defaults);
-
-  const settings = client.settings.get(message.guild.id);
-
   // Check user's permission, if they don't have permission, return message
   if (!message.member.hasPermission("ADMINISTRATOR"))
     return message.channel.send(
@@ -44,7 +36,7 @@ exports.run = async (client, message, args, level) => {
   if (!key || key === "undefined")
     return message.reply(
       `Please specify a module or use '${
-        settings.prefix
+        guild.prefix
       }set get' to get the current guild settings`
     );
 
@@ -56,85 +48,163 @@ exports.run = async (client, message, args, level) => {
 
   // BAN
   if (key === "warningsban") {
-    client.settings.set(message.guild.id, action, "warningsBan");
-    message.reply(`Warnings amount for ban has been set to **${action}**`);
+    try {
+      const res = await axios.post('http://localhost:8000/guilds/set-ban', 
+      {'discord_id': message.guild.id, 'name': message.guild.name, 'warningsBan': action });
+
+      message.channel.send(res.data.message);
+    } catch (error) {
+      message.channel.send(`Unable to set ban warnings amount due to an error. If encountered, please send to developers.\n\`${error}\``);
+    }
   }
 
   // MUTE
   if (key === "warningsmute") {
-    client.settings.set(message.guild.id, action, "warningsMute");
-    message.reply(`Warnings amount for mute has been set to **${action}**`);
+    try {
+      const res = await axios.post('http://localhost:8000/guilds/set-mute', 
+      {'discord_id': message.guild.id, 'name': message.guild.name, 'warningsMute': action });
+
+      message.channel.send(res.data.message);
+    } catch (error) {
+      message.channel.send(`Unable to set mute warnings amount due to an error. If encountered, please send to developers.\n\`${error}\``);
+    }
   }
 
   // LEVEL
   if (key === "level") {
-    client.settings.set(message.guild.id, action, "levelEnabled");
-    message.reply(`Level message has been set to **${action}**`);
+    try {
+      const res = await axios.post('http://localhost:8000/guilds/set-level', 
+      {'discord_id': message.guild.id, 'name': message.guild.name, 'levelEnabled': action });
+
+      message.channel.send(res.data.message);
+    } catch (error) {
+      message.channel.send(`Unable to set level preference due to an error. If encountered, please send to developers.\n\`${error}\``);
+    }
   }
 
   // LEAVE
   if (key === "leave") {
-    client.settings.set(message.guild.id, action, "leaveEnabled");
-    message.reply(`Leave message has been set to **${action}**`);
+    try {
+      const res = await axios.post('http://localhost:8000/guilds/set-leave', 
+      {'discord_id': message.guild.id, 'name': message.guild.name, 'leaveEnabled': action });
+
+      message.channel.send(res.data.message);
+    } catch (error) {
+      message.channel.send(`Unable to set leave preference due to an error. If encountered, please send to developers.\n\`${error}\``);
+    }
   }
 
   if (key === "leavemessage") {
-    client.settings.set(message.guild.id, action, "leaveMessage");
-    message.reply(`Leave message has been set to **${action}**`);
+    try {
+      const res = await axios.post('http://localhost:8000/guilds/set-leave-message', 
+      {'discord_id': message.guild.id, 'name': message.guild.name, 'leaveMessage': action });
+
+      message.channel.send(res.data.message);
+    } catch (error) {
+      message.channel.send(`Unable to set leave message due to an error. If encountered, please send to developers.\n\`${error}\``);
+    }
   }
 
   if (key === "leavechannel") {
-    client.settings.set(message.guild.id, action, "leaveChannel");
-    message.reply(`Leave channel has been set to **${action}**`);
+    try {
+      const res = await axios.post('http://localhost:8000/guilds/set-leave-channel', 
+      {'discord_id': message.guild.id, 'name': message.guild.name, 'leaveChannel': action });
+
+      message.channel.send(res.data.message);
+    } catch (error) {
+      message.channel.send(`Unable to set leave channel due to an error. If encountered, please send to developers.\n\`${error}\``);
+    }
   }
 
   // WELCOME
   if (key === "welcome") {
-    client.settings.set(message.guild.id, action, "welcomeEnabled");
-    message.reply(`welcome message has been set to **${action}**`);
+    try {
+      const res = await axios.post('http://localhost:8000/guilds/set-welcome', 
+      {'discord_id': message.guild.id, 'name': message.guild.name, 'welcomeEnabled': action });
+
+      message.channel.send(res.data.message);
+    } catch (error) {
+      message.channel.send(`Unable to set welcome preference due to an error. If encountered, please send to developers.\n\`${error}\``);
+    }
   }
 
   if (key === "welcomemessage") {
-    client.settings.set(message.guild.id, action, "welcomeMessage");
-    message.reply(`welcome message has been set to **${action}**`);
+    try {
+      const res = await axios.post('http://localhost:8000/guilds/set-welcome-message', 
+      {'discord_id': message.guild.id, 'name': message.guild.name, 'welcomeMessage': action });
+
+      message.channel.send(res.data.message);
+    } catch (error) {
+      message.channel.send(`Unable to set welcome message due to an error. If encountered, please send to developers.\n\`${error}\``);
+    }
   }
 
   if (key === "welcomechannel") {
-    client.settings.set(message.guild.id, action, "welcomeChannel");
-    message.reply(`welcome channel has been set to **${action}**`);
+    try {
+      const res = await axios.post('http://localhost:8000/guilds/set-welcome-channel', 
+      {'discord_id': message.guild.id, 'name': message.guild.name, 'welcomeChannel': action });
+
+      message.channel.send(res.data.message);
+    } catch (error) {
+      message.channel.send(`Unable to set welcome channel due to an error. If encountered, please send to developers.\n\`${error}\``);
+    }
   }
 
   // MODLOG
   if (key === "modlog") {
-    client.settings.set(message.guild.id, action, "modlog");
-    message.reply(`ModLog has been set to **${action}**`);
+    try {
+      const res = await axios.post('http://localhost:8000/guilds/set-modlog', 
+      {'discord_id': message.guild.id, 'name': message.guild.name, 'modlog': action });
+
+      message.channel.send(res.data.message);
+    } catch (error) {
+      message.channel.send(`Unable to set modlog preference due to an error. If encountered, please send to developers.\n\`${error}\``);
+    }
   }
 
   if (key === "modlogchannel") {
-    client.settings.set(message.guild.id, action, "modLogChannel");
-    message.reply(`ModLog channel has been set to **${action}**`);
+    try {
+      const res = await axios.post('http://localhost:8000/guilds/set-modlog-channel', 
+      {'discord_id': message.guild.id, 'name': message.guild.name, 'modlogChannel': action });
+
+      message.channel.send(res.data.message);
+    } catch (error) {
+      message.channel.send(`Unable to set modlog channel due to an error. If encountered, please send to developers.\n\`${error}\``);
+    }
   }
 
   // MOD ROLE
   if (key === "modrole") {
-    client.settings.set(message.guild.id, action, "modRole");
-    message.reply(`Mod role has been set to **${action}**`);
+    try {
+      const res = await axios.post('http://localhost:8000/guilds/set-modrole', 
+      {'discord_id': message.guild.id, 'name': message.guild.name, 'modrole': action });
+
+      message.channel.send(res.data.message);
+    } catch (error) {
+      message.channel.send(`Unable to set modrole due to an error. If encountered, please send to developers.\n\`${error}\``);
+    }
   }
 
   // ADMIN ROLE
   if (key === "adminrole") {
-    client.settings.set(message.guild.id, action, "adminRole");
-    message.reply(`Admin role has been set to **${action}**`);
+    try {
+      const res = await axios.post('http://localhost:8000/guilds/set-adminrole', 
+      {'discord_id': message.guild.id, 'name': message.guild.name, 'adminrole': action });
+
+      message.channel.send(res.data.message);
+    } catch (error) {
+      message.channel.send(`Unable to set adminrole due to an error. If encountered, please send to developers.\n\`${error}\``);
+    }
   }
 
   // PREFIX
   if (key === "prefix") {
     try {
-      const prefixRes = await axios.post('http://localhost:8000/guilds/set-prefix', 
+      const res = await axios.post('http://localhost:8000/guilds/set-prefix', 
       {'discord_id': message.guild.id, 'name': message.guild.name, 'prefix': action });
 
 
-    message.channel.send(prefixRes.data.message);
+      message.channel.send(res.data.message);
     } catch (error) {
       message.channel.send(`Unable to set prefix due to an error. If encountered, please send to developers.\n\`${error}\``);
     }
@@ -144,7 +214,7 @@ exports.run = async (client, message, args, level) => {
   // GET
   if (key === "get") {
     const array = [];
-    Object.entries(settings).forEach(([key, value]) => {
+    Object.entries(guild).forEach(([key, value]) => {
       array.push(`${key}${" ".repeat(20 - key.length)}::  ${value}`);
     });
     await message.channel.send(
