@@ -3,6 +3,7 @@
 // goes `client, other, args` when this function is run.
 
 const Discord = require("discord.js");
+const axios = require('axios');
 
 module.exports = async (client, message) => {
   const defaults = {
@@ -29,7 +30,7 @@ module.exports = async (client, message) => {
 
   // Grab the settings for this server from Enmap
   // If there is no guild, get default conf (DMs)
-  // const settings = (message.settings = client.getSettings(message.guild.id));
+  const settings = (message.settings = client.getSettings(message.guild.id));
   // client.user.setActivity(
   //   `${settings.prefix}help | ${client.guilds.size} servers`,
   //   { type: "PLAYING" }
@@ -50,31 +51,13 @@ module.exports = async (client, message) => {
   }
 
   // XP
-  let xpAdd = Math.floor(Math.random() * 2) + 1;
+  // Send user data to gain XP (XP is calculated on server-side)
+  const res = await axios.post('http://localhost:8000/users/gainxp', {'discord_id': message.author.id, 'username': message.author.username});
 
-  let curxp = userSettings.xp;
-  let curlvl = userSettings.level;
-  let nxtlvl = curlvl * 600;
-
-  const newxp = curxp + xpAdd;
-
-  // Update the xp
-  client.settings.set(message.author.id, newxp, "xp");
-
-  const uUser = client.getUserSettings(message.author.id);
-
-  // // Check level status and update levels/display level if needed
-  if (uUser.xp >= nxtlvl) {
-    // Update level
-    client.settings.set(message.author.id, curlvl + 1, "level");
-    const updatedUser = client.getUserSettings(message.author.id);
-
-    // Display level message if guild has it enabled
-    if (settings.levelEnabled) {
-      message.channel.send(
-        `${message.author.tag}, You have leveled up to ${updatedUser.level}!`
-      );
-    }
+  // Check levels in the response
+  if (res.data.newLevel > res.data.previousLevel) {
+    // TODO: Set this as guild level permission of levels enabled
+    message.channel.send(`${message.author.tag}, you have leveld up to ${res.data.newLevel}~`);
   }
 
   // AFK
