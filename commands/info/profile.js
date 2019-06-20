@@ -25,7 +25,7 @@ const applyText = async (canvas, text, fntSize, weight = "normal") => {
 
 exports.run = async (client, message, args, level) => {
   // TODO: SET AUTHORIZATION
-  const res = await axios.post('http://localhost:8000/users/profile', {'discord_id': message.author.id, 'username': message.author.username});
+  const res = await axios.post('http://localhost:8000/users/profile', {'discord_id': message.author.id, 'name': message.author.username});
   // console.log('res =>', res.data.user);
   // const bf = Buffer.from(profile.profileImage, 'binary').toString('base64');
   const profile = res.data.user;

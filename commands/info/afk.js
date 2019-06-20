@@ -11,7 +11,7 @@ exports.run = async (client, message, args, level) => {
   }
   console.log('[MSG] ', msg);
 
-  const res = await axios.post('http://localhost:8000/users/setafkmessage', {'discord_id': message.author.id, 'username': message.author.username, 'afkMessage': msg});
+  const res = await axios.post('http://localhost:8000/users/setafkmessage', {'discord_id': message.author.id, 'name': message.author.username, 'afkMessage': msg});
   // const message = res.data;
   // console.log('[message] ', profile);
   
