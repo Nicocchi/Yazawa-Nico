@@ -54,7 +54,11 @@ exports.run = async (client, message, args, level) => {
 
       message.channel.send(res.data.message);
     } catch (error) {
-      message.channel.send(`Unable to set ban warnings amount due to an error. If encountered, please send to developers.\n\`${error}\``);
+      if (typeof(action) !== Number) {
+        return message.channel.send(`:x: Unable to set ban warnings amount due to an error. \n\`${action} is not a number\``);
+      }
+
+      message.channel.send(`:x: Unable to set ban warnings amount due to an error. If encountered, please send to developers.\n\`${error}\``);
     }
   }
 
@@ -66,6 +70,10 @@ exports.run = async (client, message, args, level) => {
 
       message.channel.send(res.data.message);
     } catch (error) {
+      if (typeof(action) !== Number) {
+        return message.channel.send(`:x: Unable to set mute warnings amount due to an error. \n\`${action} is not a number\``);
+      }
+
       message.channel.send(`Unable to set mute warnings amount due to an error. If encountered, please send to developers.\n\`${error}\``);
     }
   }
@@ -78,6 +86,10 @@ exports.run = async (client, message, args, level) => {
 
       message.channel.send(res.data.message);
     } catch (error) {
+      if (typeof(action) !== Boolean) {
+        return message.channel.send(`:x: Unable to set level preference due to an error. \n\`${action} is not a boolean\``);
+      }
+
       message.channel.send(`Unable to set level preference due to an error. If encountered, please send to developers.\n\`${error}\``);
     }
   }
@@ -90,6 +102,10 @@ exports.run = async (client, message, args, level) => {
 
       message.channel.send(res.data.message);
     } catch (error) {
+      if (typeof(action) !== Boolean) {
+        return message.channel.send(`:x: Unable to set leave preference due to an error. \n\`${action} is not a boolean\``);
+      }
+
       message.channel.send(`Unable to set leave preference due to an error. If encountered, please send to developers.\n\`${error}\``);
     }
   }
@@ -101,6 +117,7 @@ exports.run = async (client, message, args, level) => {
 
       message.channel.send(res.data.message);
     } catch (error) {
+
       message.channel.send(`Unable to set leave message due to an error. If encountered, please send to developers.\n\`${error}\``);
     }
   }
@@ -124,6 +141,10 @@ exports.run = async (client, message, args, level) => {
 
       message.channel.send(res.data.message);
     } catch (error) {
+      if (typeof(action) !== Boolean) {
+        return message.channel.send(`:x: Unable to set welcome preference due to an error. \n\`${action} is not a boolean\``);
+      }
+
       message.channel.send(`Unable to set welcome preference due to an error. If encountered, please send to developers.\n\`${error}\``);
     }
   }
@@ -158,6 +179,10 @@ exports.run = async (client, message, args, level) => {
 
       message.channel.send(res.data.message);
     } catch (error) {
+      if (typeof(action) !== Boolean) {
+        return message.channel.send(`:x: Unable to set modlog preference due to an error. \n\`${action} is not a boolean\``);
+      }
+
       message.channel.send(`Unable to set modlog preference due to an error. If encountered, please send to developers.\n\`${error}\``);
     }
   }
