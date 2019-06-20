@@ -24,8 +24,9 @@ const applyText = async (canvas, text, fntSize, weight = "normal") => {
 };
 
 exports.run = async (client, message, args, level) => {
+  // TODO: SET AUTHORIZATION
   const res = await axios.post('http://localhost:8000/users/profile', {'discord_id': message.author.id, 'username': message.author.username});
-  // console.log('res =>', res.data);
+  // console.log('res =>', res.data.user);
   // const bf = Buffer.from(profile.profileImage, 'binary').toString('base64');
   const profile = res.data.user;
 
@@ -42,7 +43,6 @@ exports.run = async (client, message, args, level) => {
   ctx.shadowOffsetX = -20;
   ctx.shadowOffsetY = 20;
 
-  // const background = await Canvas.loadImage(`data:image/png;base64,${bf}`);
   const bgImage = await Canvas.loadImage(__dirname + '/wallpaper.png');
   ctx.drawImage(bgImage, 10, 10, canvas.width - 20, canvas.height - 20);
 
