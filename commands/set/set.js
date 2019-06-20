@@ -13,7 +13,15 @@
  * const [action, key, ...value] = args;
  *
  */
+
+ const axios = require('axios');
+
 exports.run = async (client, message, args, level) => {
+  // Grab the profile for the server
+  const guildRes = await axios.post('http://localhost:8000/guilds/profile', 
+    {'discord_id': message.guild.id, 'name': message.guild.name });
+  const guild = guildRes.data.guild;
+
   // Retrieve current guild settings (merged) and overrides only.
   // const settings = message.settings;
   const defaults = client.config.defaultSettings;
@@ -121,9 +129,16 @@ exports.run = async (client, message, args, level) => {
 
   // PREFIX
   if (key === "prefix") {
-    client.settings.set(message.guild.id, action, "prefix");
-    client.user.setActivity(`${action}help | ${client.guilds.size} servers`, {type: 'PLAYING'});
-    message.reply(`Prefix has been set to **${action}**`);
+    try {
+      const prefixRes = await axios.post('http://localhost:8000/guilds/set-prefix', 
+      {'discord_id': message.guild.id, 'name': message.guild.name, 'prefix': action });
+
+
+    message.channel.send(prefixRes.data.message);
+    } catch (error) {
+      message.channel.send(`Unable to set prefix due to an error. If encountered, please send to developers.\n\`${error}\``);
+    }
+    
   }
 
   // GET

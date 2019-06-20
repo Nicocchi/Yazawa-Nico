@@ -6,62 +6,35 @@ const Discord = require("discord.js");
 const axios = require('axios');
 
 module.exports = async (client, message) => {
-  const res = await axios.post('http://localhost:8000/users/profile', {'discord_id': message.author.id, 'username': message.author.username});
-  const profile = res.data.user;
-
-  const defaults = {
-    id: message.author.id,
-    username: `${message.author.username}`,
-    points: 0,
-    xp: 0,
-    level: 1,
-    daily: "time", // Time of daily
-    isMuted: false,
-    afk: false,
-    afkMessage: "I am AFK right now.",
-    isRPS: false,
-    isRPSGamble: false,
-    marriageProposals: [],
-    sentMarriageProposals: [],
-    marriages: [],
-    marriageSlots: 5,
-    isBuyingSlot: false
-  };
-
   // Ignore bots
   if (message.author.bot) return;
 
-  // Grab the settings for this server from Enmap
-  // If there is no guild, get default conf (DMs)
-  const settings = (message.settings = client.getSettings(message.guild.id));
-  // client.user.setActivity(
-  //   `${settings.prefix}help | ${client.guilds.size} servers`,
-  //   { type: "PLAYING" }
-  // );
+  // Grab the profile for the server
+  const guildRes = await axios.post('http://localhost:8000/guilds/profile', 
+    {'discord_id': message.guild.id, 'name': message.guild.name });
+  const guild = guildRes.data.guild;
 
-  // Check user settings, if none, set default user settings to defaults
-  if (!client.settings.has(message.author.id))
-    client.settings.set(message.author.id, defaults);
-  // Set user's settings variable
-  const userSettings = (message.settings = client.getUserSettings(
-    message.author.id
-  ));
+  // Grab the message author's profile
+  const userRes = await axios.post('http://localhost:8000/users/profile', 
+    {'discord_id': message.author.id, 'name': message.author.username});
+  const author = userRes.data.user;
 
   // Checks if the bot was mentioned, with no message after it, returns the prefix.
   const prefixMention = new RegExp(`^<@!?${client.user.id}>( |)$`);
   if (message.content.match(prefixMention)) {
-    return message.reply(`My prefix on this guild is \`${settings.prefix}\``);
+    return message.channel.send(`My prefix in this server is \`${guild.prefix}\``);
   }
 
   // XP ==================================================================
   // Send user data to gain XP (XP is calculated on server-side)
   // TODO: SET AUTHORIZATION
-  const xpRes = await axios.post('http://localhost:8000/users/gainxp', {'discord_id': message.author.id, 'username': message.author.username});
+  const xpRes = await axios.post('http://localhost:8000/users/gainxp', 
+    {'discord_id': message.author.id, 'name': message.author.username});
 
   // Check levels in the response
-  if (xpRes.data.newLevel > xpRes.data.previousLevel) {
-    // TODO: Set this as guild level permission of levels enabled
-    message.channel.send(`${message.author.tag}, you have leveld up to ${xpRes.data.newLevel}~`);
+  if (xpRes.data.newLevel > xpRes.data.previousLevel && guild.levelEnabled) {
+    message.channel.send(`${message.author.tag}, you have leveld up to 
+      ${xpRes.data.newLevel}~`);
   }
 
   // AFK ==================================================================
@@ -72,7 +45,7 @@ module.exports = async (client, message) => {
   // If a user was mentioned, get their profile info and check if the
   // user is AFK. If AFK, send the user's AFK message.
   if (user) {
-    const mentionedUser = await axios.post('http://localhost:8000/users/profile', {'discord_id': user.user.id, 'username': user.user.username});
+    const mentionedUser = await axios.post('http://localhost:8000/users/profile', {'discord_id': user.user.id, 'name': user.user.username});
     const mentionedProfile = mentionedUser.data.user;
 
     if (mentionedProfile.afk) {
@@ -94,8 +67,8 @@ module.exports = async (client, message) => {
   }
 
   // If the author is AFK, set as back and return message
-  if (profile.afk) {
-    console.log('[MESSAGE_AFK]', profile.afk);
+  if (author.afk) {
+    console.log('[MESSAGE_AFK]', author.afk);
     const profileResults = await axios.post('http://localhost:8000/users/setafk', {'discord_id': message.author.id, 'username': message.author.username, 'afk': false});
 
     let embed = new Discord.RichEmbed()
@@ -113,12 +86,11 @@ module.exports = async (client, message) => {
   // END OF AFK ==================================================================
 
   // Ignore any message that does not start with the prefix
-  // if (message.content.indexOf(settings.prefix) !== 0) return;
-  if (!message.content.startsWith(settings.prefix)) return;
+  if (!message.content.startsWith(guild.prefix)) return;
 
   // Seperate the 'command' name, and the 'arguments' for the command.
   const args = message.content
-    .slice(settings.prefix.length)
+    .slice(guild.prefix.length)
     .trim()
     .split(/ +/g);
   const command = args.shift().toLowerCase();
@@ -127,7 +99,7 @@ module.exports = async (client, message) => {
   if (message.guild && !message.member)
     await message.guild.fetchMember(message.author);
 
-  // Get the user or member's permission level from teh elevation
+  // Get the user or member's permission level from the elevation
   const level = client.permlevel(message);
 
   // Check whether the command, or alias, exist in the collections defined
@@ -146,7 +118,7 @@ module.exports = async (client, message) => {
 
   // Level Permission check
   if (level < client.levelCache[cmd.conf.permLevel]) {
-    if (settings.systemNotice === "true") {
+    if (guild.systemNotice === "true") {
       return message.channel
         .send(`You do not have permission to use this command. Your permission level is
                 ${level} (${
