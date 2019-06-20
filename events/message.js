@@ -6,6 +6,9 @@ const Discord = require("discord.js");
 const axios = require('axios');
 
 module.exports = async (client, message) => {
+  const res = await axios.post('http://localhost:8000/users/profile', {'discord_id': message.author.id, 'username': message.author.username});
+  const profile = res.data.user;
+
   const defaults = {
     id: message.author.id,
     username: `${message.author.username}`,
@@ -50,70 +53,51 @@ module.exports = async (client, message) => {
     return message.reply(`My prefix on this guild is \`${settings.prefix}\``);
   }
 
-  // XP
+  // XP ==================================================================
   // Send user data to gain XP (XP is calculated on server-side)
-  const res = await axios.post('http://localhost:8000/users/gainxp', {'discord_id': message.author.id, 'username': message.author.username});
+  // TODO: SET AUTHORIZATION
+  const xpRes = await axios.post('http://localhost:8000/users/gainxp', {'discord_id': message.author.id, 'username': message.author.username});
 
   // Check levels in the response
-  if (res.data.newLevel > res.data.previousLevel) {
+  if (xpRes.data.newLevel > xpRes.data.previousLevel) {
     // TODO: Set this as guild level permission of levels enabled
-    message.channel.send(`${message.author.tag}, you have leveld up to ${res.data.newLevel}~`);
+    message.channel.send(`${message.author.tag}, you have leveld up to ${xpRes.data.newLevel}~`);
   }
 
-  // AFK
-  // Get a user if there is one mentioned
+  // AFK ==================================================================
+
+  // Get a user
   let user = message.guild.member(message.mentions.users.first());
 
-  // Check if there is a user, if so, check if need to call the user's afk message
+  // If a user was mentioned, get their profile info and check if the
+  // user is AFK. If AFK, send the user's AFK message.
   if (user) {
-    const userDefaults = {
-      id: user.user.id,
-      username: `${user.user.username}`,
-      points: 0,
-      xp: 0,
-      level: 1,
-      daily: "time", // Time of daily
-      isMuted: false,
-      afk: false,
-      afkMessage: "I am AFK right now.",
-      isRPS: false,
-      isRPSGamble: false,
-      marriageProposals: [],
-      sentMarriageProposals: [],
-      marriages: [],
-      marriageSlots: 5,
-      isBuyingSlot: false
-    };
+    const mentionedUser = await axios.post('http://localhost:8000/users/profile', {'discord_id': user.user.id, 'username': user.user.username});
+    const mentionedProfile = mentionedUser.data.user;
 
-    if (!client.settings.has(user.user.id))
-      client.settings.set(user.user.id, userDefaults);
-
-    const userSettings2 = (message.settings = client.getUserSettings(
-      user.user.id
-    ));
-
-    // If user is afk, send user's afk message
-    if (userSettings2.afk) {
+    if (mentionedProfile.afk) {
       let embed = new Discord.RichEmbed()
-        .setTitle(`AFK`)
-        .setTimestamp()
-        .setColor("#FF4D9C")
-        .setThumbnail(user.user.avatarURL)
-        .setDescription(
-          `**${
-            user.user.username
-          }** is currently away. They left this message:\n\n**${
-            userSettings2.afkMessage
-          }**`
-        );
-
-      message.channel.send(embed);
+          .setTitle(`AFK`)
+          .setTimestamp()
+          .setColor("#FF4D9C")
+          .setThumbnail(user.user.avatarURL)
+          .setDescription(
+            `**${
+              user.user.username
+            }** is currently away. They left this message:\n\n**${
+              mentionedProfile.afkMessage
+            }**`
+          );
+  
+        message.channel.send(embed);
     }
   }
 
-  // If the author is afk, set as back and return message
-  if (userSettings.afk) {
-    client.settings.set(message.author.id, false, "afk");
+  // If the author is AFK, set as back and return message
+  if (profile.afk) {
+    console.log('[MESSAGE_AFK]', profile.afk);
+    const profileResults = await axios.post('http://localhost:8000/users/setafk', {'discord_id': message.author.id, 'username': message.author.username, 'afk': false});
+
     let embed = new Discord.RichEmbed()
       .setTitle(`AFK`)
       .setTimestamp()
@@ -125,6 +109,8 @@ module.exports = async (client, message) => {
 
     message.channel.send(embed);
   }
+
+  // END OF AFK ==================================================================
 
   // Ignore any message that does not start with the prefix
   // if (message.content.indexOf(settings.prefix) !== 0) return;

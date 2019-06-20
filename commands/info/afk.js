@@ -1,46 +1,21 @@
 const Discord = require("discord.js");
+const axios = require('axios');
 
 //  Description: Display an AFK message when someone pings you if you are away
 //  Usage: prefix arg1
-
 exports.run = async (client, message, args, level) => {
-  // Setup default config if user is not in DB
-  const defaults = {
-    id: message.author.id,
-    username: `${message.author.username}`,
-    points: 0,
-    xp: 0,
-    level: 1,
-    daily: "time", // Time of daily
-    isMuted: false,
-    afk: false,
-    afkMessage: "I am AFK right now.",
-    isRPS: false,
-    isRPSGamble: false,
-    marriageProposals: [],
-    sentMarriageProposals: [],
-    marriages: [],
-    marriageSlots: 5,
-    isBuyingSlot: false
-  };
-
-  if (!client.settings.has(message.author.id))
-    client.settings.set(message.author.id, defaults);
-
   // Get the message, if no message, set a default message
-  let msg = args[0];
+  let msg = args.join(' ');
   if (!msg || msg === "undefined") {
     msg = "I am AFK right now.";
   }
+  console.log('[MSG] ', msg);
 
-  // Save the settings
-  client.settings.set(message.author.id, true, "afk");
-  client.settings.set(message.author.id, msg, "afkMessage");
-
-  // Return a reply
-  message.channel.send(
-    `${message.author.username}, marking you as away with the msg: "${msg}"`
-  );
+  const res = await axios.post('http://localhost:8000/users/setafkmessage', {'discord_id': message.author.id, 'username': message.author.username, 'afkMessage': msg});
+  // const message = res.data;
+  // console.log('[message] ', profile);
+  
+  message.channel.send(`${message.author.username}, marking you as away with the msg: "${msg}"`);
 };
 
 exports.conf = {
