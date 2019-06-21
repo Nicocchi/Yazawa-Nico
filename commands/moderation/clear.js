@@ -1,39 +1,44 @@
-//  Description: kick a mentioned user.
-//  Usage: ban <user> <reason>
 const Discord = require("discord.js");
+const axios = require("axios");
 
+//  Description: Clear bulk messages.
+//  Usage: clear <amount>
 exports.run = async (client, message, args, level) => {
-    const defaults = client.config.defaultSettings;
-    if (!client.settings.has(message.guild.id))
-        client.settings.set(message.guild.id, defaults);
-    const settings = client.settings.get(message.guild.id);
+    // Check if author has proper permissions
+    if(!message.member.hasPermission('MANAGE_MESSAGES')) return message.channel.send(`:x: Unable to delete messages due to an error.\n \`You do not have the required permission: 'MANAGE_MESSAGES'\``);
 
-    if(!message.member.hasPermission('MANAGE_MESSAGES')) return message.reply('You do not have permissions to do that' +
-        ' command.');
-    if(!args[0]) return message.channel.send('There is no amount to delete');
+    // If there isn't an amount specified, return error
+    if(!args[0]) return message.channel.send(`:x: Unable to delete messages due to an error.\n \`Amount was not specified\``);
 
-    if(args[0] > 100) return message.channel.send('Too many messages. Only 100 and below');
+    // User's can only delete up to 50 messages at a time
+    if(args[0] > 50) return message.channel.send(`:x: Unable to delete messages due to an error.\n \`Amount must not exceed 50\``);
 
+    // Remove the messages
     message.channel.bulkDelete(args[0]).then(() => {
         message.channel.send(`Cleared ${args[0]} messages`).then(msg => msg.delete(5000));
     });
 
-    // If no modLogChannel, don't proceed
-    const modLogChannel = message.guild.channels.find(c => c.id === settings.modLogChannel)
-    if(!modLogChannel) return;
-    if(message.author.bot) return;
-
+    // Configure embed
     let embed = new Discord.RichEmbed()
-        .setAuthor(`${message.member.user.username}`)
-        .setDescription(`${message.author.username} deleted ${args[0]} messages ${message.channel}`)
-        .setTimestamp()
-        .setFooter(
-            `ID: ${message.author.id}`
-        )
-        .setColor("#FF4D9C");
+        .setAuthor(`${client.user.username}'s ModLog`, `${client.user.avatarURL}`)
+        .setDescription(`Bulk Delete in ${message.channel}, ${args[0]} messages deleted by **${message.author.username}#${message.author.discriminator}**`)
+        .setColor('#FF4D9C')
+        .setTimestamp();
 
-    // Send the deleted message to the modlog channel
-    modLogChannel.send(embed).catch(console.error);
+    // Get guild profile
+    const guildRes = await axios.post('http://localhost:8000/guilds/profile', 
+    {'discord_id': message.guild.id, 'name': message.guild.name });
+    const guild = guildRes.data.guild;
+
+    // Set channel & check of modlog channel is available. If so, send embed
+    // to the modlog channel, otherwise, send to default message channel
+    if (guild.modLogChannel !== '' || guild.modLogChannel !== null || guild.modLogChannel !== undefined) {
+        const channel = message.guild.channels.find(c => c.id === guild.modLogChannel);
+        console.log(channel);
+        channel.send(embed);
+    }
+
+    message.channel.send(embed).then(msg => msg.delete(5000));
 };
 
 exports.conf = {
