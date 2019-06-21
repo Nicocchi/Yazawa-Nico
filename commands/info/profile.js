@@ -24,11 +24,27 @@ const applyText = async (canvas, text, fntSize, weight = "normal") => {
 };
 
 exports.run = async (client, message, args, level) => {
+  let member = message.guild.member(message.mentions.users.first()) || message.guild.members.get(args[0]);
+  if (!member) {
+    member = {
+      id: message.author.id,
+      username: message.author.username,
+      avatar: message.author.displayAvatarURL
+    };
+  } else {
+    member = {
+      id: member.id,
+      username: member.user.username,
+      avatar: member.user.displayAvatarURL
+    };
+  }
+  // console.log("Member", member.username);
   // TODO: SET AUTHORIZATION
-  const res = await axios.post('http://localhost:8000/users/profile', {'discord_id': message.author.id, 'name': message.author.username});
+  const res = await axios.post('http://localhost:8000/users/profile', {'discord_id': member.id, 'name': member.username});
   // console.log('res =>', res.data.user);
   // const bf = Buffer.from(profile.profileImage, 'binary').toString('base64');
   const profile = res.data.user;
+  console.log("PROFILE", res);
 
   const canvas = Canvas.createCanvas(700, 700);
   const ctx = canvas.getContext('2d');
@@ -65,13 +81,13 @@ exports.run = async (client, message, args, level) => {
   ctx.fillRect(210, 350, 500, 340);
 
   // Draw avatar
-  const avatar = await Canvas.loadImage(message.author.displayAvatarURL);
+  const avatar = await Canvas.loadImage(member.avatar);
   ctx.drawImage(avatar, 20, 180, 180, 180 );
 
   // Draw user's username
-  ctx.font = await applyText(canvas, message.author.username, 80);
+  ctx.font = await applyText(canvas, member.username, 80);
   ctx.fillStyle = '#ffffff';
-  ctx.fillText(message.author.username, 260, 270);
+  ctx.fillText(member.username, 260, 270);
 
   // Draw user's level
   ctx.font = await applyText(canvas, "Level", 50);
@@ -91,9 +107,9 @@ exports.run = async (client, message, args, level) => {
   const xp = profile.experience;
   const maxXP = 85800;
   const perc = (xp / maxXP) * 100;
-  console.log(perc);
+  // console.log(perc);
   const value = Math.floor(perc * 400) / 100
-  console.log(value);
+  // console.log(value);
 
   // Front bar
   ctx.fillStyle = "rgba(0, 118, 210, 0.7)";
@@ -158,7 +174,8 @@ exports.run = async (client, message, args, level) => {
   }
 
   // Draw Info Text
-  const text = `I am the number one idol in the universe! This is getting a bit too long isn't it? Isn't it?`;
+  // const text = `I am the number one idol in the universe! This is getting a bit too long isn't it? Isn't it?`;
+  const text = profile.profileMessage;
   const txt = text.slice(0, 85)
   // ctx.font = await applyText(canvas, text, 50);
   ctx.font = "30px sans-serif"
@@ -166,7 +183,7 @@ exports.run = async (client, message, args, level) => {
   ctx.textAlign = "start";
 
   const lines = fragmentText(txt, 430);
-  console.log(lines);
+  // console.log(lines);
 
   lines.forEach(function(line, i) {
     ctx.fillText(line, 230, (i + 1) * 30 + 560);
