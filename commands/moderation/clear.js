@@ -34,7 +34,6 @@ exports.run = async (client, message, args, level) => {
     // to the modlog channel, otherwise, send to default message channel
     if (guild.modLogChannel !== '' || guild.modLogChannel !== null || guild.modLogChannel !== undefined) {
         const channel = message.guild.channels.find(c => c.id === guild.modLogChannel);
-        console.log(channel);
         channel.send(embed);
     }
 
