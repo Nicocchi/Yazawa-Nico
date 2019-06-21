@@ -9,11 +9,8 @@ exports.run = async (client, message, args, level) => {
   if (!msg || msg === "undefined") {
     msg = "I am AFK right now.";
   }
-  console.log('[MSG] ', msg);
 
   const res = await axios.post('http://localhost:8000/users/setafkmessage', {'discord_id': message.author.id, 'name': message.author.username, 'afkMessage': msg});
-  // const message = res.data;
-  // console.log('[message] ', profile);
   
   message.channel.send(`${message.author.username}, marking you as away with the msg: "${msg}"`);
 };
