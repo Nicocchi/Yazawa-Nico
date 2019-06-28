@@ -1,50 +1,22 @@
 const Discord = require("discord.js");
 const moment = require("moment");
+const axios = require("axios");
 
 //  Description: Get your daily love gems
 //  Usage: daily
 exports.run = async (client, message, args, level) => {
-  const defaults = client.config.defaultUserSettings;
-  if (!client.settings.has(message.author.id))
-    client.settings.set(message.author.id, defaults);
-  let settings = client.getUserSettings(message.author.id);
+  try {
+    // Set the rip
+    const res = await axios.post('http://localhost:8000/users/daily', {'discord_id': message.author.id, 'name': message.guild.name, 'rip': 1 });
+    const user = res.data;
+    console.log(user);
 
-  // Define the current day in UTC format
-  let m = moment().utc();
-  // Define the difference for comparing the current and user's last daily date
-  let diff = 0;
+    // Send message
+    message.channel.send(user.message);
 
-  // Get the last daily date from the user
-  let daily = settings.daily;
-  // Get the user's love gems
-  let loveGems = settings.points;
-
-  const dff = moment(daily).utc();
-
-  // If the user is not using the command for the first time, set the difference for comparison
-  if (daily != "time") {
-    diff = m.diff(dff, "hours");
-  }
-
-  // Compare the dates and add the love gems, if already claimed, return message stating user has already claimed
-  // If the user is using the command for the first time or 24 hours have passed since their last time using the
-  // command
-  if (daily === "time" || diff >= 24) {
-    daily = m;
-    loveGems += 200;
-    client.settings.set(message.author.id, daily, "daily");
-    client.settings.set(message.author.id, loveGems, "points");
-    message.channel.send(
-      `:white_check_mark: ${
-        message.author.username
-      }, you claimed 200 love gems!`
-    );
-  } else {
-    message.channel.send(
-      `:negative_squared_cross_mark: ${
-        message.author.username
-      }, you have already claimed your daily love gems.`
-    );
+  } catch (error) {
+    console.log(error.response.message);
+    message.channel.send(`Unable to receive Love Gems due to an error. If encountered, please send to developers. (!support to get invite link) \n\`[${moment().utc()}] Daily | ${error}\``);
   }
 };
 
