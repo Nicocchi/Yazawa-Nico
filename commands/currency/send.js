@@ -1,52 +1,32 @@
 const Discord = require("discord.js");
 const moment = require("moment");
+const axios = require("axios");
 
 //  Description: Send some love gems to a user
 //  Usage: send arg1
 exports.run = async (client, message, args, level) => {
-  // Get Author Settings
-  const defaults = client.config.defaultUserSettings;
-
-  if (!client.settings.has(message.author.id))
-    client.settings.set(message.author.id, defaults);
-  let settings = client.getUserSettings(message.author.id);
-
-  // Set user
-  const user =
+  try {
+    // Set user
+    const user =
     message.guild.member(message.mentions.users.first()) ||
     message.guild.members.get(args[0]);
 
-  if (!user) return message.reply("You need to specify a user to send to~");
+    if (!user) return message.channel.send("You need to specify a user to send to~");
 
-  // Set amount
-  const amount = args[1];
-  if (!amount) return message.reply("You need to specify an amount to send~");
+    // Set amount
+    const amount = args[1];
+    if (!amount) return message.channel.send("You need to specify an amount to send~");
 
-  // If our love gems are smaller than amount, return error
-  if (settings.points < amount)
-    return message.reply("Sorry, you do not have enough love gems~");
+    // Set the rip
+    const res = await axios.post('http://localhost:8000/users/send', {'discord_id': message.author.id, 'name': message.author.username, 'mentioned_id': user.id, 'sendAmount': amount, 'mentioned_name': user.displayName });
+    const userProfile = res.data;
 
-  // Set User
-  if (!client.settings.has(user.user.id))
-    client.settings.set(user.user.id, defaults);
+    // Send message
+    message.channel.send(userProfile.message);
 
-  let userSettings = client.getUserSettings(user.user.id);
-
-  // Set love gems
-  let userGems = userSettings.points;
-  let authorGems = settings.points;
-  userGems += parseInt(amount);
-  authorGems -= parseInt(amount);
-
-  // Save the new love gems to the user's db
-  client.settings.set(user.user.id, userGems, "points");
-  client.settings.set(message.author.id, authorGems, "points");
-
-  message.channel.send(
-    `:white_check_mark: ${message.author.username}, you sent ${amount} to ${
-      user.user.username
-    }`
-  );
+  } catch (error) {
+    message.channel.send(`Unable to send Love Gems due to an error. If encountered, please send to developers. (!support to get invite link) \n\`[${moment().utc()}] Send | ${error.response}\``);
+  }
 };
 
 exports.conf = {
