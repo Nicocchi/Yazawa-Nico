@@ -1,47 +1,36 @@
 const Discord = require("discord.js");
 const moment = require("moment");
+const axios = require("axios");
 //  Description: Display rips
 //  Usage: rip arg1
 exports.run = async (client, message, args, level) => {
-  const defaults = client.config.defaultGlobalSettings;
+  try {
+    // Set the rip
+    const res = await axios.post('http://localhost:8000/globals/rip', {'discord_id': message.guild.id, 'name': message.guild.name, 'rip': 1 });
+    const global = res.data;
 
-  if (!client.settings.has("GlobalSettings"))
-    client.settings.set("GlobalSettings", defaults);
-  let settings = client.getGlobalSettings();
+    // Send message
+    let messages = args.join(" ");
 
-  // let date = moment().utc();
-  let totalRips = settings.totalRips;
-  let todaysRips = settings.todaysRips;
-  let date = settings.ripDateTime;
-  let m = moment().utc();
-  let currDate = m.format("YYYY-MM-DD");
+    if (messages) {
+      var msg = `${
+        message.author.username
+      } has paid their respects for ${args.join(" ")}\n${
+        global.todaysRips
+      } Today, 
+      ${global.totalRips} All`;
+    } else {
+      var msg = `${message.author.username} has paid their respects.\n${
+        global.todaysRips
+      } Today, ${global.totalRips} All`;
+    }
 
-  client.settings.set("GlobalSettings", totalRips + 1, "totalRips");
-  if (currDate > date || date === 0) {
-    client.settings.set("GlobalSettings", 1, "todaysRips");
-    client.settings.set("GlobalSettings", currDate, "ripDateTime");
-  } else {
-    client.settings.set("GlobalSettings", todaysRips + 1, "todaysRips");
+    let embed = new Discord.RichEmbed().setDescription(msg).setColor("#FF4D9C");
+    message.channel.send({ embed: embed });
+
+  } catch (error) {
+    message.channel.send(`Unable to set rip due to an error. If encountered, please send to developers.\n\`${error}\``);
   }
-
-  settings = client.getGlobalSettings();
-  let messages = args.join(" ");
-
-  if (messages) {
-    var msg = `${
-      message.author.username
-    } has paid their respects for ${args.join(" ")}\n${
-      settings.todaysRips
-    } Today, 
-    ${settings.totalRips} All`;
-  } else {
-    var msg = `${message.author.username} has paid their respects.\n${
-      settings.todaysRips
-    } Today, ${settings.totalRips} All`;
-  }
-
-  let embed = new Discord.RichEmbed().setDescription(msg).setColor("#FF4D9C");
-  message.channel.send({ embed: embed });
 };
 
 exports.conf = {
