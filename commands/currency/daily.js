@@ -6,7 +6,7 @@ const axios = require("axios");
 //  Usage: daily
 exports.run = async (client, message, args, level) => {
   try {
-    // Set the rip
+    // Set the daily
     const res = await axios.post('http://localhost:8000/users/daily', {'discord_id': message.author.id, 'name': message.guild.name, 'rip': 1 });
     const user = res.data;
 

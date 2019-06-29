@@ -17,7 +17,7 @@ exports.run = async (client, message, args, level) => {
     const amount = args[1];
     if (!amount) return message.channel.send("You need to specify an amount to send~");
 
-    // Set the rip
+    // Set the send
     const res = await axios.post('http://localhost:8000/users/send', {'discord_id': message.author.id, 'name': message.author.username, 'mentioned_id': user.id, 'sendAmount': amount, 'mentioned_name': user.displayName });
     const userProfile = res.data;
 
