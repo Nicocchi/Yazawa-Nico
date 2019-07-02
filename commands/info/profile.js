@@ -44,9 +44,9 @@ exports.run = async (client, message, args, level) => {
   // console.log('res =>', res.data.user);
   // const bf = Buffer.from(profile.profileImage, 'binary').toString('base64');
   const profile = res.data.user;
-  console.log("PROFILE", res);
+  // console.log("PROFILE", res);
 
-  const canvas = Canvas.createCanvas(700, 700);
+  const canvas = Canvas.createCanvas(900, 730);
   const ctx = canvas.getContext('2d');
 
   // Draw the background
@@ -59,7 +59,8 @@ exports.run = async (client, message, args, level) => {
   ctx.shadowOffsetX = -20;
   ctx.shadowOffsetY = 20;
 
-  const bgImage = await Canvas.loadImage(__dirname + '/wallpaper.png');
+  // const bgImage = await Canvas.loadImage(__dirname + '/Wallpaper.jpg');
+  const bgImage = await Canvas.loadImage(profile.profileImage);
   ctx.drawImage(bgImage, 10, 10, canvas.width - 20, canvas.height - 20);
 
   // Reset the blur effect
@@ -70,78 +71,79 @@ exports.run = async (client, message, args, level) => {
 
   // Header
   ctx.fillStyle = "rgba(0, 0, 0, 0.7)";
-  ctx.fillRect(10, 200, 680, 150);
+  ctx.fillRect(10, 200, 880, 150);
 
   // Left column
   ctx.fillStyle = "rgba(0, 0, 0, 0.7)";
-  ctx.fillRect(10, 350, 200, 340);
+  ctx.fillRect(10, 350, 270, 370);
 
   // Right column
   ctx.fillStyle = "rgba(255, 255, 255, 0.7)";
-  ctx.fillRect(210, 350, 500, 340);
+  ctx.fillRect(280, 350, 610, 370);
 
   // Draw avatar
   const avatar = await Canvas.loadImage(member.avatar);
-  ctx.drawImage(avatar, 20, 180, 180, 180 );
+  ctx.drawImage(avatar, 30, 130, 220, 220 );
 
   // Draw user's username
   ctx.font = await applyText(canvas, member.username, 80);
   ctx.fillStyle = '#ffffff';
-  ctx.fillText(member.username, 260, 270);
+  ctx.fillText(member.username, 360, 270);
 
   // Draw user's level
   ctx.font = await applyText(canvas, "Level", 50);
   ctx.fillStyle = '#ffffff';
-  ctx.fillText("LEVEL", 440, 340);
+  ctx.fillText("LEVEL", 670, 340);
 
   ctx.font = await applyText(canvas, "999", 50, "bold");
   ctx.fillStyle = '#ffffff';
-  ctx.fillText(profile.level, 580, 340);
+  ctx.fillText(profile.level, 800, 340);
 
   // Draw the XP Gauge
   // Background
   ctx.fillStyle = "rgba(0, 0, 0, 0.7)";
-  ctx.fillRect(250, 370, 400, 50);
+  ctx.fillRect(350, 370, 480, 50);
 
   // Calculate value for front bar
   const xp = profile.experience;
-  const maxXP = 85800;
+  const curLvl = profile.level;
+  const maxXP = curLvl * 600;
   const perc = (xp / maxXP) * 100;
   // console.log(perc);
-  const value = Math.floor(perc * 400) / 100
+  const value = Math.floor(perc * 480) / 100
   // console.log(value);
 
   // Front bar
   ctx.fillStyle = "rgba(0, 118, 210, 0.7)";
-  ctx.fillRect(250, 370, value, 50);
+  ctx.fillRect(350, 370, value, 50);
 
   // XP Text
   ctx.font = await applyText(canvas, `XP 99999 / 99999`, 40);
   ctx.fillStyle = '#ffffff';
   ctx.textAlign = "end";
-  ctx.fillText(`XP ${xp} / ${maxXP}`, 600, 405);
+  ctx.fillText(`XP ${xp} / ${maxXP}`, 650, 405);
 
   // Draw Cards Text
   ctx.font = await applyText(canvas, `Cards`, 50);
   ctx.fillStyle = '#000000';
   ctx.textAlign = "start";
-  ctx.fillText(`Cards`, 230, 480);
+  ctx.fillText(`Cards`, 330, 480);
 
   ctx.font = await applyText(canvas, `999999`, 50);
   ctx.fillStyle = '#000000';
   ctx.textAlign = "end";
-  ctx.fillText(profile.cards.length, 675, 480);
+  ctx.fillText(profile.cards.length, 875, 480);
 
   // Draw Love Gems Text
   ctx.font = await applyText(canvas, `Love Gems`, 50);
   ctx.fillStyle = '#000000';
   ctx.textAlign = "start";
-  ctx.fillText(`Love Gems`, 230, 540);
+  ctx.fillText(`Love Gems`, 330, 540);
 
   ctx.font = await applyText(canvas, `999999`, 50);
   ctx.fillStyle = '#000000';
   ctx.textAlign = "end";
-  ctx.fillText(profile.loveGems, 675, 540);
+  ctx.fillText(profile.loveGems, 875, 540);
 
   function fragmentText(text, maxWidth) {
     var words = text.split(' '),
@@ -176,18 +178,34 @@ exports.run = async (client, message, args, level) => {
   // Draw Info Text
   // const text = `I am the number one idol in the universe! This is getting a bit too long isn't it? Isn't it?`;
   const text = profile.profileMessage;
-  const txt = text.slice(0, 85)
+  const txt = text.slice(0, 158)
   // ctx.font = await applyText(canvas, text, 50);
   ctx.font = "30px sans-serif"
   ctx.fillStyle = '#000000';
   ctx.textAlign = "start";
 
-  const lines = fragmentText(txt, 430);
+  const lines = fragmentText(txt, 530);
   // console.log(lines);
 
   lines.forEach(function(line, i) {
-    ctx.fillText(line, 230, (i + 1) * 30 + 560);
+    ctx.fillText(line, 330, (i + 1) * 30 + 560);
   })
+
+  // Draw Marriages
+  const txt1 = ['Vanilla', 'Usagi', "Zeen~", "Yazawa Nico", "Pyokun", "GnomieTheHomies", "handy kuma", "Lolitsune", "V.A.L.I.S", "June"];
+
+  ctx.font = "40px sans-serif"
+  ctx.fillStyle = '#ffffff';
+  ctx.textAlign = "start";
+  ctx.fillText(`Marriages`, 50, 400);
+
+  ctx.font = "30px sans-serif"
+  txt1.forEach(function(line, i) {
+    // ctx.font = await applyText(canvas, line, 30);
+    if (line.length >= 14) line = line.slice(0, 14);
+    ctx.fillText(line, 30, (i + 1) * 30 + 410);
+  })
+
   
 
   const attachment = new Discord.Attachment(canvas.toBuffer(), 'user_profile.png');
