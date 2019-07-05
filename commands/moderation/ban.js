@@ -44,7 +44,7 @@ exports.run = async (client, message, args, level) => {
     channel.send(embed);
     } catch (error) {
         client.logger.error(error);
-    message.channel.send(`Unable to show ban log due to an error. If encountered, please send to developers. (!support to get invite link) \n\`[${moment().utc()}] Ban Log | ${error.response}\``);
+        message.channel.send(`Unable to show ban log due to an error. If encountered, please send to developers. (!support to get invite link) \n\`[${moment().utc()}] Ban Log | ${error.response}\``);
     }
     
 };
