@@ -15,9 +15,16 @@ exports.run = async (client, message, args, level) => {
     if(args[0] > 50) return message.channel.send(`:x: Unable to delete messages due to an error.\n \`Amount must not exceed 50\``);
 
     // Remove the messages
-    message.channel.bulkDelete(args[0]).then(() => {
+    const amount = Number(args[0]) + 1;
+    console.log(amount);
+    try {
+        message.channel.bulkDelete(amount).then(() => {
         message.channel.send(`Cleared ${args[0]} messages`).then(msg => msg.delete(5000));
     });
+    } catch (e) {
+        client.logger.error(`[channelCreate.js]: ${e}`);
+    }
+    
 
     // Configure embed
     let embed = new Discord.RichEmbed()
@@ -38,7 +45,6 @@ exports.run = async (client, message, args, level) => {
         channel.send(embed);
     }
 
-    // message.channel.send(msg).then(msg => msg.delete(5000));
     } catch (e) {
         message.channel.send(`Unable to show clear log due to an error. If encountered, please send to developers. (!support to get invite link) \n\`[${moment().utc()}] Clear Log | ${e.response}\``);
     }
