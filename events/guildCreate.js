@@ -7,9 +7,7 @@ module.exports = (client, guild) => {
         guild.owner.user.tag
       } (${guild.owner.user.id})`
     );
-    const defaults = client.config.defaultSettings;
-    if (!client.settings.has(guild.id)) client.settings.set(guild.id, defaults);
   } catch (e) {
-    client.logger.error(e);
+    client.logger.error(`[guildCreate.js]: ${e}`);
   }
 };

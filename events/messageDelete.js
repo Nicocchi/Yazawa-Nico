@@ -1,26 +1,22 @@
 // This event executes when a message is deleted.
 const Discord = require("discord.js");
+const axios = require('axios');
+const Canvas = require('canvas');
+const moment = require('moment');
 
-module.exports = (client, message) => {
+module.exports = async (client, message) => {
   try {
+    if (message.member.id === client.user.id) return;
     // Load the guild's settings
-    const defaults = client.config.defaultSettings;
-    if (!client.settings.has(message.guild.id))
-      client.settings.set(message.guild.id, defaults);
+    const guildRes = await axios.post('http://localhost:8000/guilds/profile', 
+    {'discord_id': message.guild.id, 'name': message.guild.name });
+    const guild = guildRes.data.guild;
 
-    const settings = client.settings.get(message.guild.id);
+    const modLogChannel = message.guild.channels.find(ch => ch.id === guild.modLogChannel);
 
-    // If no modLogChannel, don't proceed
-    if (!settings.modlog) return;
-    const modLogChannel = message.guild.channels.find(
-      c => c.id === settings.modLogChannel
-    );
-    if (message.author.bot) return;
-
-    if (!modLogChannel) return;
-
-    try {
-      let embed = new Discord.RichEmbed()
+    if (guild.modlog && modLogChannel !== null) {
+      try {
+        let embed = new Discord.RichEmbed()
         .setAuthor(`${message.member.user.username}`)
         .setDescription(
           `Message sent by ${message.member} deleted in ${message.channel}\n ${
@@ -29,15 +25,18 @@ module.exports = (client, message) => {
         )
         .setTimestamp()
         .setThumbnail(message.member.user.avatarURL)
-        .setFooter(`ID: ${message.member.id} | ${message.member.joinedAt}`)
+        .setTimestamp()
         .setColor("#FF4D9C");
-
-      // Send the deleted message to the modlog channel
-      modLogChannel.send(embed).catch(console.error);
-    } catch (e) {
-      client.logger.error(e);
+        
+        // Send the deleted message to the modlog channel
+        modLogChannel.send(embed).catch(console.error);
+      } catch (e) {
+        client.logger.error(`[messageDelete.js]: Embed: ${e}`);
+        message.channel.send(`Unable to show delete log due to an error. If encountered, please send to developers. (!support to get invite link) \n\`[${moment().utc()}] [messageDelete.js]: Embed: | ${e.response}\``);
+      }
     }
+
   } catch (e) {
-    client.logger.log(e);
+    client.logger.error(`[messageDelete.js]: Embed: ${e}`);
   }
 };

@@ -23,10 +23,10 @@ exports.run = async (client, message, args, level) => {
         .setTimestamp();
 
     // Send embed directly to kicked user
-    if(user) user.send(embed);
+    if(user) await user.send(embed);
 
     // Kick the user
-    // message.guild.member(user).kick(reason);
+    message.guild.member(user).kick(reason);
 
     // Get guild profile
     const guildRes = await axios.post('http://localhost:8000/guilds/profile', 

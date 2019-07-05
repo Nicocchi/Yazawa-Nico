@@ -4,7 +4,8 @@ const axios = require("axios");
 //  Description: Clear bulk messages.
 //  Usage: clear <amount>
 exports.run = async (client, message, args, level) => {
-    // Check if author has proper permissions
+    try {
+        // Check if author has proper permissions
     if(!message.member.hasPermission('MANAGE_MESSAGES')) return message.channel.send(`:x: Unable to delete messages due to an error.\n \`You do not have the required permission: 'MANAGE_MESSAGES'\``);
 
     // If there isn't an amount specified, return error
@@ -37,7 +38,11 @@ exports.run = async (client, message, args, level) => {
         channel.send(embed);
     }
 
-    message.channel.send(embed).then(msg => msg.delete(5000));
+    // message.channel.send(msg).then(msg => msg.delete(5000));
+    } catch (e) {
+        message.channel.send(`Unable to show clear log due to an error. If encountered, please send to developers. (!support to get invite link) \n\`[${moment().utc()}] Clear Log | ${e.response}\``);
+    }
+    
 };
 
 exports.conf = {
