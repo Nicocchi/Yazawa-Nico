@@ -4,7 +4,8 @@ const axios = require('axios');
 //  Description: Ban a mentioned user.
 //  Usage: ban <user> <reason>
 exports.run = async (client, message, args, level) => {
-    // Get mentioned user, if none, return error
+    try {
+        // Get mentioned user, if none, return error
     let user = message.guild.member(message.mentions.users.first() || message.guild.members.get(args[0]));
     if(!user) return message.channel.send(`:x: Unable to ban user **undefined** due to an error.\n \`You must mention a user to ban\``);
 
@@ -23,10 +24,10 @@ exports.run = async (client, message, args, level) => {
         .setTimestamp();
 
     // Send embed directly to banned user
-    if(user) user.send(embed);
+    if(user) await user.send(embed);
 
     // Ban the user
-    // message.guild.member(user).ban(reason);
+    message.guild.member(user).ban(reason);
 
     // Get guild profile
     const guildRes = await axios.post('http://localhost:8000/guilds/profile', 
@@ -41,6 +42,11 @@ exports.run = async (client, message, args, level) => {
     }
 
     channel.send(embed);
+    } catch (error) {
+        client.logger.error(error);
+    message.channel.send(`Unable to show ban log due to an error. If encountered, please send to developers. (!support to get invite link) \n\`[${moment().utc()}] Ban Log | ${error.response}\``);
+    }
+    
 };
 
 exports.conf = {

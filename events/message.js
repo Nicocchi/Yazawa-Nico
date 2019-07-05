@@ -85,12 +85,14 @@ module.exports = async (client, message) => {
 
   // END OF AFK ==================================================================
 
-  // Ignore any message that does not start with the prefix
-  if (!message.content.startsWith(guild.prefix)) return;
+  // Ignore any message that does not start with the prefix or bot mention
+  const prefixMention2 = new RegExp(`^<@!?${client.user.id}> `);
+  const prefix = message.content.match(prefixMention2) ? message.content.match(prefixMention2)[0] : guild.prefix;
+  if (!message.content.startsWith(prefix)) return;
 
   // Seperate the 'command' name, and the 'arguments' for the command.
   const args = message.content
-    .slice(guild.prefix.length)
+    .slice(prefix.length)
     .trim()
     .split(/ +/g);
   const command = args.shift().toLowerCase();

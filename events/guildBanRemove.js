@@ -1,35 +1,36 @@
 // This event executes when a message is deleted.
 const Discord = require("discord.js");
+const axios = require("axios");
+const moment = require('moment');
 
-module.exports = (client, guild, user) => {
-  // Load the guild's settings
+module.exports = async (client, guild, member) => {
   try {
-    const defaults = client.config.defaultSettings;
-    if (!client.settings.has(guild.id)) client.settings.set(guild.id, defaults);
+    // console.log("USER", user);
+    // Load the guild's settings
+    const guildRes = await axios.post('http://localhost:8000/guilds/profile', 
+    {'discord_id': guild.id, 'name': guild.name });
+    const guildr = guildRes.data.guild;
 
-    const settings = client.settings.get(guild.id);
+    const modLogChannel = guild.channels.find(ch => ch.id === guildr.modLogChannel);
 
-    // If no modLogChannel, don't proceed
-    if (!settings.modlog) return;
-    const modLogChannel = guild.channels.find(
-      c => c.id === settings.modLogChannel
-    );
 
-    if (!modLogChannel) return;
-
-    try {
-      let embed = new Discord.RichEmbed()
-        .setDescription(`Ban revoked: ${user.username}`)
-        .setThumbnail(user.avatarURL)
-        .setTimestamp()
-        .setColor("#FF4D9C");
-
-      // Send the deleted message to the modlog channel
-      modLogChannel.send(embed).catch(console.error);
-    } catch (e) {
-      client.logger.error(e);
+    if (guild.modlog && modLogChannel !== null || modLogChannel !== "") {
+      try {
+        let embed = new Discord.RichEmbed()
+          .setDescription(`**Ban Revoked:** ${member.username}#${member.discriminator}`)
+          .setThumbnail(member.displayAvatarURL)
+          .setTimestamp()
+          .setColor("#FF4D9C");
+        
+        // Send the deleted message to the modlog channel
+        modLogChannel.send(embed).catch(console.error);
+      } catch (e) {
+        client.logger.error(`[guildBanRemove.js]: Embed: ${e}`);
+        guild.channel.send(`Unable to show ban revoked log due to an error. If encountered, please send to developers. (!support to get invite link) \n\`[${moment().utc()}] [guildBanRemove.js]: Embed | ${e.response}\``);
+      }
     }
+
   } catch (e) {
-    client.logger.error(e);
+    client.logger.error(`[guildBanRemove.js]: ${e}`);
   }
 };
