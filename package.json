@@ -1,42 +1,66 @@
 {
-  "name": "yazawa-nico-js",
+  "name": "yazawa-nico-backend",
   "version": "1.0.0",
-  "description": "Discord Bot",
-  "main": "index.js",
+  "description": "Backend server for Yazawa Nico Discord bot",
+  "main": "server/index.js",
   "scripts": {
-    "start": "node index.js",
-    "client-dev": "nodemon index.js"
+    "server-dev": "cross-env NODE_ENV=prod nodemon index.js",
+    "client-dev": "npm run start-dev --prefix client",
+    "start-dev": "concurrently \"npm run server-dev npm\" \"npm run client-dev\"",
+    "test": "cross-env NODE_ENV=test mocha --exit ../__tests__/server/**/*.test.js",
+    "report": "cross-env NODE_ENV=test nyc --reporter=lcov mocha --exit ../__tests__/server/**/*.test.js",
+    "text-report": "cross-env NODE_ENV=test nyc --reporter=text-summary mocha --exit ../__tests__/server/**/*.test.js",
+    "nyc": "cross-env NODE_ENV=test nyc mocha --exit ../__tests__/server/**/*.test.js"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Nicocchi/Yazawa-Nico-JS.git"
+    "url": "git+https://github.com/Nicocchi/Yazawa-Nico-Backend.git"
   },
-  "author": "Jeremy Boggs",
+  "author": "Nicocchi",
   "license": "GPL-2.0",
   "bugs": {
-    "url": "https://github.com/Nicocchi/Yazawa-Nico-JS/issues"
+    "url": "https://github.com/Nicocchi/Yazawa-Nico-Backend/issues"
   },
-  "homepage": "https://github.com/Nicocchi/Yazawa-Nico-JS#readme",
+  "homepage": "https://github.com/Nicocchi/Yazawa-Nico-Backend#readme",
+  "engines": {
+    "node": "10.15.3"
+  },
   "dependencies": {
-    "axios": "0.19.0",
-    "better-sqlite-pool": "^0.1.2",
+    "bcryptjs": "2.4.3",
+    "body-parser": "1.19.0",
     "canvas": "2.5.0",
-    "chalk": "^2.4.1",
-    "dblapi.js": "^2.3.0",
-    "discord-youtube-api": "^0.1.0",
-    "discord.js": "^11.4.2",
-    "dotenv": "^6.1.0",
-    "enmap": "^4.3.2",
-    "file-saver": "2.0.2",
-    "moment": "^2.22.2",
-    "moment-duration-format": "^2.2.2",
-    "ms": "^2.1.1",
-    "node-opus": "^0.3.1",
-    "simple-youtube-api": "^5.1.1",
-    "ytdl-core": "^0.28.3"
+    "cors": "2.8.5",
+    "cross-env": "5.2.0",
+    "dotenv": "8.0.0",
+    "express": "4.17.1",
+    "express-promise-router": "3.0.3",
+    "form-data": "2.3.3",
+    "jikan-node": "1.2.0",
+    "joi": "14.3.1",
+    "jsonwebtoken": "8.5.1",
+    "moment": "^2.24.0",
+    "mongoose": "5.6.0",
+    "morgan": "1.9.1",
+    "puppeteer": "1.17.0"
   },
   "devDependencies": {
+    "chai": "4.2.0",
+    "chai-http": "4.3.0",
+    "eslint": "5.16.0",
+    "faker": "4.1.0",
+    "mocha": "6.1.4",
     "nodemon": "1.19.1",
-    "prettier": "^1.14.3"
+    "nyc": "14.1.1",
+    "rewire": "4.0.1",
+    "sinon": "7.3.2",
+    "sinon-chai": "3.3.0"
+  },
+  "nyc": {
+    "exclude": [
+      "__tests__",
+      "node_modules"
+    ],
+    "cache": false,
+    "report-dir": "./__tests__/report"
   }
 }
