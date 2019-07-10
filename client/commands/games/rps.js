@@ -3,14 +3,6 @@ const Discord = require("discord.js");
 //  Description: Play a game of RPS
 //  Usage: rps
 exports.run = async (client, message, args, level) => {
-  const defaults = client.config.defaultUserSettings;
-  if (!client.settings.has(message.author.id))
-    client.settings.set(message.author.id, defaults);
-  let settings = client.getUserSettings(message.author.id);
-
-  let amount = args[0];
-  let gems = settings.points;
-
   let embed = new Discord.RichEmbed()
     .addField(
       "Let's play a game",
@@ -48,40 +40,14 @@ exports.run = async (client, message, args, level) => {
           "You chose rock. I chose rock.\nHey! We came to a draw!\n\n**╮( ˘ ､ ˘ )╭**"
         );
 
-        if (amount) {
-          const amt = amount / 2;
-          const win = gems + amt;
-          client.settings.set(message.author.id, win, "points");
-          message.reply(`You gained ${amt} love gems!`);
-        }
-
-        client.settings.set(message.author.id, 0, "gambleAmount");
       } else if (response.toLowerCase() === "paper") {
         message.channel.send(
           "You chose paper. I chose rock.\nAww, you won!\n\n**｡ﾟ･ (>﹏<) ･ﾟ｡**"
         );
-
-        if (amount) {
-          const amt = amount * 2;
-          const win = gems + amt;
-          client.settings.set(message.author.id, win, "points");
-          message.reply(`You gained ${amt} love gems!`);
-        }
-
-        client.settings.set(message.author.id, 0, "gambleAmount");
       } else if (response.toLowerCase() === "scissors") {
         message.channel.send(
           "You chose scissors. I chose rock.\nYay! I won!\n\n**(๑˃ᴗ˂)ﻭ**"
         );
-
-        if (amount) {
-          const amt = amount;
-          const lose = gems - amt;
-          client.settings.set(message.author.id, lose, "points");
-          message.reply(`You lost ${amt} love gems!`);
-        }
-
-        client.settings.set(message.author.id, 0, "gambleAmount");
       }
       break;
 
@@ -91,41 +57,14 @@ exports.run = async (client, message, args, level) => {
         message.channel.send(
           "You chose paper. I chose paper.\nHey! We came to a draw!\n\n**╮( ˘ ､ ˘ )╭**"
         );
-
-        if (amount) {
-          const amt = amount / 2;
-          const win = gems + amt;
-          client.settings.set(message.author.id, win, "points");
-          message.reply(`You gained ${amt} love gems!`);
-        }
-
-        client.settings.set(message.author.id, 0, "gambleAmount");
       } else if (response.toLowerCase() === "rock") {
         message.channel.send(
           "You chose rock. I chose paper.\nYay! I won!\n\n**(๑˃ᴗ˂)ﻭ**"
         );
-
-        if (amount) {
-          const amt = amount;
-          const lose = gems - amt;
-          client.settings.set(message.author.id, lose, "points");
-          message.reply(`You lost ${amt} love gems!`);
-        }
-
-        client.settings.set(message.author.id, 0, "gambleAmount");
       } else if (response.toLowerCase() === "scissors") {
         message.channel.send(
           "You chose scissors. I chose paper.\nAww, you won!\n\n**｡ﾟ･ (>﹏<) ･ﾟ｡**"
         );
-
-        if (amount) {
-          const amt = amount * 2;
-          const win = gems + amt;
-          client.settings.set(message.author.id, win, "points");
-          message.reply(`You gained ${amt} love gems!`);
-        }
-
-        client.settings.set(message.author.id, 0, "gambleAmount");
       }
       break;
 
@@ -135,41 +74,14 @@ exports.run = async (client, message, args, level) => {
         message.channel.send(
           "You chose scissors. I chose scissors.\nHey! We came to a draw!\n\n**╮( ˘ ､ ˘ )╭**"
         );
-
-        if (amount) {
-          const amt = amount / 2;
-          const win = gems + amt;
-          client.settings.set(message.author.id, win, "points");
-          message.reply(`You gained ${amt} love gems!`);
-        }
-
-        client.settings.set(message.author.id, 0, "gambleAmount");
       } else if (response.toLowerCase() === "rock") {
         message.channel.send(
           "You chose rock. I chose scissors.\nAww, you won!\n\n**｡ﾟ･ (>﹏<) ･ﾟ｡**"
         );
-
-        if (amount) {
-          const amt = amount * 2;
-          const win = gems + amt;
-          client.settings.set(message.author.id, win, "points");
-          message.reply(`You gained ${amt} love gems!`);
-        }
-
-        client.settings.set(message.author.id, 0, "gambleAmount");
       } else if (response.toLowerCase() === "scissors") {
         message.channel.send(
           "You chose paper. I chose scissors.\nYay! I won!\n\n**(๑˃ᴗ˂)ﻭ**"
         );
-
-        if (amount) {
-          const amt = amount;
-          const lose = gems - amt;
-          client.settings.set(message.author.id, lose, "points");
-          message.reply(`You lost ${amt} love gems!`);
-        }
-
-        client.settings.set(message.author.id, 0, "gambleAmount");
       }
       break;
 
