@@ -46,46 +46,59 @@ module.exports = async (client, member) => {
         ctx.font = 'bold 60px sans-serif';
         ctx.strokeStyle = 'black';
         ctx.lineWidth = 8;
-        ctx.strokeText('Welcome', 270, 120);
+        ctx.strokeText('Welcome', 260, 100);
         ctx.fillStyle = '#ffffff';
-        ctx.fillText('Welcome ', 270, 120);
+        ctx.fillText('Welcome ', 260, 100);
 
         // Add an exclamation point here and below
-        ctx.font = applyText(canvas, `${member.displayName}!`, 60, 'bold');
+        // ctx.font = applyText(canvas, `${member.displayName}!`, 60, 'bold');
+        let dpN = member.displayName;
+        if (dpN.length > 9) {
+          dpN = member.displayName.slice(0, 9);
+        }
+        ctx.font = "bold 60px sans-serif"
         ctx.strokeStyle = 'black';
         ctx.lineWidth = 8;
-        ctx.strokeText(`${member.displayName}`, 560, 120);
+        ctx.strokeText(`${dpN}`, 570, 100);
         ctx.fillStyle = '#ffffff';
-        ctx.fillText(`${member.displayName}`, 560, 120);
+        ctx.fillText(`${dpN}`, 570, 100);
 
-        ctx.font = applyText(canvas, `to`, 60, 'bold');
+        ctx.font = "bold 60px sans-serif"
         ctx.strokeStyle = 'black';
         ctx.lineWidth = 8;
-        ctx.strokeText(`to`, 270, 180);
+        ctx.strokeText(`to`, 260, 170);
         ctx.fillStyle = '#ffffff';
-        ctx.fillText(`to`, 270, 180);
+        ctx.fillText(`to`, 260, 170);
+
+        let dpNG = member.guild.name;
+        // if (dpNG.length > 20) {
+        //   dpNG = member.displayName.slice(0, 20);
+        // }
 
         ctx.font = applyText(canvas, `${member.guild.name}!`, 60, 'bold');
+        // ctx.font = "bold 60px sans-serif"
         ctx.strokeStyle = 'black';
         ctx.lineWidth = 8;
-        ctx.strokeText(`${member.guild.name}`, 340, 180);
+        ctx.strokeText(`${dpNG}`, 330, 170);
         ctx.fillStyle = '#ffffff';
-        ctx.fillText(`${member.guild.name}`, 340, 180);
+        ctx.fillText(`${dpNG}`, 330, 170);
 
         ctx.font = applyText(canvas, `You are the xxxth member!`, 60, 'bold');
         ctx.strokeStyle = 'black';
         ctx.lineWidth = 8;
-        ctx.strokeText(`You are the ${member.guild.members.array().length}th member!`, 270, 250);
+        ctx.strokeText(`You are the ${member.guild.members.array().length}th member!`, 260, 250);
         ctx.fillStyle = '#ffffff';
-        ctx.fillText(`You are the ${member.guild.members.array().length}th member!`, 270, 250);
+        ctx.fillText(`You are the ${member.guild.members.array().length}th member!`, 260, 250);
 
         ctx.beginPath();
-        ctx.arc(145, 145, 100, 0, Math.PI * 2, true);
+        // ctx.arc(125, 155, 100, 0, Math.PI * 2, true);
+        ctx.arc(125, 145, 100, 0, Math.PI * 2, true);
         ctx.closePath();
         ctx.clip();
 
         const avatar = await Canvas.loadImage(member.user.displayAvatarURL);
-        ctx.drawImage(avatar, 45, 45, 245, 245);
+        // ctx.drawImage(avatar, 25, 25, 205, 205);
+        ctx.drawImage(avatar, 25, 45, 200, 200);
 
         const attachment = new Discord.Attachment(canvas.toBuffer(), 'welcome-image.png');
         const msg = guild.welcomeMessage.replace("<user>", member).replace("<guild>", member.guild.name);
