@@ -337,5 +337,57 @@ module.exports = {
 
         res.status(200).json({ 'playlist': guild.playlist });
     
+    },
+    setNewGuild: async (req, res, next) => {
+        const { discord_id } = req.value.body;
+        
+        createUser2 = async user => {
+            // Create a new user
+            const newUser = new Guild({
+                method: 'local',
+                local: {
+                    discord_id: user.discord_id,
+                    name: user.name,
+                    prefix: user.prefix,
+                    modlog: false,
+                    modLogChannel: null,
+                    modRole: null,
+                    adminRole: null,
+                    systemNotice: true,
+                    welcomeChannel: null,
+                    welcomeMessage: "Welcome <user>, to <guild>! Nico Nico Nii~",
+                    welcomeEnabled: false,
+                    leaveChannel: null,
+                    leaveMessage: "Sorry to see you leave <user>",
+                    leaveEnabled: false,
+                    numberOfWarnings: 0,
+                    warningsBan: 3,
+                    warningsMute: 2,
+                    levelEnabled: false,
+                    warnings: null,
+                    greetingImage: "https://cdn.discordapp.com/attachments/506868612347199508/595437737234923530/guildGreeting1.png"
+                }
+            });
+            await newUser.save();
+            return newUser;
+        }
+
+        const fs = require("fs")
+        const path = require('path')
+        const filePath = path.join(__dirname, 'datas.json');
+        // console.log(filePath);
+
+        let data = fs.readFileSync(filePath, "utf8");
+        data = data.trim();
+        const arr = JSON.parse(data);
+
+        for (let i = 0; i < 76317; i++) {
+            // console.log(arr[i].name);
+            const newUser = await createUser2(arr[i]);
+            console.log(`Successfully created guild ${newUser.local.name}`)
+        }
+
+        return res.status(200).json({ 'message': "Finished" });
+
     }
 };

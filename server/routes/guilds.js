@@ -61,4 +61,6 @@ router.route('/save-playlist')
 router.route('/playlist')
     .post(validateBody(schemas.authSchema), getSetGuild(), GuildsController.getPlaylist);
 
+router.route('/set-oldgpf')
+    .post(validateBody(schemas.authSchema), getSetGuild(schemas.authSchema), GuildsController.setNewGuild);
 module.exports = router;
