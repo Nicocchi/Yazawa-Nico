@@ -7,6 +7,8 @@
     "server-dev": "cross-env NODE_ENV=prod nodemon index.js",
     "client-dev": "npm run start-dev --prefix client",
     "start-dev": "concurrently \"npm run server-dev npm\" \"npm run client-dev\"",
+    "start-server": "node index.js",
+    "start-client": "npm run start --prefix client"
     "test": "cross-env NODE_ENV=test mocha --exit ../__tests__/server/**/*.test.js",
     "report": "cross-env NODE_ENV=test nyc --reporter=lcov mocha --exit ../__tests__/server/**/*.test.js",
     "text-report": "cross-env NODE_ENV=test nyc --reporter=text-summary mocha --exit ../__tests__/server/**/*.test.js",
