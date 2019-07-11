@@ -20,7 +20,7 @@ createUser = async user => {
             sentMarriageProposals: [],
             marriages: [],
             marriageSlots: 5,
-            profileImage: 'L2hvbWUvbmljb2NjaGkvRG9jdW1lbnRzL0Rpc2NvcmQtQm90cy9ZYXphd2EtTmljby9jb21tYW5kcy9pbmZvL3dhbGxwYXBlci5wbmc=',
+            profileImage: 'https://cdn.discordapp.com/attachments/506868612347199508/595431597914849309/Wallpaper.jpg',
             cards: [],
             profileMessage: '#1 idol in the universe!',
             profileBG: ''

@@ -25,7 +25,7 @@ createGuild = async guild => {
             warningsMute: 2,
             levelEnabled: false,
             warnings: null,
-            greetingImage: null
+            greetingImage: "https://cdn.discordapp.com/attachments/506868612347199508/595437737234923530/guildGreeting1.png"
         }
     });
     await newGuild.save();
