@@ -25,7 +25,6 @@ exports.run = async (client, message, args, level) => {
       );
 
     let serverQueue = client.queue.get(message.guild.id);
-    console.dir(serverQueue);
 
     if (serverQueue && !serverQueue.playing) {
       serverQueue.playing = true;
@@ -38,9 +37,11 @@ exports.run = async (client, message, args, level) => {
         const playlistRes = res.data;
         console.log("[RESUME.js] -> PLAYLIST", playlistRes.playlist);
         const voiceChannel = message.member.voiceChannel;
-        console.log("[RESUME.js] -> VC", voiceChannel);
+        // console.log("[RESUME.js] -> VC", voiceChannel);
 
-        if (!playlistRes.playlist || playlistRes.playlist === []) return message.channel.send("There is nothing playing.");
+        if (playlistRes.playlist.length <= 0) {
+          return message.channel.send("There is nothing to play");
+        }
 
         let queueConstruct = {
           textChannel: message.channel,
@@ -71,8 +72,6 @@ exports.run = async (client, message, args, level) => {
         return message.channel.send(`Unable to retrieve playlist due to an error. If encountered, please send to developers. (!support to get invite link) \n\`[${moment().utc()}] Retrieve Playlist - Resume | ${error}\``);
       }
     }
-
-    return message.channel.send("There is nothing playing.");
   } catch (e) {
     console.log(e);
   }
