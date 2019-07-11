@@ -316,5 +316,26 @@ module.exports = {
             }
         );
 
+    },
+    savePlaylist: async (req, res, next) => {
+        const { discord_id, playlist } = req.value.body;
+        console.log(playlist);
+
+        Guild.findOneAndUpdate(
+            {'local.discord_id': discord_id},
+            {$set: {'local.playlist': playlist }},
+            {},
+            function(e, object) {
+                if (e) return res.status(500).json({ error: e.message })
+
+                return res.status(200).json({ message: `:white_check_mark: Playlist has been saved` });
+            }
+        );
+    },
+    getPlaylist: async (req, res, next) => {
+        const { discord_id, guild } = req.value.body;
+
+        res.status(200).json({ 'playlist': guild.playlist });
+    
     }
 };

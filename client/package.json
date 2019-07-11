@@ -21,6 +21,7 @@
     "node": "10.15.3"
   },
   "dependencies": {
+    "@ffmpeg-installer/ffmpeg": "^1.0.19",
     "axios": "0.19.0",
     "better-sqlite-pool": "^0.1.2",
     "canvas": "2.5.0",
@@ -30,11 +31,14 @@
     "discord.js": "^11.4.2",
     "dotenv": "^6.1.0",
     "enmap": "^4.3.2",
+    "ffmpeg": "0.0.4",
+    "ffmpeg-binaries": "^4.0.0",
     "file-saver": "2.0.2",
+    "fluent-ffmpeg": "^2.1.2",
     "moment": "^2.22.2",
     "moment-duration-format": "^2.2.2",
     "ms": "^2.1.1",
-    "node-opus": "^0.3.1",
+    "node-opus": "^0.3.2",
     "simple-youtube-api": "^5.1.1",
     "ytdl-core": "^0.28.3"
   },
