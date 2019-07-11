@@ -120,7 +120,8 @@ module.exports = {
             sendAmount: Joi.number(),
             mentioned_name: Joi.string(),
             imageUrl: Joi.string(),
-            playlist: Joi.array().items()
+            playlist: Joi.array().items(),
+            pfinfo: Joi.string(),
         })
     }
 };
