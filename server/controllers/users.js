@@ -534,5 +534,20 @@ module.exports = {
                 return res.status(200).json({ message: msg });
             }
         );
-    }
+    },
+    setProfileText: async(req, res, next) => {
+        const { discord_id, user, pfinfo } = req.value.body;
+        console.log(pfinfo);
+
+        User.findOneAndUpdate(
+            {'local.discord_id': discord_id},
+            {$set: {'local.profileMessage': pfinfo}},
+            {},
+            function(e, object) {
+                if (e) return res.status(500).json({ message: e.message })
+
+                return res.status(200).json({ message: `Profile text has been updated to \`${pfinfo}\`` });
+            }
+        );
+    },
 };

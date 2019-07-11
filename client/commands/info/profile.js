@@ -176,9 +176,13 @@ exports.run = async (client, message, args, level) => {
   }
 
   // Draw Info Text
-  // const text = `I am the number one idol in the universe! This is getting a bit too long isn't it? Isn't it?`;
+  ctx.font = "35px sans-serif"
+  ctx.fillStyle = '#000000';
+  ctx.textAlign = "start";
+  ctx.fillText(`Info Box`, 330, 590);
+
   const text = profile.profileMessage;
-  const txt = text.slice(0, 158)
+  const txt = text.slice(0, 116)
   // ctx.font = await applyText(canvas, text, 50);
   ctx.font = "30px sans-serif"
   ctx.fillStyle = '#000000';
@@ -188,7 +192,7 @@ exports.run = async (client, message, args, level) => {
   // console.log(lines);
 
   lines.forEach(function(line, i) {
-    ctx.fillText(line, 330, (i + 1) * 30 + 560);
+    ctx.fillText(line, 330, (i + 1) * 30 + 600);
   })
 
   // Draw Marriages

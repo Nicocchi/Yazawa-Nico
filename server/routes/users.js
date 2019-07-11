@@ -39,5 +39,8 @@ router.route('/buymarriageslot')
 
 router.route('/setprofileimage')
     .post(validateBody(schemas.authSchema), getSetUser(schemas.authSchema), UsersController.setProfileImage);
+
+router.route('/set-pfinfo')
+    .post(validateBody(schemas.authSchema), getSetUser(schemas.authSchema), UsersController.setProfileText);
     
 module.exports = router;
