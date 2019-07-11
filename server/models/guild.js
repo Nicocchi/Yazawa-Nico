@@ -69,6 +69,9 @@ const guildSchema = new Schema({
         },
         greetingImage: {
             type: String
+        },
+        playlist: {
+            type: Array
         }
     }
 });

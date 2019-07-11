@@ -55,4 +55,10 @@ router.route('/set-warn')
 router.route('/set-greeting-image')
     .post(validateBody(schemas.authSchema), getSetGuild(), GuildsController.setGreetingImage);
 
+router.route('/save-playlist')
+    .post(validateBody(schemas.authSchema), getSetGuild(), GuildsController.savePlaylist);
+
+router.route('/playlist')
+    .post(validateBody(schemas.authSchema), getSetGuild(), GuildsController.getPlaylist);
+
 module.exports = router;

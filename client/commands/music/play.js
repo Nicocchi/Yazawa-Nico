@@ -1,12 +1,14 @@
 const { Discord, Util } = require("discord.js");
 const ytdl = require("ytdl-core");
+const axios = require("axios");
+const moment = require("moment");
 //  Description: Play a song from YouTube
 //  Usage: prefix arg1
 
 exports.run = async (client, message, args, level) => {
   try {
     // Create server queue
-    const serverQueue = client.queue.get(message.guild.id);
+    let serverQueue = client.queue.get(message.guild.id);
 
     // Check channel and permissions
     const voiceChannel = message.member.voiceChannel;
@@ -16,15 +18,17 @@ exports.run = async (client, message, args, level) => {
     const permissions = voiceChannel.permissionsFor(message.client.user);
     if (!permissions.has("CONNECT"))
       return message.channel.send(
-        "I cannot to voice channel, please make " +
+        "I can not connect to this voice channel, please make " +
           "sure I have the proper permissions."
       );
 
     if (!permissions.has("SPEAK"))
       return message.channel.send(
-        "I cannot to speak in this voice channel, " +
+        "I can not speak in this voice channel, " +
           "please make sure I have the proper permissions."
       );
+
+      
 
     // Begin searching
     const searchString = args.join(" ");

@@ -1,5 +1,8 @@
 const Discord = require("discord.js");
 const ytdl = require("ytdl-core");
+const moment = require("moment");
+const axios = require("axios");
+
 module.exports = client => {
   /**
    * PERMISSION LEVEL FUNCTION
@@ -194,6 +197,7 @@ module.exports = client => {
       // If no song, leave the voice channel and delete the guild from the queue
       if (!song) {
         serverQueue.voiceChannel.leave();
+        // const res = await axios.post('http://localhost:8000/guilds/save-playlist', {'discord_id': guild.id, 'name': guild.name, 'playlist': [] });
         client.queue.delete(guild.id);
         return;
       }
@@ -208,7 +212,10 @@ module.exports = client => {
           // Recall the function with the next song
           client.play(guild, serverQueue.songs[0]);
         })
-        .on("Error", e => client.logger.error(`CLIENT_PLAY: ${e}`));
+        .on("Error", e => {
+          client.logger.error(`CLIENT_PLAY: ${e}`);
+          serverQueue.textChannel.send(`Error playing song: ${e}`);
+        });
 
       // Set the volume
       dispatcher.setVolumeLogarithmic(serverQueue.volume / 5);
@@ -231,31 +238,49 @@ module.exports = client => {
       const song = {
         id: video.id,
         title: video.title,
-        url: `https://www.youtube.com/watch?v=${video.id}`
+        url: video.url
       };
 
       if (!serverQueue) {
-        const queueConstruct = {
-          textChannel: message.channel,
-          voiceChannel: voiceChannel,
-          connection: null,
-          songs: [],
-          volume: 5,
-          playing: true
-        };
-        client.queue.set(message.guild.id, queueConstruct);
-
-        queueConstruct.songs.push(song);
-
         try {
-          var connection = await voiceChannel.join();
-          queueConstruct.connection = connection;
-          client.play(message.guild, queueConstruct.songs[0]);
-        } catch (e) {
-          client.logger.error(e);
-          client.queue.delete(message.guild.id);
-          return message.channel.send("I could not join the voice channel.");
+          // try to load playlist from server
+          const res = await axios.post('http://localhost:8000/guilds/playlist', {'discord_id': message.guild.id, 'name': message.guild.name });
+          const playlistRes = res.data;
+          // console.log("[FUNCTIONS.js] -> PLAYLIST", playlistRes.playlist);
+
+          let songs = [];
+          if (playlistRes.playlist || playlistRes.playlist !== []) songs = playlistRes.playlist;
+
+          console.log("[FUNCTIONS.js] -> SONGS", songs);
+          let queueConstruct = {
+            textChannel: message.channel,
+            voiceChannel: voiceChannel,
+            connection: null,
+            songs: songs,
+            volume: 5,
+            playing: true
+          };
+
+          // console.log("[FUNCTIONS.js] -> QUEUE_CONSTRUCT", queueConstruct);
+          
+          client.queue.set(message.guild.id, queueConstruct);
+
+          queueConstruct.songs.push(song);
+
+          try {
+            var connection = await voiceChannel.join();
+            queueConstruct.connection = connection;
+            client.play(message.guild, queueConstruct.songs[0]);
+          } catch (e) {
+            client.logger.error(e);
+            client.queue.delete(message.guild.id);
+            return message.channel.send(`Unable to play song due to an error. If encountered, please send to developers. (!support to get invite link) \n\`[${moment().utc()}] Play | ${e}\``);
+          }
+      
+        } catch (error) {
+          return message.channel.send(`Unable to retrieve playlist due to an error. If encountered, please send to developers. (!support to get invite link) \n\`[${moment().utc()}] Retrieve Playlist | ${error}\``);
         }
+        
       } else {
         serverQueue.songs.push(song);
         if (playlist) return;

@@ -1,6 +1,7 @@
 const Discord = require("discord.js");
 const ytdl = require("ytdl-core");
-
+const axios = require("axios");
+const moment = require("moment");
 //  Description: Skip a song from the queue
 //  Usage: prefix arg1
 
@@ -15,9 +16,27 @@ exports.run = async (client, message, args, level) => {
         "There is nothing playing that I could skip for you."
       );
 
-    message.channel.send(`**${serverQueue.songs[0].title}** was skipped.`);
+    try {
+      const song = serverQueue.songs[0].title;
+      // console.log(serverQueue);
+      let songQueue = serverQueue.songs;
+      songQueue.shift();
+      console.log(songQueue);
 
-    serverQueue.connection.dispatcher.end();
+      const res = await axios.post('http://localhost:8000/guilds/save-playlist', {'discord_id': message.guild.id, 'name': message.guild.name, 'playlist': songQueue });
+      console.log(res.data);
+
+      message.channel.send(`**${song}** was skipped.`);
+      
+      serverQueue.connection.dispatcher.end();
+
+      
+    } catch (error) {
+      message.channel.send(`Error skipping ${error}`);
+    }
+    
+
+    
   } catch (e) {
     console.log(e);
   }
