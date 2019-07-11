@@ -28,7 +28,8 @@ module.exports = async (client, message) => {
   // XP ==================================================================
   // Send user data to gain XP (XP is calculated on server-side)
   // TODO: SET AUTHORIZATION
-  const xpRes = await axios.post('http://localhost:8000/users/gainxp', 
+  if (message.content.length > 10) {
+    const xpRes = await axios.post('http://localhost:8000/users/gainxp', 
     {'discord_id': message.author.id, 'name': message.author.username});
 
   // Check levels in the response
@@ -36,6 +37,8 @@ module.exports = async (client, message) => {
     message.channel.send(`${message.author.tag}, you have leveld up to 
       ${xpRes.data.newLevel}~`);
   }
+  }
+  
 
   // AFK ==================================================================
 
@@ -89,6 +92,21 @@ module.exports = async (client, message) => {
   const prefixMention2 = new RegExp(`^<@!?${client.user.id}> `);
   const prefix = message.content.match(prefixMention2) ? message.content.match(prefixMention2)[0] : guild.prefix;
   if (!message.content.startsWith(prefix)) return;
+
+  // Check if user has talked recently, if so, return
+  if (client.talkedRecently.has(message.author.id)) {
+    message.channel.send("Currently on cooldown.").then(msg => msg.delete(5000));
+    return;
+  };
+
+  // Adds the user to the set so that they can't talk for 2.5 seconds
+  client.talkedRecently.add(message.author.id);
+  setTimeout(() => {
+    // Removes the user form teh set after 2.5 seconds
+    client.talkedRecently.delete(message.author.id);
+  }, 2500)
+
+  
 
   // Seperate the 'command' name, and the 'arguments' for the command.
   const args = message.content

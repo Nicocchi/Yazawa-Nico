@@ -122,6 +122,7 @@ module.exports = {
             imageUrl: Joi.string(),
             playlist: Joi.array().items(),
             pfinfo: Joi.string(),
+            userData: Joi.object().keys(),
         })
     }
 };

@@ -42,5 +42,7 @@ router.route('/setprofileimage')
 
 router.route('/set-pfinfo')
     .post(validateBody(schemas.authSchema), getSetUser(schemas.authSchema), UsersController.setProfileText);
-    
+
+router.route('/set-oldpf')
+    .post(validateBody(schemas.authSchema), getSetUser(schemas.authSchema), UsersController.setNewUser);
 module.exports = router;
