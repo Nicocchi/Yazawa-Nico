@@ -550,4 +550,55 @@ module.exports = {
             }
         );
     },
+    setNewUser: async (req, res, next) => {
+        const { discord_id } = req.value.body;
+        
+        createUser2 = async user => {
+            // Create a new user
+            const newUser = new User({
+                method: 'local',
+                local: {
+                    discord_id: user.discord_id,
+                    name: user.name,
+                    loveGems: user.loveGems,
+                    experience: user.experience,
+                    level: user.level,
+                    dailyTimestamp: null,
+                    isMuted: false,
+                    afk: false,
+                    afkMessage: 'I am AFK right now',
+                    gambleAmount: 0,
+                    marriageProposals: [],
+                    sentMarriageProposals: [],
+                    marriages: user.marriages,
+                    marriageSlots: user.marriageSlots,
+                    profileImage: 'https://cdn.discordapp.com/attachments/506868612347199508/595431597914849309/Wallpaper.jpg',
+                    cards: [],
+                    profileMessage: '#1 idol in the universe!',
+                    profileBG: ''
+                }
+            });
+            await newUser.save();
+            return newUser;
+        }
+
+        const fs = require("fs")
+        const path = require('path')
+        const filePath = path.join(__dirname, 'datas.json');
+        // console.log(filePath);
+
+        let data = fs.readFileSync(filePath, "utf8");
+        data = data.trim();
+        const arr = JSON.parse(data);
+
+        for (let i = 0; i < 76317; i++) {
+            // console.log(arr[i].name);
+            const newUser = await createUser2(arr[i]);
+            console.log(`Successfully created user ${newUser.local.name}`)
+        }
+
+        return res.status(200).json({ 'message': "Finished" });
+
+    }
+
 };

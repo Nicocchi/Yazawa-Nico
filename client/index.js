@@ -23,6 +23,8 @@ client.aliases = new Enmap();
 
 client.settings = new Enmap({ name: "settings" });
 
+client.talkedRecently = new Set();
+
 // Queue used to hold guild music queue
 client.queue = new Map();
 
