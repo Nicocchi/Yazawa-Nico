@@ -79,6 +79,7 @@ module.exports = {
     },
     setAFK: async(req, res, next) => {
         const { discord_id, afk_value } = req.value.body;
+        console.log("AFK -> ", afk_value);
 
         User.findOneAndUpdate(
             {'local.discord_id': discord_id},

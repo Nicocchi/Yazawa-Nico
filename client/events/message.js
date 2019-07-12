@@ -70,21 +70,30 @@ module.exports = async (client, message) => {
   }
 
   // If the author is AFK, set as back and return message
-  if (author.afk) {
-    console.log('[MESSAGE_AFK]', author.afk);
-    const profileResults = await axios.post('http://localhost:8000/users/setafk', {'discord_id': message.author.id, 'username': message.author.username, 'afk': false});
-
-    let embed = new Discord.RichEmbed()
-      .setTitle(`AFK`)
-      .setTimestamp()
-      .setColor("#FF4D9C")
-      .setThumbnail(message.author.displayAvatarURL)
-      .setDescription(
-        `You are now set as back **${message.author.username}!**`
-      );
-
-    message.channel.send(embed);
+  try {
+    if (author.afk) {
+      const profileResults = await axios.post('http://localhost:8000/users/setafk', {
+        "discord_id": message.author.id,
+        "name": message.author.username,
+        "afk_value": false
+      });
+  
+      let embed = new Discord.RichEmbed()
+        .setTitle(`AFK`)
+        .setTimestamp()
+        .setColor("#FF4D9C")
+        .setThumbnail(message.author.displayAvatarURL)
+        .setDescription(
+          `You are now set as back **${message.author.username}!**`
+        );
+  
+      message.channel.send(embed);
+    }
+  } catch (error) {
+    console.log(error.response.status);
+    // client.logger.error(error.response);
   }
+  
 
   // END OF AFK ==================================================================
 
