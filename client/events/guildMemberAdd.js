@@ -53,10 +53,11 @@ module.exports = async (client, member) => {
         // Add an exclamation point here and below
         // ctx.font = applyText(canvas, `${member.displayName}!`, 60, 'bold');
         let dpN = member.displayName;
-        if (dpN.length > 9) {
-          dpN = member.displayName.slice(0, 9);
-        }
-        ctx.font = "bold 60px sans-serif"
+        // if (dpN.length > 9) {
+        //   dpN = member.displayName.slice(0, 9);
+        // }
+        // ctx.font = "bold 60px sans-serif"
+        ctx.font = applyText(canvas, `${dpN}!`, 60, 'bold');
         ctx.strokeStyle = 'black';
         ctx.lineWidth = 8;
         ctx.strokeText(`${dpN}`, 570, 100);
@@ -66,16 +67,16 @@ module.exports = async (client, member) => {
         ctx.font = "bold 60px sans-serif"
         ctx.strokeStyle = 'black';
         ctx.lineWidth = 8;
-        ctx.strokeText(`to`, 260, 170);
+        ctx.strokeText(`to`, 250, 170);
         ctx.fillStyle = '#ffffff';
-        ctx.fillText(`to`, 260, 170);
+        ctx.fillText(`to`, 250, 170);
 
         let dpNG = member.guild.name;
         // if (dpNG.length > 20) {
         //   dpNG = member.displayName.slice(0, 20);
         // }
 
-        ctx.font = applyText(canvas, `${member.guild.name}!`, 60, 'bold');
+        ctx.font = applyText(canvas, `${dpNG}!`, 60, 'bold');
         // ctx.font = "bold 60px sans-serif"
         ctx.strokeStyle = 'black';
         ctx.lineWidth = 8;
@@ -86,9 +87,9 @@ module.exports = async (client, member) => {
         ctx.font = applyText(canvas, `You are the xxxth member!`, 60, 'bold');
         ctx.strokeStyle = 'black';
         ctx.lineWidth = 8;
-        ctx.strokeText(`You are the ${member.guild.members.array().length}th member!`, 260, 250);
+        ctx.strokeText(`You are the ${member.guild.memberCount}th member!`, 260, 250);
         ctx.fillStyle = '#ffffff';
-        ctx.fillText(`You are the ${member.guild.members.array().length}th member!`, 260, 250);
+        ctx.fillText(`You are the ${member.guild.memberCount}th member!`, 260, 250);
 
         ctx.beginPath();
         // ctx.arc(125, 155, 100, 0, Math.PI * 2, true);
