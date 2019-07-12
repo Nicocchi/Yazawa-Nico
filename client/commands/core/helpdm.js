@@ -53,7 +53,7 @@ exports.run = async (client, message, args, level) => {
       `Set`,
       "`adminrole`, `get`, `leave`, `leavechannel`, `leavemessage`, `level`,`modlog`, " +
         "`modlogchannel`, `modrole`, `prefix`, `warningsban`, `warningsmute`, `welcome`, `welcomechannel`, " +
-        "`welcomemessage` "
+        "`welcomemessage`, `welcometest` "
     );
 
   message.author.send(embed);
