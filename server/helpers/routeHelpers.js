@@ -98,6 +98,7 @@ module.exports = {
             xp: Joi.number(),
             level: Joi.number(),
             afk: Joi.boolean(),
+            afk_value: Joi.boolean(),
             afkMessage: Joi.string(),
             prefix: Joi.string(),
             warningsBan: Joi.number(),
