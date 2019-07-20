@@ -113,7 +113,7 @@ module.exports = {
         let loveGems = user.loveGems;
 
         // Define the current day in UTC format
-        let m = moment().utc();
+        let now = moment().utc();
 
         // Define the difference for comparing the current and user's last daily date
         let diff = 0;
@@ -126,14 +126,15 @@ module.exports = {
 
         // If the user is not using the command for the first time, set the difference for comparison
         if (dailyTimestamp != null) {
-            diff = m.diff(dff, "hours");
+            const duration = moment.duration(now.diff(dff));
+            diff = dff.diff(now, 'hours');
         }
 
         // Compare the dates and add the love gems, if already claimed, return message stating user has already claimed
         // If the user is using the command for the first time or 24 hours have passed since their last time using the
         // command
         if (dailyTimestamp === null || diff >= 24) {
-            dailyTimestamp = m;
+            dailyTimestamp = now.toString();
             loveGems += 200;
             User.findOneAndUpdate(
                 { 'local.discord_id': discord_id },
