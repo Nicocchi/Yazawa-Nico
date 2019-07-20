@@ -288,8 +288,8 @@ module.exports = {
         }
 
         // Point proposals to new arrays
-        let authorProposals = user.sentMarriageProposals;
-        let userSentProposals = foundUser.local.marriageProposals;
+        let authorProposals = user.marriageProposals;
+        let userSentProposals = foundUser.local.sentMarriageProposals;
 
         // Bool to determine if accepted or not
         let accepted = false;
