@@ -193,7 +193,7 @@ module.exports = {
                     function(e, object) {
                         if (e) return res.status(500).json({ message: `[${moment().utc()}] Daily | ${e.message}` });
 
-                        return res.status(200).json({ message: `:white_check_mark: You sent 200 Love Gems to **${mentioned_name}**! You now have \`${userLoveGems}\` Love Gems.` });
+                        return res.status(200).json({ message: `:white_check_mark: You sent \`${sendAmount}\` Love Gems to **${mentioned_name}**! You now have \`${userLoveGems}\` Love Gems.` });
                     }
                 );
             }
