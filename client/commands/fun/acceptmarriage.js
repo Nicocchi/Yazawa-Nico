@@ -19,7 +19,7 @@ exports.run = async (client, message, args, level) => {
   if (user.user.id === message.author.id)
     return message.channel.send("You can't marry yourself!");
 
-      message.channel.send(userProfile.message);
+    message.channel.send(userProfile.message);
   } catch (error) {
     message.channel.send(`Unable to complete marriage due to an error. If encountered, please send to developers. (!support to get invite link) \n\`[${moment().utc()}] Accept Marry | ${error}\``);
   }
