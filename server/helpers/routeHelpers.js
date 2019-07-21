@@ -34,6 +34,19 @@ module.exports = {
                 foundUser = await createUser(user);
             }
 
+            // Check username -> if different, update, else, ignore
+            if (foundUser.local.name !== name) {
+                User.findOneAndUpdate(
+                    {'local.discord_id': discord_id},
+                    {'local.name': name},
+                    {},
+                    function(e, object) {
+                        if (e) console.log(e.message);
+                    }
+                )
+                foundUser.local.name === name;
+            }
+
             if (!req.value) { req.value = {}; }
             req.value['body'] = req.body;
             req.value['body']['user'] = foundUser.local;
