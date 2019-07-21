@@ -40,6 +40,9 @@ const guildSchema = new Schema({
         welcomeMessage: {
             type: String
         },
+        welcomeImgMessage: {
+            type: String
+        },
         welcomeEnabled: {
             type: Boolean
         },

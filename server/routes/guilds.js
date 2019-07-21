@@ -63,4 +63,7 @@ router.route('/playlist')
 
 router.route('/set-oldgpf')
     .post(validateBody(schemas.authSchema), getSetGuild(schemas.authSchema), GuildsController.setNewGuild);
+
+router.route('/set-welcome-img-message')
+    .post(validateBody(schemas.authSchema), getSetGuild(schemas.authSchema), GuildsController.setWelcomeImgMessage);
 module.exports = router;

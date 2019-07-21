@@ -160,6 +160,17 @@ exports.run = async (client, message, args, level) => {
     }
   }
 
+  if (key === "welcomeimgmessage") {
+    try {
+      const res = await axios.post('http://localhost:8000/guilds/set-welcome-img-message', 
+      {'discord_id': message.guild.id, 'name': message.guild.name, 'welcomeMessage': action });
+
+      message.channel.send(res.data.message);
+    } catch (error) {
+      message.channel.send(`Unable to set welcome image message due to an error. If encountered, please send to developers.\n\`${error}\``);
+    }
+  }
+
   if (key === "welcomechannel") {
     try {
       const res = await axios.post('http://localhost:8000/guilds/set-welcome-channel', 

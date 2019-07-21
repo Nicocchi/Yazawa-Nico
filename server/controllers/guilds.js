@@ -17,6 +17,7 @@ createGuild = async guild => {
             welcomeChannel: null,
             welcomeMessage: "Welcome <user>, to <guild>! Nico Nico Nii~",
             welcomeEnabled: false,
+            welcomeImgMessage: "Welcome <user> to <guild>! You are the <count>th user!",
             leaveChannel: null,
             leaveMessage: "Sorry to see you leave <user>",
             leaveEnabled: false,
@@ -185,6 +186,21 @@ module.exports = {
                 if (e) return res.status(500).json({ error: e.message })
 
                 return res.status(200).json({ message: `:white_check_mark: Server welcome message has been changed to \`${welcomeMessage}\`` });
+            }
+        );
+
+    },
+    setWelcomeImgMessage: async(req, res, next) => {
+        const { discord_id, guild, welcomeMessage } = req.value.body;
+
+        Guild.findOneAndUpdate(
+            {'local.discord_id': discord_id},
+            {$set: {'local.welcomeImgMessage': welcomeMessage }},
+            {},
+            function(e, object) {
+                if (e) return res.status(500).json({ error: e.message })
+
+                return res.status(200).json({ message: `:white_check_mark: Server welcome image message has been changed to \`${welcomeMessage}\`` });
             }
         );
 
