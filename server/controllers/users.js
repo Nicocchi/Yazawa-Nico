@@ -79,7 +79,6 @@ module.exports = {
     },
     setAFK: async(req, res, next) => {
         const { discord_id, afk_value } = req.value.body;
-        console.log("AFK -> ", afk_value);
 
         User.findOneAndUpdate(
             {'local.discord_id': discord_id},
@@ -107,7 +106,7 @@ module.exports = {
         )
     },
     daily: async (req, res, next) => {
-        const { discord_id, user } = req.value.body;
+        const { discord_id, user, username } = req.value.body;
 
         // Get the user's love gems
         let loveGems = user.loveGems;
@@ -129,8 +128,6 @@ module.exports = {
             const duration = moment.duration(now.diff(dff));
             diff = now.diff(dff, 'hours');
         }
-
-        console.log("Diff -> ", diff);
 
         // Compare the dates and add the love gems, if already claimed, return message stating user has already claimed
         // If the user is using the command for the first time or 24 hours have passed since their last time using the
