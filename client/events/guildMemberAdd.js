@@ -42,54 +42,57 @@ module.exports = async (client, member) => {
         ctx.strokeStyle = '#74037b';
         ctx.strokeRect(0, 0, canvas.width, canvas.height);
 
-        // Slightly smaller text placed above the member's display name
+        function fragmentText(text, maxWidth) {
+          var words = text.split(' '),
+              lines = [],
+              line = "";
+          if (ctx.measureText(text).width < maxWidth) {
+              return [text];
+          }
+          while (words.length > 0) {
+              while (ctx.measureText(words[0]).width >= maxWidth) {
+                  var tmp = words[0];
+                  words[0] = tmp.slice(0, -1);
+                  if (words.length > 1) {
+                      words[1] = tmp.slice(-1) + words[1];
+                  } else {
+                      words.push(tmp.slice(-1));
+                  }
+              }
+              if (ctx.measureText(line + words[0]).width < maxWidth) {
+                  line += words.shift() + " ";
+              } else {
+                  lines.push(line);
+                  line = "";
+              }
+              if (words.length === 0) {
+                  lines.push(line);
+              }
+          }
+          return lines;
+        }
+
+        let text = "";
+        if (!guild.welcomeImgMessage || guild.welcomeImgMessage === "" || guild.welcomeImgMessage === null || guild.welcomeImgMessage === undefined) {
+          text = `Welcome <user> to <guild>! You are the <count>th user!`;
+        } else {
+          text = guild.welcomeImgMessage;
+        }
+
+        const txt = text.replace("<user>", member.displayName).replace("<guild>", member.guild.name).replace("<count>", member.guild.memberCount);
+      
         ctx.font = 'bold 60px sans-serif';
         ctx.strokeStyle = 'black';
-        ctx.lineWidth = 8;
-        ctx.strokeText('Welcome', 260, 100);
+        ctx.lineWidth = 2;
         ctx.fillStyle = '#ffffff';
-        ctx.fillText('Welcome ', 260, 100);
-
-        // Add an exclamation point here and below
-        // ctx.font = applyText(canvas, `${member.displayName}!`, 60, 'bold');
-        let dpN = member.displayName;
-        // if (dpN.length > 9) {
-        //   dpN = member.displayName.slice(0, 9);
-        // }
-        // ctx.font = "bold 60px sans-serif"
-        ctx.font = applyText(canvas, `${dpN}!`, 60, 'bold');
-        ctx.strokeStyle = 'black';
-        ctx.lineWidth = 8;
-        ctx.strokeText(`${dpN}`, 570, 100);
-        ctx.fillStyle = '#ffffff';
-        ctx.fillText(`${dpN}`, 570, 100);
-
-        ctx.font = "bold 60px sans-serif"
-        ctx.strokeStyle = 'black';
-        ctx.lineWidth = 8;
-        ctx.strokeText(`to`, 250, 170);
-        ctx.fillStyle = '#ffffff';
-        ctx.fillText(`to`, 250, 170);
-
-        let dpNG = member.guild.name;
-        // if (dpNG.length > 20) {
-        //   dpNG = member.displayName.slice(0, 20);
-        // }
-
-        ctx.font = applyText(canvas, `${dpNG}!`, 60, 'bold');
-        // ctx.font = "bold 60px sans-serif"
-        ctx.strokeStyle = 'black';
-        ctx.lineWidth = 8;
-        ctx.strokeText(`${dpNG}`, 330, 170);
-        ctx.fillStyle = '#ffffff';
-        ctx.fillText(`${dpNG}`, 330, 170);
-
-        ctx.font = applyText(canvas, `You are the xxxth member!`, 60, 'bold');
-        ctx.strokeStyle = 'black';
-        ctx.lineWidth = 8;
-        ctx.strokeText(`You are the ${member.guild.memberCount}th member!`, 260, 250);
-        ctx.fillStyle = '#ffffff';
-        ctx.fillText(`You are the ${member.guild.memberCount}th member!`, 260, 250);
+      
+        const lines = fragmentText(txt, 730);
+        // console.log(lines);
+      
+        lines.forEach(function(line, i) {
+          ctx.fillText(line, 260, (i + 1) * 60 + 30);
+          ctx.strokeText(line, 260, (i + 1) * 60 + 30);
+        })
 
         ctx.beginPath();
         // ctx.arc(125, 155, 100, 0, Math.PI * 2, true);
