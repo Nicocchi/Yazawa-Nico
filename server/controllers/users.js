@@ -127,8 +127,10 @@ module.exports = {
         // If the user is not using the command for the first time, set the difference for comparison
         if (dailyTimestamp != null) {
             const duration = moment.duration(now.diff(dff));
-            diff = dff.diff(now, 'hours');
+            diff = now.diff(dff, 'hours');
         }
+
+        console.log("Diff -> ", diff);
 
         // Compare the dates and add the love gems, if already claimed, return message stating user has already claimed
         // If the user is using the command for the first time or 24 hours have passed since their last time using the
