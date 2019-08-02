@@ -7,7 +7,6 @@ const moment = require("moment");
 
 exports.run = async (client, message, args, level) => {
   try {
-    return message.channel.send("Music is currently under maintenance. Sorry for the inconvenience.")
     // Create server queue
     let serverQueue = client.queue.get(message.guild.id);
 

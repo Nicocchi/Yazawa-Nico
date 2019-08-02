@@ -8,7 +8,6 @@ const axios = require("axios");
 
 exports.run = async (client, message, args, level) => {
   try {
-    return message.channel.send("Music is currently under maintenance. Sorry for the inconvenience.")
     if (!message.member.voiceChannel)
       return message.channel.send("You are not in a voice channel.");
 
