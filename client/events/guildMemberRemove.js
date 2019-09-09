@@ -15,7 +15,7 @@ module.exports = async (client, member) => {
     const channel = member.guild.channels.find(ch => ch.id === guild.leaveChannel);
 
     if (guild.leaveEnabled && guild.leaveChannel !== null) {
-      const msg = guild.leaveMessage.replace("<user>", member);
+      const msg = guild.leaveMessage.replace("<user>", member.user.username);
 
       channel.send(msg);
 
@@ -33,6 +33,12 @@ module.exports = async (client, member) => {
             
             // Send the deleted message to the modlog channel
             modLogChannel.send(embed).catch(console.error);
+
+            // client.logger.error("Getting audit logs");
+            // const entry = await message.guild.fetchAuditLogs({type: 'MEMBER_KICK'});
+
+            // client.logger.error(entry);
+
           } catch (e) {
             client.logger.error(`[guildMemberAdd.js]: Embed: ${e}`);
             client.channel.send(`Unable to show leave log due to an error. If encountered, please send to developers. (!support to get invite link) \n\`[${moment().utc()}] [guildMemberAdd.js]: Embed: | ${e.response}\``);
