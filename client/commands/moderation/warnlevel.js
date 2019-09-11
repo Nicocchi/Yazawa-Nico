@@ -30,7 +30,7 @@ exports.conf = {
 
 exports.help = {
     name: "warnlevel",
-    category: "System",
+    category: "System user",
     description: "warns a mentioned user",
     usage: "warnlevel <user>"
 };
