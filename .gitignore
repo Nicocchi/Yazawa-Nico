@@ -65,6 +65,8 @@ typings/
 build/
 commands/info/wallpaper.jpg
 commands/info/wallpaper.png
+package-lock.json
+/client/package-lock.json
 
 # Secrets
 .env
