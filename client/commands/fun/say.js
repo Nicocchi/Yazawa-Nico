@@ -1,4 +1,3 @@
-const Discord = require("discord.js");
 //  Description: Say something with the bot
 //  Usage: say *args
 exports.run = async (client, message, args, level) => {

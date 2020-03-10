@@ -2,7 +2,7 @@
 // Note: Due to the binding of client to every event, every event
 // goes `client, other, args` when this function is run.
 
-const Discord = require("discord.js");
+const { MessageEmbed } = require("discord.js");
 const axios = require('axios');
 
 module.exports = async (client, message) => {
@@ -34,8 +34,7 @@ module.exports = async (client, message) => {
 
   // Check levels in the response
   if (xpRes.data.newLevel > xpRes.data.previousLevel && guild.levelEnabled) {
-    message.channel.send(`${message.author.tag}, you have leveld up to 
-      ${xpRes.data.newLevel}~`);
+    message.channel.send(`${message.author.tag}, you have leveld up to ${xpRes.data.newLevel}~`);
   }
   }
   
@@ -52,7 +51,7 @@ module.exports = async (client, message) => {
     const mentionedProfile = mentionedUser.data.user;
 
     if (mentionedProfile.afk) {
-      let embed = new Discord.RichEmbed()
+      let embed = new MessageEmbed()
           .setTitle(`AFK`)
           .setTimestamp()
           .setColor("#FF4D9C")
@@ -78,7 +77,7 @@ module.exports = async (client, message) => {
         "afk_value": false
       });
   
-      let embed = new Discord.RichEmbed()
+      let embed = new MessageEmbed()
         .setTitle(`AFK`)
         .setTimestamp()
         .setColor("#FF4D9C")

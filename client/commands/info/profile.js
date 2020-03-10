@@ -1,7 +1,7 @@
-const Discord = require("discord.js");
+const { MessageAttachment } = require("discord.js");
 const axios = require('axios');
 const Canvas = require('canvas');
-const { Image } = require('canvas');
+const { Image, loadImage } = require('canvas');
 
 //  Description: Display User Profile Stats
 //  Usage: prefix arg1 arg2
@@ -24,20 +24,21 @@ const applyText = async (canvas, text, fntSize, weight = "normal") => {
 };
 
 exports.run = async (client, message, args, level) => {
-  let member = message.guild.member(message.mentions.users.first()) || message.guild.members.get(args[0]);
+  let member = message.guild.member(message.mentions.users.first());
   if (!member) {
     member = {
       id: message.author.id,
       username: message.author.username,
-      avatar: message.author.displayAvatarURL
+      avatar: message.author.displayAvatarURL()
     };
   } else {
     member = {
       id: member.id,
       username: member.user.username,
-      avatar: member.user.displayAvatarURL
+      avatar: member.user.displayAvatarURL()
     };
   }
+
   // console.log("Member", member.username);
   // TODO: SET AUTHORIZATION
   const res = await axios.post('http://localhost:8000/users/profile', {'discord_id': member.id, 'name': member.username});
@@ -80,10 +81,13 @@ exports.run = async (client, message, args, level) => {
   // Right column
   ctx.fillStyle = "rgba(255, 255, 255, 0.7)";
   ctx.fillRect(280, 350, 610, 370);
+  console.log("DRAWING AVATAR")
 
   // Draw avatar
-  const avatar = await Canvas.loadImage(member.avatar);
-  ctx.drawImage(avatar, 30, 130, 220, 220 );
+  // const avatar = await Canvas.loadImage(member.avatar);
+  // ctx.drawImage(avatar, 30, 130, 220, 220 );
+
+  console.log("MADE IT HERE")
 
   // Draw user's username
   ctx.font = await applyText(canvas, member.username, 80);
@@ -243,9 +247,7 @@ exports.run = async (client, message, args, level) => {
     ctx.fillText("No Marriages", 50, 450);
   }
 
-  
-
-  const attachment = new Discord.Attachment(canvas.toBuffer(), 'user_profile.png');
+  const attachment = new MessageAttachment(canvas.toBuffer());
 
   message.channel.send(attachment);
     

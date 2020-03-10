@@ -1,4 +1,4 @@
-const Discord = require("discord.js");
+const { MessageEmbed } = require("discord.js");
 const axios = require('axios');
 const fs = require('fs');
 const ms = require('ms');
@@ -8,7 +8,7 @@ const ms = require('ms');
 exports.run = async (client, message, args, level) => {
     console.log("RUN")
     // Get mentioned user, if none, return error
-    let user = message.guild.member(message.mentions.users.first() || message.guild.members.get(args[0]));
+    let user = message.guild.member(message.mentions.users.first());
     if(!user) return message.channel.send(`:x: Unable to warn user **undefined** due to an error.\n \`You must mention a user to warn\``);
 
     // Check if author has proper permissions
@@ -22,8 +22,8 @@ exports.run = async (client, message, args, level) => {
         const res = await axios.post('http://localhost:8000/guilds/set-warn', {'discord_id': message.guild.id, 'name': message.guild.name, warnUser: user.user.id, warning: reason });
 
     // Configure embed
-    let embed = new Discord.RichEmbed()
-        .setAuthor(`${client.user.username}'s ModLog`, `${client.user.avatarURL}`)
+    let embed = new MessageEmbed()
+        .setAuthor(`${client.user.username}'s ModLog`, `${client.user.avatarURL()}`)
         .setDescription(`User **${user.user.username}#${user.user.discriminator}** was warned by **${message.author.username}#${message.author.discriminator}** for:\n\n **${reason}**\n\nWarnings: ${res.data.warnings}`)
         .setColor('#FF4D9C')
         .setTimestamp();
@@ -36,14 +36,14 @@ exports.run = async (client, message, args, level) => {
     // Set channel & check of modlog channel is available. If so, send embed
     // to the modlog channel, otherwise, send to default message channel
     if (guild.modLogChannel !== null) {
-        const channel = message.guild.channels.find(c => c.id === guild.modLogChannel);
+        const channel = message.guild.channels.cache.find(c => c.id === guild.modLogChannel);
         channel.send(embed);
     }
 
     message.channel.send(embed).then(msg => msg.delete(5000));
 
     if (res.data.warnings === guild.warningsMute) {
-        let muterole = message.guild.roles.find(`name`, 'muted')
+        let muterole = message.guild.roles.cache.find(`name`, 'muted')
 
         //check mute role and create
         if(!muterole) return message.channel.send('No mute role, warn has been given but not muted. Please set muted role named "muted"');
@@ -63,7 +63,10 @@ exports.run = async (client, message, args, level) => {
 
     if(res.data.warnings == guild.warningsBan) {
         message.guild.member(user).ban(reason);
-        message.channel.send(`${user.user.username} has been banned for being warned too many times`)
+        user.ban(reason).then(() => {
+            message.channel.send(`${user.user.username} has been banned for being warned too many times`)
+        }).catch(() => message.channel.send(`Unable to ban ${user.user.username} for being warned too many times`))
+        
     }
     } catch (error) {
         message.channel.send(`Unable to warn user due to an error. If encountered, please send to developers.\n\`${error}\``);

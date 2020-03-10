@@ -1,4 +1,3 @@
-const Discord = require("discord.js");
 //  Description: Display the choose image.
 //  Usage: choose arg1 | *arg2
 exports.run = async (client, message, args, level) => {

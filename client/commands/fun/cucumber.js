@@ -1,4 +1,3 @@
-const Discord = require("discord.js");
 //  Description: Give a cucumber to someone
 //  Usage: cucumber arg1
 exports.run = async (client, message, args, level) => {
