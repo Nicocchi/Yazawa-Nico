@@ -1,5 +1,5 @@
 // This event executes when a message is deleted.
-const Discord = require("discord.js");
+const { MessageEmbed } = require("discord.js");
 const axios = require("axios");
 const moment = require('moment');
 
@@ -14,7 +14,7 @@ module.exports = async (client, channel) => {
 
     if (guild.modlog && modLogChannel !== null) {
       try {
-        let embed = new Discord.RichEmbed()
+        let embed = new MessageEmbed()
           .setDescription(`**Channel Created:** ${channel.name}`)
           .setTimestamp()
           .setColor("#FF4D9C");

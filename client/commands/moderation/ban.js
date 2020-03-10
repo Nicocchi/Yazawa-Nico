@@ -1,4 +1,4 @@
-const Discord = require("discord.js");
+const { MessageEmbed } = require("discord.js");
 const axios = require('axios');
 
 //  Description: Ban a mentioned user.
@@ -6,7 +6,7 @@ const axios = require('axios');
 exports.run = async (client, message, args, level) => {
     try {
         // Get mentioned user, if none, return error
-    let user = message.guild.member(message.mentions.users.first() || message.guild.members.get(args[0]));
+    let user = message.guild.member(message.mentions.users.first());
     if(!user) return message.channel.send(`:x: Unable to ban user **undefined** due to an error.\n \`You must mention a user to ban\``);
 
     // Check if author has proper permissions
@@ -16,32 +16,17 @@ exports.run = async (client, message, args, level) => {
     let reason = args.join(' ').slice(22);
     if (reason === '') reason = 'No reason given'
 
-    // Configure embed
-    let embed = new Discord.RichEmbed()
-        .setAuthor(`${client.user.username}'s ModLog`, `${client.user.avatarURL}`)
-        .setDescription(`User **${user.user.username}#${user.user.discriminator}** was banned by **${message.author.username}#${message.author.discriminator}** for:\n\n **${reason}**`)
-        .setColor('#FF4D9C')
-        .setTimestamp();
-
-    // Send embed directly to banned user
-    if(user) await user.send(embed);
+    const username = `${user.user.username}#${user.user.discriminator}`
 
     // Ban the user
-    message.guild.member(user).ban(reason);
+    // message.guild.members.ban(user.id);
 
-    // Get guild profile
-    const guildRes = await axios.post('http://localhost:8000/guilds/profile', 
-    {'discord_id': message.guild.id, 'name': message.guild.name });
-    const guild = guildRes.data.guild;
+    user.ban(reason).then(() => {
+        message.channel.send(`Banned ${username}`)
+    }).catch(err => {
+        message.channel.send(`Unable to ban ${username}`)
+    })
 
-    // Set channel & check of modlog channel is available. If so, send embed
-    // to the modlog channel, otherwise, send to default message channel
-    let channel = message.channel;
-    if (guild.modLogChannel !== '' || guild.modLogChannel !== null || guild.modLogChannel !== undefined) {
-        channel = message.guild.channels.find(c => c.id === guild.modLogChannel);
-    }
-
-    channel.send(embed);
     } catch (error) {
         client.logger.error(error);
         message.channel.send(`Unable to show ban log due to an error. If encountered, please send to developers. (!support to get invite link) \n\`[${moment().utc()}] Ban Log | ${error.response}\``);

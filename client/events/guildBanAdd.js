@@ -16,7 +16,7 @@ module.exports = async (client, guild, member) => {
 
     if (guild.modlog && modLogChannel !== null || modLogChannel !== "") {
       try {
-        let embed = new Discord.RichEmbed()
+        let embed = new MessageEmbed()
           .setDescription(`**Member Banned:** ${member.username}#${member.discriminator}`)
           .setThumbnail(member.displayAvatarURL)
           .setTimestamp()

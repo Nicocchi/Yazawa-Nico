@@ -8,24 +8,38 @@ module.exports = async (client, member) => {
   // Load the guild's settings
   // console.log(member.guild);
   try {
+    const fetchedLogs = await member.guild.fetchAuditLogs({
+      limit: 1,
+      type: 'MEMBER_PRUNE',
+    });
+
+    const pruneLog = fetchedLogs.entries.first();
+
+    // if (!pruneLog) return console.log(`${member.user.tag} left the guild, most likely of their own will.`);
+
     const guildRes = await axios.post('http://localhost:8000/guilds/profile', 
     {'discord_id': member.guild.id, 'name': member.guild.name });
     const guild = guildRes.data.guild;
 
-    const channel = member.guild.channels.find(ch => ch.id === guild.leaveChannel);
+    const channel = member.guild.channels.cache.find(ch => ch.id === guild.leaveChannel);
 
     if (guild.leaveEnabled && guild.leaveChannel !== null) {
-      const msg = guild.leaveMessage.replace("<user>", member.user.username);
+      var msg = '';
+      if (pruneLog) {
+        msg = guild.leaveMessage.replace("<user>", member.user.tag);
+      } else { 
+        msg = guild.leaveMessage.replace("<user>", member.user.username);
+      }
 
       channel.send(msg);
 
       // Modlog
       try {
-        const modLogChannel = channel.guild.channels.find(ch => ch.id === guild.modLogChannel);
+        const modLogChannel = channel.guild.channels.cache.find(ch => ch.id === guild.modLogChannel);
     
         if (guild.modlog && modLogChannel !== null) {
           try {
-            let embed = new Discord.RichEmbed()
+            let embed = new MessageEmbed()
               .setDescription(`**Member Left:** ${member.user.username}#${member.user.discriminator}`)
               .setThumbnail(member.user.displayAvatarURL)
               .setTimestamp()

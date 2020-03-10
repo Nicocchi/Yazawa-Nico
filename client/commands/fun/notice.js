@@ -1,4 +1,4 @@
-const Discord = require("discord.js");
+const { MessageEmbed } = require("discord.js");
 //  Description: Notice senpai
 //  Usage: notice arg1
 exports.run = async (client, message, args, level) => {
@@ -14,7 +14,7 @@ exports.run = async (client, message, args, level) => {
     var msg = `${message.author.username} has noticed ${user.user.username}`;
   }
 
-  let embed = new Discord.RichEmbed()
+  let embed = new MessageEmbed()
     .addField(`(≧▽≦)`, msg)
     .setColor("#FF4D9C");
 

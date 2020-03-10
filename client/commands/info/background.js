@@ -1,7 +1,4 @@
-const Discord = require("discord.js");
 const axios = require('axios');
-const Canvas = require('canvas');
-const { Image } = require('canvas');
 const moment = require('moment');
 
 //  Description: Display User Profile Stats

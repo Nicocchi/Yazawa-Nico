@@ -1,4 +1,3 @@
-const Discord = require("discord.js");
 const axios = require('axios');
 const moment = require('moment');
 
@@ -21,7 +20,7 @@ exports.run = async (client, message, args, level) => {
         return;
     }
 
-    message.channel.send("Must supply a message. Max chars -> `116`");
+    message.channel.send("Must supply a message to set profile info box. Max chars -> `116`");
     
 };
 

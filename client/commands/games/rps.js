@@ -1,9 +1,9 @@
-const Discord = require("discord.js");
+const { MessageEmbed } = require("discord.js");
 
 //  Description: Play a game of RPS
 //  Usage: rps
 exports.run = async (client, message, args, level) => {
-  let embed = new Discord.RichEmbed()
+  let embed = new MessageEmbed()
     .addField(
       "Let's play a game",
       "Choose between **rock**, **paper**, or **scissors**.\n\n((≡|≡))_／ ＼_((≡|≡) )\n\n Timer closes in 10 seconds"
