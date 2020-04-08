@@ -5,25 +5,26 @@ const ytdl = require("ytdl-core");
 //  Usage: prefix arg1
 
 exports.run = async (client, message, args, level) => {
-  try {
-    if (!message.member.voiceChannel)
-      return message.channel.send("You are not in a voice channel.");
+  message.reply(`Music commands are currently under maintenance.`);
+  // try {
+  //   if (!message.member.voiceChannel)
+  //     return message.channel.send("You are not in a voice channel.");
 
-    const serverQueue = client.queue.get(message.guild.id);
-    if (serverQueue && serverQueue.playing) {
-      serverQueue.playing = false;
-      serverQueue.connection.dispatcher.pause();
-      return message.channel.send("The music is paused.");
-    }
+  //   const serverQueue = client.queue.get(message.guild.id);
+  //   if (serverQueue && serverQueue.playing) {
+  //     serverQueue.playing = false;
+  //     serverQueue.connection.dispatcher.pause();
+  //     return message.channel.send("The music is paused.");
+  //   }
 
-    return message.channel.send("There is nothing playing.");
+  //   return message.channel.send("There is nothing playing.");
 
-    serverQueue.playing = false;
-    serverQueue.connection.dispatcher.pause();
-    return message.channel.send("The music is paused.");
-  } catch (e) {
-    console.log(e);
-  }
+  //   serverQueue.playing = false;
+  //   serverQueue.connection.dispatcher.pause();
+  //   return message.channel.send("The music is paused.");
+  // } catch (e) {
+  //   console.log(e);
+  // }
 
 };
 

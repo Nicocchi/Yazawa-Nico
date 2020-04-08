@@ -5,24 +5,25 @@ const ytdl = require("ytdl-core");
 //  Usage: prefix arg1
 
 exports.run = async (client, message, args, level) => {
-  try {
-    if (!message.member.voiceChannel)
-      return message.channel.send("You are not in a voice channel.");
+  message.reply(`Music commands are currently under maintenance.`);
+  // try {
+  //   if (!message.member.voiceChannel)
+  //     return message.channel.send("You are not in a voice channel.");
 
-    const serverQueue = client.queue.get(message.guild.id);
-    if (!serverQueue) return message.channel.send("There is nothing playing.");
-    if (!args[0])
-      return message.channel.send(`The current volume is ${serverQueue.volume}`);
+  //   const serverQueue = client.queue.get(message.guild.id);
+  //   if (!serverQueue) return message.channel.send("There is nothing playing.");
+  //   if (!args[0])
+  //     return message.channel.send(`The current volume is ${serverQueue.volume}`);
 
-      if(!message.member.hasPermission('ADMINISTRATOR')) return message.channel.send('You can not change volume because you do not have permission.');
+  //     if(!message.member.hasPermission('ADMINISTRATOR')) return message.channel.send('You can not change volume because you do not have permission.');
 
-    serverQueue.volume = args[0];
-    serverQueue.connection.dispatcher.setVolumeLogarithmic(args[0] / 5);
+  //   serverQueue.volume = args[0];
+  //   serverQueue.connection.dispatcher.setVolumeLogarithmic(args[0] / 5);
 
-    message.channel.send(`Volume set to ${args[0]}`);
-  } catch (e) {
-    console.log(e);
-  }
+  //   message.channel.send(`Volume set to ${args[0]}`);
+  // } catch (e) {
+  //   console.log(e);
+  // }
 
 };
 
