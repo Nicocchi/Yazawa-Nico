@@ -5,18 +5,19 @@ const ytdl = require("ytdl-core");
 //  Usage: prefix arg1
 
 exports.run = async (client, message, args, level) => {
-  try {
-    const serverQueue = client.queue.get(message.guild.id);
-    if (!serverQueue) return message.channel.send("There is nothing playing.");
-    return message.channel.send(`
-    __**Song Queue:**__
-    ${serverQueue.songs.map((song, i) => `\n[${i <= 8 ? `0${++i}` : `${++i}`}] - **${song.title}**`).join("")}
-    \nThere are currently **${serverQueue.songs.length}** songs in queue
-    \nNow Playing: **${serverQueue.songs[0].title}**
-    `);
-  } catch (e) {
-    console.log(e);
-  }
+  message.reply(`Music commands are currently under maintenance.`);
+  // try {
+  //   const serverQueue = client.queue.get(message.guild.id);
+  //   if (!serverQueue) return message.channel.send("There is nothing playing.");
+  //   return message.channel.send(`
+  //   __**Song Queue:**__
+  //   ${serverQueue.songs.map((song, i) => `\n[${i <= 8 ? `0${++i}` : `${++i}`}] - **${song.title}**`).join("")}
+  //   \nThere are currently **${serverQueue.songs.length}** songs in queue
+  //   \nNow Playing: **${serverQueue.songs[0].title}**
+  //   `);
+  // } catch (e) {
+  //   console.log(e);
+  // }
 
 };
 

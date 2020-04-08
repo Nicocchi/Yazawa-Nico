@@ -6,40 +6,41 @@ const moment = require("moment");
 //  Usage: prefix arg1
 
 exports.run = async (client, message, args, level) => {
-  try {
-    if (!message.member.voiceChannel)
-      return message.channel.send("You are not in a voice channel.");
+  message.reply(`Music commands are currently under maintenance.`);
+  // try {
+  //   if (!message.member.voiceChannel)
+  //     return message.channel.send("You are not in a voice channel.");
 
-    const serverQueue = client.queue.get(message.guild.id);
-    if (!serverQueue)
-      return message.channel.send(
-        "There is nothing playing that I could skip for you."
-      );
+  //   const serverQueue = client.queue.get(message.guild.id);
+  //   if (!serverQueue)
+  //     return message.channel.send(
+  //       "There is nothing playing that I could skip for you."
+  //     );
 
-    try {
-      const song = serverQueue.songs[0].title;
-      // console.log(serverQueue);
-      let songQueue = serverQueue.songs;
-      songQueue.shift();
-      console.log(songQueue);
+  //   try {
+  //     const song = serverQueue.songs[0].title;
+  //     // console.log(serverQueue);
+  //     let songQueue = serverQueue.songs;
+  //     songQueue.shift();
+  //     console.log(songQueue);
 
-      const res = await axios.post('http://localhost:8000/guilds/save-playlist', {'discord_id': message.guild.id, 'name': message.guild.name, 'playlist': songQueue });
-      console.log(res.data);
+  //     const res = await axios.post('http://localhost:8000/guilds/save-playlist', {'discord_id': message.guild.id, 'name': message.guild.name, 'playlist': songQueue });
+  //     console.log(res.data);
 
-      message.channel.send(`**${song}** was skipped.`);
+  //     message.channel.send(`**${song}** was skipped.`);
       
-      serverQueue.connection.dispatcher.end();
+  //     serverQueue.connection.dispatcher.end();
 
       
-    } catch (error) {
-      message.channel.send(`Error skipping ${error}`);
-    }
+  //   } catch (error) {
+  //     message.channel.send(`Error skipping ${error}`);
+  //   }
     
 
     
-  } catch (e) {
-    console.log(e);
-  }
+  // } catch (e) {
+  //   console.log(e);
+  // }
 };
 
 exports.conf = {
