@@ -41,10 +41,10 @@ exports.run = async (client, message, args, level) => {
   // console.log("Member", member.username);
   // TODO: SET AUTHORIZATION
   const res = await axios.post('http://localhost:8000/users/profile', {'discord_id': member.id, 'name': member.username});
-  // console.log('res =>', res.data.user);
+  console.log('res =>', res.data.user);
   // const bf = Buffer.from(profile.profileImage, 'binary').toString('base64');
   const profile = res.data.user;
-  // console.log("PROFILE", res);
+  console.log("PROFILE", res);
 
   const canvas = Canvas.createCanvas(900, 730);
   const ctx = canvas.getContext('2d');
@@ -216,7 +216,7 @@ exports.run = async (client, message, args, level) => {
       await asyncForEach(txt1, async (mg) => {
         const res1 = await axios.post('http://localhost:8000/users/profile', {'discord_id': mg, 'name': member.username});
         const prof = await res1.data.user;
-        // console.log(prof.name);
+        console.log("prof", prof.name);
         await marriages.push(prof.name);
       });
     }
