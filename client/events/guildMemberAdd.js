@@ -1,5 +1,5 @@
 // This event executes when a new member joins a server.
-const Discord = require("discord.js");
+const {Discord, MessageEmbed, MessageAttachment } = require("discord.js");
 const axios = require('axios');
 const Canvas = require('canvas');
 const moment = require('moment');
@@ -29,7 +29,7 @@ module.exports = async (client, member) => {
       {'discord_id': member.guild.id, 'name': member.guild.name });
       const guild = guildRes.data.guild;
 
-      const channel = member.guild.channels.find(ch => ch.id === guild.welcomeChannel);
+      const channel = member.guild.channels.cache.find(ch => ch.id === guild.welcomeChannel);
 
       if (guild.welcomeEnabled && guild.welcomeChannel !== null) {
         const canvas = Canvas.createCanvas(1000, 300);
@@ -100,24 +100,25 @@ module.exports = async (client, member) => {
         ctx.closePath();
         ctx.clip();
 
-        const avatar = await Canvas.loadImage(member.user.displayAvatarURL);
+        const avatar = await Canvas.loadImage(member.user.displayAvatarURL({format: "jpg"}));
         // ctx.drawImage(avatar, 25, 25, 205, 205);
         ctx.drawImage(avatar, 25, 45, 200, 200);
 
-        const attachment = new Discord.Attachment(canvas.toBuffer(), 'welcome-image.png');
+        const attachment = new MessageAttachment(canvas.toBuffer());
         const msg = guild.welcomeMessage.replace("<user>", member).replace("<guild>", member.guild.name);
 
-        channel.send(msg, attachment);
+        channel.send(msg);
+        channel.send(attachment);
 
         // Modlog
         try {
-          const modLogChannel = channel.guild.channels.find(ch => ch.id === guild.modLogChannel);
+          const modLogChannel = channel.guild.channels.cache.find(ch => ch.id === guild.modLogChannel);
       
           if (guild.modlog && modLogChannel !== null) {
             try {
-              let embed = new Discord.RichEmbed()
+              let embed = new MessageEmbed()
                 .setDescription(`**Member Joined:** ${member.user.username}#${member.user.discriminator}`)
-                .setThumbnail(member.user.displayAvatarURL)
+                .setThumbnail(member.user.displayAvatarURL())
                 .setTimestamp()
                 .setColor("#FF4D9C");
               

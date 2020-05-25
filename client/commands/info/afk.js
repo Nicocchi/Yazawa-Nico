@@ -1,4 +1,3 @@
-const Discord = require("discord.js");
 const axios = require('axios');
 
 //  Description: Display an AFK message when someone pings you if you are away

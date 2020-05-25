@@ -1,4 +1,4 @@
-const Discord = require("discord.js");
+const { MessageEmbed } = require("discord.js");
 const moment = require("moment");
 const axios = require("axios");
 
@@ -27,24 +27,28 @@ exports.run = async (client, message, args, level) => {
 
   // If user is the author, return error
   if (user.user.id === message.author.id)
-    return message.channel.send("You can't marry yourself!");
+    return message.channel.send("You... seriously tried to marry yourself?");
+  
+  if (user.user.id === client.user.id)
+    return message.channel.send(">///< I appreciate you being my fan... but... sorry! Idol's are pure! But please stay my fan forever!");
 
     // console.log(userProfile);
 
-    let embed = new Discord.RichEmbed()
+    let embed = new MessageEmbed()
+    .setAuthor(`${message.author.username} has proposed to ${user.user.username}`, `${message.author.displayAvatarURL()}`)
       .addField(
-        `${message.author.username} has proposed to ${user.user.username}`,
+        `_ _`,
         userProfile.message,
         false
       )
       .addField(
         ":white_check_mark: To accept",
-        `${guild.prefix}acceptmarriage @<user>`,
+        `${guild.prefix}acceptmarriage @${message.author.username}`,
         true
       )
       .addField(
         ":negative_squared_cross_mark: To decline",
-        `${guild.prefix}declinemarriage @<user>`,
+        `${guild.prefix}declinemarriage @${message.author.username}`,
         true
       )
       .setColor("#FF4D9C");

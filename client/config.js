@@ -18,7 +18,7 @@ const config = {
   // CAN NOT BE LEFT BLANK
 
   defaultSettings: {
-    prefix: "!",
+    prefix: "$",
     modlog: false,
     modLogChannel: "channelID",
     modRole: "Moderator",

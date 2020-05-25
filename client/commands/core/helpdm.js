@@ -1,16 +1,15 @@
 //  Description: Displays all the available commands for your permission level.
 //  Usage: prefix arg1 arg2
-const Discord = require("discord.js");
+const { MessageEmbed } = require("discord.js");
 const axios = require('axios');
-const moment = require('moment');
 
 exports.run = async (client, message, args, level) => {
   const guildRes = await axios.post('http://localhost:8000/guilds/profile', 
     {'discord_id': message.guild.id, 'name': message.guild.name });
   const guild = guildRes.data.guild;
 
-  let embed = new Discord.RichEmbed()
-    .setAuthor(`${client.user.username}'s Commands`, `${client.user.avatarURL}`)
+  let embed = new MessageEmbed()
+    .setAuthor(`${client.user.username}'s Commands`, `${client.user.avatarURL()}`)
     .setDescription(
       `Nico Nico Nii~ Here is a list of all the commands I can do~`
     )
@@ -18,7 +17,7 @@ exports.run = async (client, message, args, level) => {
     .setColor("#FF4D9C")
     .setFooter(
       `Server member since ${message.member.joinedAt}`,
-      message.author.displayAvatarURL
+      message.author.displayAvatarURL()
     )
     .addField("Prefix", `${guild.prefix}`, true)
     .addField(
@@ -26,7 +25,7 @@ exports.run = async (client, message, args, level) => {
       `[Support](https://discord.gg/cs9Sv8N) | [Invite](https://discordapp.com/oauth2/authorize?client_id=506839796921139203&scope=bot&permissions=2146827775)`,
       true
     )
-    .addField(`Version`, `v3.5`, true)
+    .addField(`Version`, `v3.6`, true)
     .addField(`Core`, "`help`, `helpdm`", false)
     .addField(
       `Images`,
@@ -41,14 +40,14 @@ exports.run = async (client, message, args, level) => {
       "`choose`, `cucumber`, `divorce`, `give`, `marry`, `notice`, `rip`, `say`, `senpai`, `wisdom`",
       false
     )
-    .addField(`Profile`, "`profile`, `background`, `avatar`, `afk`", false)
+    .addField(`Profile`, "`profile`, `background`, `pfinfo`, `avatar`, `afk`", false)
     .addField(`Games`, "`8ball`, `rps`", false)
     .addField(`Moderation`, "`ban`, `clear`, `kick`, `set`, `warn` ", false)
-    .addField(
-      `Music`,
-      "`nowplaying` | `q`, `pause` | `ps`, `play` | `p`, `queue` | `q`, `resume`, `skip`, `stop`, `volume` | `vol`",
-      false
-    )
+    // .addField(
+    //   `Music`,
+    //   "`nowplaying` | `q`, `pause` | `ps`, `play` | `p`, `queue` | `q`, `resume`, `skip`, `stop`, `volume` | `vol`",
+    //   false
+    // )
     .addField(
       `Set`,
       "`adminrole`, `get`, `leave`, `leavechannel`, `leavemessage`, `level`,`modlog`, " +

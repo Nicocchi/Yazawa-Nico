@@ -1,4 +1,3 @@
-const Discord = require("discord.js");
 //  Description: Display wisdom quotes
 //  Usage: wisdom arg1
 exports.run = async (client, message, args, level) => {

@@ -1,10 +1,9 @@
-const Discord = require("discord.js");
+const { MessageEmbed } = require("discord.js");
 //  Description: Display the cry image.
 //  Usage: cry arg1
 exports.run = async (client, message, args, level) => {
   let user =
-    message.guild.member(message.mentions.users.first()) ||
-    message.guild.members.get(args[0]);
+    message.guild.member(message.mentions.users.first())
 
   client
     .parseJSON("./JSON/cry.json")
@@ -19,7 +18,7 @@ exports.run = async (client, message, args, level) => {
         }... Have a Nico Nii to cheer you up~ Nico Nico Nii!`;
       }
 
-      let embed = new Discord.RichEmbed()
+      let embed = new MessageEmbed()
         .addField(`(༎ຶ⌑༎ຶ)`, msg)
         .setColor("#FF4D9C")
         .setImage(res);

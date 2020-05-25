@@ -14,7 +14,7 @@ module.exports = async (client, channel) => {
 
     if (guild.modlog && modLogChannel !== null) {
       try {
-        let embed = new Discord.RichEmbed()
+        let embed = new MessageEmbed()
           .setDescription(`**Channel Deleted:** ${channel.name}`)
           .setTimestamp()
           .setColor("#FF4D9C");
