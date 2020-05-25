@@ -43,11 +43,11 @@ exports.run = async (client, message, args, level) => {
   .addField(`Profile`, "`profile`, `background`, `pfinfo`, `avatar`, `afk`", false)
   .addField(`Games`, "`8ball`, `rps`", false)
   .addField(`Moderation`, "`ban`, `clear`, `kick`, `set`, `warn` ", false)
-  .addField(
-    `Music`,
-    "`nowplaying` | `q`, `pause` | `ps`, `play` | `p`, `queue` | `q`, `resume`, `skip`, `stop`, `volume` | `vol`",
-    false
-  )
+  // .addField(
+  //   `Music`,
+  //   "`nowplaying` | `q`, `pause` | `ps`, `play` | `p`, `queue` | `q`, `resume`, `skip`, `stop`, `volume` | `vol`",
+  //   false
+  // )
   .addField(
     `Set`,
     "`adminrole`, `get`, `leave`, `leavechannel`, `leavemessage`, `level`,`modlog`, " +
