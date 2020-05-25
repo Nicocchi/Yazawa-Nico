@@ -100,7 +100,7 @@ module.exports = async (client, member) => {
         ctx.closePath();
         ctx.clip();
 
-        const avatar = await Canvas.loadImage(member.user.displayAvatarURL());
+        const avatar = await Canvas.loadImage(member.user.displayAvatarURL({format: "jpg"}));
         // ctx.drawImage(avatar, 25, 25, 205, 205);
         ctx.drawImage(avatar, 25, 45, 200, 200);
 
