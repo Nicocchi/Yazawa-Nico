@@ -42,7 +42,6 @@ const init = async () => {
     "./commands/images",
     "./commands/info",
     "./commands/moderation",
-    "./commands/music",
     "./commands/set"
   ];
 
