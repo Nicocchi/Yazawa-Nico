@@ -1,5 +1,4 @@
-const Discord = require("discord.js");
-const moment = require("moment");
+const {MessageEmbed} = require("discord.js");
 const axios = require("axios");
 //  Description: Display rips
 //  Usage: rip arg1
@@ -25,7 +24,7 @@ exports.run = async (client, message, args, level) => {
       } Today, ${global.totalRips} All`;
     }
 
-    let embed = new Discord.RichEmbed().setDescription(msg).setColor("#FF4D9C");
+    let embed = new MessageEmbed().setDescription(msg).setColor("#FF4D9C");
     message.channel.send({ embed: embed });
 
   } catch (error) {

@@ -1,10 +1,9 @@
-const Discord = require("discord.js");
+const { MessageEmbed } = require("discord.js");
 //  Description: Display the attack image.
 //  Usage: attack arg1
 exports.run = async (client, message, args, level) => {
   let user =
-    message.guild.member(message.mentions.users.first()) ||
-    message.guild.members.get(args[0]);
+    message.guild.member(message.mentions.users.first());
 
   client
     .parseJSON("./JSON/attack.json")
@@ -12,12 +11,14 @@ exports.run = async (client, message, args, level) => {
       if (!user) {
         var msg = `${message.author.username} is attacking thin air OwO`;
       } else {
-        var msg = `${message.author.username} is attacking ${
+        var msg = "_ _";
+        const nicofight = client.emojis.cache.find(emo => {console.log(emo.id); return emo.name === 'nicofight'})
+        user.id === client.user.id ? message.channel.send(`${nicofight} You dare attack an idol!?`) : `${message.author.username} is attacking ${
           user.user.username
         }!`;
       }
 
-      let embed = new Discord.RichEmbed()
+      let embed = new MessageEmbed()
         .addField(`⋋_⋌`, msg)
         .setColor("#FF4D9C")
         .setImage(res);

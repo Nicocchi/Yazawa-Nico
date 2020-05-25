@@ -4,8 +4,9 @@ const axios = require('axios');
 //  Description: kick a mentioned user.
 //  Usage: ban <user> <reason>
 exports.run = async (client, message, args, level) => {
-    // Get mentioned user, if none, return error
-    let user = message.guild.member(message.mentions.users.first() || message.guild.members.get(args[0]));
+    try {
+        // Get mentioned user, if none, return error
+    let user = message.guild.member(message.mentions.users.first());
     if(!user) return message.channel.send(`:x: Unable to kick user **undefined** due to an error.\n \`You must mention a user to kick\``);
 
     // Check if author has proper permissions
@@ -15,32 +16,18 @@ exports.run = async (client, message, args, level) => {
     let reason = args.join(' ').slice(22);
     if (reason === '') reason = 'No reason given'
 
-    // Configure embed
-    let embed = new Discord.RichEmbed()
-        .setAuthor(`${client.user.username}'s ModLog`, `${client.user.avatarURL}`)
-        .setDescription(`User **${user.user.username}#${user.user.discriminator}** was kicked by **${message.author.username}#${message.author.discriminator}** for:\n\n **${reason}**`)
-        .setColor('#FF4D9C')
-        .setTimestamp();
+    const username = `${user.user.username}#${user.user.discriminator}`
 
-    // Send embed directly to kicked user
-    if(user) await user.send(embed);
+    user.kick(reason).then(() => {
+        message.channel.send(`Kicked ${username}`)
+    }).catch(err => {
+        message.channel.send(`Unable to kick ${username}`)
+    })
 
-    // Kick the user
-    message.guild.member(user).kick(reason);
-
-    // Get guild profile
-    const guildRes = await axios.post('http://localhost:8000/guilds/profile', 
-    {'discord_id': message.guild.id, 'name': message.guild.name });
-    const guild = guildRes.data.guild;
-
-    // Set channel & check of modlog channel is available. If so, send embed
-    // to the modlog channel, otherwise, send to default message channel
-    let channel = message.channel;
-    if (guild.modLogChannel !== '' || guild.modLogChannel !== null || guild.modLogChannel !== undefined) {
-        channel = message.guild.channels.find(c => c.id === guild.modLogChannel);
+    } catch (error) {
+        client.logger.error(error);
+        message.channel.send(`Unable to show kick log due to an error. If encountered, please send to developers. (!support to get invite link) \n\`[${moment().utc()}] Kick Log | ${error.response}\``);
     }
-
-    channel.send(embed);
 };
 
 exports.conf = {

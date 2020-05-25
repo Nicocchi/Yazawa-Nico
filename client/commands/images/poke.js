@@ -1,10 +1,9 @@
-const Discord = require("discord.js");
+const { MessageEmbed } = require("discord.js");
 //  Description: Display the poke image.
 //  Usage: poke arg1
 exports.run = async (client, message, args, level) => {
   let user =
-    message.guild.member(message.mentions.users.first()) ||
-    message.guild.members.get(args[0]);
+    message.guild.member(message.mentions.users.first())
 
   client
     .parseJSON("./JSON/poke.json")
@@ -17,7 +16,7 @@ exports.run = async (client, message, args, level) => {
         }~~`;
       }
 
-      let embed = new Discord.RichEmbed()
+      let embed = new MessageEmbed()
         .addField(`POKE`, msg)
         .setColor("#FF4D9C")
         .setImage(res);

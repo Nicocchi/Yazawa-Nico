@@ -1,10 +1,9 @@
-const Discord = require("discord.js");
+const { MessageEmbed } = require("discord.js");
 //  Description: Get senpai to notice you
 //  Usage: senpai arg1
 exports.run = async (client, message, args, level) => {
   let user =
-    message.guild.member(message.mentions.users.first()) ||
-    message.guild.members.get(args[0]);
+    message.guild.member(message.mentions.users.first())
 
   if (!user) {
     return message.channel.send(
@@ -16,7 +15,7 @@ exports.run = async (client, message, args, level) => {
     } to notice them...\n\nPlease notice me senpai ಠ_ಠ`;
   }
 
-  let embed = new Discord.RichEmbed().addField(`ಠ_ಠ`, msg).setColor("#FF4D9C");
+  let embed = new MessageEmbed().addField(`ಠ_ಠ`, msg).setColor("#FF4D9C");
 
   message.channel.send({ embed: embed });
 };

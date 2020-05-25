@@ -26,7 +26,7 @@ exports.run = async (client, message, args, level) => {
     
 
     // Configure embed
-    let embed = new Discord.RichEmbed()
+    let embed = new MessageEmbed()
         .setAuthor(`${client.user.username}'s ModLog`, `${client.user.avatarURL}`)
         .setDescription(`Bulk Delete in ${message.channel}, ${args[0]} messages deleted by **${message.author.username}#${message.author.discriminator}**`)
         .setColor('#FF4D9C')
