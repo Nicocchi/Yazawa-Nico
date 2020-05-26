@@ -2,8 +2,7 @@ const CLIENT_ID = process.env.CLIENT_ID;
 const CLIENT_SECRET = process.env.CLIENT_SECRET;
 const axios = require("axios");
 const btoa = require('btoa');
-const redirect = encodeURIComponent("http://localhost:8000/api/discord/callback");
-const redirect2 = encodeURIComponent("http://localhost:3000/api/discord/callback");
+const redirect = encodeURIComponent(`${process.env.REDIRECT_URL}`);
 
 const DiscordOauth2 = require("discord-oauth2");
 const oauth = new DiscordOauth2();
