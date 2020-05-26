@@ -51,7 +51,7 @@ module.exports = {
             function(e, object) {
                 if (e) return res.status(500).json({ error: e.message })
 
-                return res.status(200).json({ message: `:white_check_mark: Server prefix has been changed to \`${prefix}\`` });
+                return res.status(200).json({ message: `:white_check_mark: Server prefix has been changed to \`${prefix}\``, doc: object.local });
             }
         );
 
@@ -66,7 +66,7 @@ module.exports = {
             function(e, object) {
                 if (e) return res.status(500).json({ message: e.message })
 
-                return res.status(200).json({ message: 'Greeting image updated!' });
+                return res.status(200).json({ message: 'Greeting image updated!', doc: object.local });
             }
         );
     },
@@ -80,7 +80,7 @@ module.exports = {
             function(e, object) {
                 if (e) return res.status(500).json({ error: e.message })
 
-                return res.status(200).json({ message: `:white_check_mark: Server ban amount has been changed to \`${warningsBan}\`` });
+                return res.status(200).json({ message: `:white_check_mark: Server ban amount has been changed to \`${warningsBan}\``, doc: object.local });
             }
         );
 
@@ -95,7 +95,7 @@ module.exports = {
             function(e, object) {
                 if (e) return res.status(500).json({ error: e.message })
 
-                return res.status(200).json({ message: `:white_check_mark: Server mute amount has been changed to \`${warningsMute}\`` });
+                return res.status(200).json({ message: `:white_check_mark: Server mute amount has been changed to \`${warningsMute}\``, doc: object.local });
             }
         );
 
@@ -110,7 +110,7 @@ module.exports = {
             function(e, object) {
                 if (e) return res.status(500).json({ error: e.message })
 
-                return res.status(200).json({ message: `:white_check_mark: Server level preference has been changed to \`${levelEnabled}\`` });
+                return res.status(200).json({ message: `:white_check_mark: Server level preference has been changed to \`${levelEnabled}\``, doc: object.local });
             }
         );
 
@@ -125,7 +125,7 @@ module.exports = {
             function(e, object) {
                 if (e) return res.status(500).json({ error: e.message })
 
-                return res.status(200).json({ message: `:white_check_mark: Server leave preference has been changed to \`${leaveEnabled}\`` });
+                return res.status(200).json({ message: `:white_check_mark: Server leave preference has been changed to \`${leaveEnabled}\``, doc: object.local });
             }
         );
 
@@ -140,7 +140,7 @@ module.exports = {
             function(e, object) {
                 if (e) return res.status(500).json({ error: e.message })
 
-                return res.status(200).json({ message: `:white_check_mark: Server leave message has been changed to \`${leaveMessage}\`` });
+                return res.status(200).json({ message: `:white_check_mark: Server leave message has been changed to \`${leaveMessage}\``, doc: object.local });
             }
         );
 
@@ -155,7 +155,7 @@ module.exports = {
             function(e, object) {
                 if (e) return res.status(500).json({ error: e.message })
 
-                return res.status(200).json({ message: `:white_check_mark: Server leave channel has been changed to \`${leaveChannel}\`` });
+                return res.status(200).json({ message: `:white_check_mark: Server leave channel has been changed to \`${leaveChannel}\``, doc: object.local });
             }
         );
 
@@ -170,7 +170,7 @@ module.exports = {
             function(e, object) {
                 if (e) return res.status(500).json({ error: e.message })
 
-                return res.status(200).json({ message: `:white_check_mark: Server welcome preference has been changed to \`${welcomeEnabled}\`` });
+                return res.status(200).json({ message: `:white_check_mark: Server welcome preference has been changed to \`${welcomeEnabled}\``, doc: object.local });
             }
         );
 
@@ -185,7 +185,7 @@ module.exports = {
             function(e, object) {
                 if (e) return res.status(500).json({ error: e.message })
 
-                return res.status(200).json({ message: `:white_check_mark: Server welcome message has been changed to \`${welcomeMessage}\`` });
+                return res.status(200).json({ message: `:white_check_mark: Server welcome message has been changed to \`${welcomeMessage}\``, doc: object.local });
             }
         );
 
@@ -200,7 +200,7 @@ module.exports = {
             function(e, object) {
                 if (e) return res.status(500).json({ error: e.message })
 
-                return res.status(200).json({ message: `:white_check_mark: Server welcome image message has been changed to \`${welcomeMessage}\`` });
+                return res.status(200).json({ message: `:white_check_mark: Server welcome image message has been changed to \`${welcomeMessage}\``, doc: object.local });
             }
         );
 
@@ -215,7 +215,7 @@ module.exports = {
             function(e, object) {
                 if (e) return res.status(500).json({ error: e.message })
 
-                return res.status(200).json({ message: `:white_check_mark: Server welcome channel has been changed to \`${welcomeChannel}\`` });
+                return res.status(200).json({ message: `:white_check_mark: Server welcome channel has been changed to \`${welcomeChannel}\``, doc: object.local });
             }
         );
 
@@ -230,7 +230,7 @@ module.exports = {
             function(e, object) {
                 if (e) return res.status(500).json({ error: e.message })
 
-                return res.status(200).json({ message: `:white_check_mark: Server modlog preference has been changed to \`${modlog}\`` });
+                return res.status(200).json({ message: `:white_check_mark: Server modlog preference has been changed to \`${modlog}\``, doc: object.local });
             }
         );
 
@@ -245,7 +245,7 @@ module.exports = {
             function(e, object) {
                 if (e) return res.status(500).json({ error: e.message })
 
-                return res.status(200).json({ message: `:white_check_mark: Server modlog channel has been changed to \`${modlogChannel}\`` });
+                return res.status(200).json({ message: `:white_check_mark: Server modlog channel has been changed to \`${modlogChannel}\``, doc: object.local });
             }
         );
 
@@ -260,7 +260,7 @@ module.exports = {
             function(e, object) {
                 if (e) return res.status(500).json({ error: e.message })
 
-                return res.status(200).json({ message: `:white_check_mark: Server mod role has been changed to \`${modrole}\`` });
+                return res.status(200).json({ message: `:white_check_mark: Server mod role has been changed to \`${modrole}\``, doc: object.local });
             }
         );
 
@@ -275,7 +275,7 @@ module.exports = {
             function(e, object) {
                 if (e) return res.status(500).json({ error: e.message })
 
-                return res.status(200).json({ message: `:white_check_mark: Server admin role has been changed to \`${adminrole}\`` });
+                return res.status(200).json({ message: `:white_check_mark: Server admin role has been changed to \`${adminrole}\``, doc: object.local });
             }
         );
 
@@ -328,7 +328,7 @@ module.exports = {
             function(e, object) {
                 if (e) return res.status(500).json({ error: e.message })
 
-                return res.status(200).json({ message: `:white_check_mark: User has been warned`, warnings: warnings[warnUser].warns });
+                return res.status(200).json({ message: `:white_check_mark: User has been warned`, warnings: warnings[warnUser].warns, doc: object.local });
             }
         );
 
@@ -344,7 +344,7 @@ module.exports = {
             function(e, object) {
                 if (e) return res.status(500).json({ error: e.message })
 
-                return res.status(200).json({ message: `:white_check_mark: Playlist has been saved` });
+                return res.status(200).json({ message: `:white_check_mark: Playlist has been saved`, doc: object.local });
             }
         );
     },
