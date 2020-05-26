@@ -27,5 +27,6 @@ app.use(bodyParser.json());
 app.use('/users', require('./routes/users'));
 app.use('/guilds', require('./routes/guilds'));
 app.use('/globals', require('./routes/globals'));
+app.use('/api/discord', require('./routes/discord'));
 
 module.exports = app;
