@@ -107,7 +107,7 @@ module.exports = {
     schemas: {
         authSchema: Joi.object().keys({
             discord_id: Joi.string().required(),
-            name: Joi.string().required(),
+            name: Joi.string(),
             xp: Joi.number(),
             level: Joi.number(),
             afk: Joi.boolean(),

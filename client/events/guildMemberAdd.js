@@ -74,7 +74,7 @@ module.exports = async (client, member) => {
 
         let text = "";
         if (!guild.welcomeImgMessage || guild.welcomeImgMessage === "" || guild.welcomeImgMessage === null || guild.welcomeImgMessage === undefined) {
-          text = `Welcome <user> to <guild>! You are the <count>th user!`;
+          text = `Welcome <user> to <guild>!`;
         } else {
           text = guild.welcomeImgMessage;
         }
@@ -105,7 +105,7 @@ module.exports = async (client, member) => {
         ctx.drawImage(avatar, 25, 45, 200, 200);
 
         const attachment = new MessageAttachment(canvas.toBuffer());
-        const msg = guild.welcomeMessage.replace("<user>", member).replace("<guild>", member.guild.name);
+        const msg = guild.welcomeMessage.replace("<user>", member).replace("<guild>", member.guild.name).replace("<count>", member.guild.memberCount);
 
         channel.send(msg);
         channel.send(attachment);
