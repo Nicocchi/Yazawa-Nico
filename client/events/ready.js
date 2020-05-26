@@ -4,8 +4,8 @@ require("dotenv").config();
 module.exports = async client => {
   // Log that the bot is online
   client.logger.log(
-    `${client.user.tag}, ready to serve ${client.users.size} users in ${
-      client.guilds.size
+    `${client.user.tag}, ready to serve ${client.users.cache.size} users in ${
+      client.guilds.cache.size
     } servers.`,
     "ready"
   );
@@ -13,7 +13,7 @@ module.exports = async client => {
   // Make the bot have an activity
   client.user.setActivity(
     `${client.config.defaultSettings.prefix}help | ${
-      client.guilds.size
+      client.guilds.cache.size
     } servers`,
     { type: "PLAYING" }
   );
@@ -28,6 +28,12 @@ module.exports = async client => {
 
   // Post stats every 30 minutes
   setInterval(() => {
+    client.user.setActivity(
+      `${client.config.defaultSettings.prefix}help | ${
+        client.guilds.cache.size
+      } servers`,
+      { type: "PLAYING" }
+    );
     dbl.postStats(client.guilds.size);
     client.logger.log(
       `Server count posted. Currently serving in ${client.guilds.size} servers!`
