@@ -12,11 +12,11 @@ exports.run = async (client, message, args, level) => {
 
   try {
     // Set the marriage proposal
-  const res = await axios.post('http://localhost:8000/users/marry', {'discord_id': message.author.id, 'name': message.author.username, 'mentioned_id': user.id, 'mentioned_name': user.displayName });
+  const res = await axios.post(`${process.env.BE_URL}/users/marry`, {'discord_id': message.author.id, 'name': message.author.username, 'mentioned_id': user.id, 'mentioned_name': user.displayName });
   const userProfile = res.data;
 
   // Grab the profile for the server
-  const guildRes = await axios.post('http://localhost:8000/guilds/profile', 
+  const guildRes = await axios.post(`${process.env.BE_URL}/guilds/profile`, 
     {'discord_id': message.guild.id, 'name': message.guild.name });
   const guild = guildRes.data.guild;
   if (!guild) {

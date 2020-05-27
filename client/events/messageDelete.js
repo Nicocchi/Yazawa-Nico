@@ -8,7 +8,7 @@ module.exports = async (client, message) => {
   try {
     if (message.member.id === client.user.id) return;
     // Load the guild's settings
-    const guildRes = await axios.post('http://localhost:8000/guilds/profile', 
+    const guildRes = await axios.post(`${process.env.BE_URL}/guilds/profile`, 
     {'discord_id': message.guild.id, 'name': message.guild.name });
     const guild = guildRes.data.guild;
 

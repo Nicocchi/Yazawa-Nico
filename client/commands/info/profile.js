@@ -41,7 +41,7 @@ exports.run = async (client, message, args, level) => {
 
     // console.log("Member", member.username);
     // TODO: SET AUTHORIZATION
-    const res = await axios.post("http://localhost:8000/users/profile", {
+    const res = await axios.post(`${process.env.BE_URL}/users/profile`, {
         discord_id: member.id,
         name: member.username,
     });
@@ -219,7 +219,7 @@ exports.run = async (client, message, args, level) => {
 
         const start = async () => {
             await asyncForEach(txt1, async (mg) => {
-                const res1 = await axios.post("http://localhost:8000/users/profile", {
+                const res1 = await axios.post(`${process.env.BE_URL}/users/profile`, {
                     discord_id: mg,
                     name: member.username,
                 });

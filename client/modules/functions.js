@@ -197,7 +197,7 @@ module.exports = client => {
       // If no song, leave the voice channel and delete the guild from the queue
       if (!song) {
         serverQueue.voiceChannel.leave();
-        // const res = await axios.post('http://localhost:8000/guilds/save-playlist', {'discord_id': guild.id, 'name': guild.name, 'playlist': [] });
+        // const res = await axios.post(`${process.env.BE_URL}/guilds/save-playlist`, {'discord_id': guild.id, 'name': guild.name, 'playlist': [] });
         client.queue.delete(guild.id);
         return;
       }
@@ -244,7 +244,7 @@ module.exports = client => {
       if (!serverQueue) {
         try {
           // try to load playlist from server
-          const res = await axios.post('http://localhost:8000/guilds/playlist', {'discord_id': message.guild.id, 'name': message.guild.name });
+          const res = await axios.post(`${process.env.BE_URL}/guilds/playlist`, {'discord_id': message.guild.id, 'name': message.guild.name });
           const playlistRes = res.data;
           // console.log("[FUNCTIONS.js] -> PLAYLIST", playlistRes.playlist);
 

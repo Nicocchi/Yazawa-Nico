@@ -7,7 +7,7 @@ const moment = require('moment');
 exports.run = async (client, message, args, level) => {
     try {
 
-        const res = await axios.post('http://localhost:8000/users/set-oldpf', {'discord_id': message.author.id, 'name': message.author.username});
+        const res = await axios.post(`${process.env.BE_URL}/users/set-oldpf`, {'discord_id': message.author.id, 'name': message.author.username});
         const data = res.data;
 
         message.channel.send(data.message);

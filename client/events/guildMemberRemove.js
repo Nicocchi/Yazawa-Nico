@@ -17,7 +17,7 @@ module.exports = async (client, member) => {
 
     // if (!pruneLog) return console.log(`${member.user.tag} left the guild, most likely of their own will.`);
 
-    const guildRes = await axios.post('http://localhost:8000/guilds/profile', 
+    const guildRes = await axios.post(`${process.env.BE_URL}/guilds/profile`, 
     {'discord_id': member.guild.id, 'name': member.guild.name });
     const guild = guildRes.data.guild;
 

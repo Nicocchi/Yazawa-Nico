@@ -25,7 +25,7 @@ module.exports = async (client, member) => {
   // Load the guild's settings
   // console.log(member.guild);
   try {
-      const guildRes = await axios.post('http://localhost:8000/guilds/profile', 
+      const guildRes = await axios.post(`${process.env.BE_URL}/guilds/profile`, 
       {'discord_id': member.guild.id, 'name': member.guild.name });
       const guild = guildRes.data.guild;
 

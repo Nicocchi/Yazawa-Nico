@@ -18,7 +18,7 @@
 
 exports.run = async (client, message, args, level) => {
   // Grab the profile for the server
-  const guildRes = await axios.post('http://localhost:8000/guilds/profile', 
+  const guildRes = await axios.post(`${process.env.BE_URL}/guilds/profile`, 
     {'discord_id': message.guild.id, 'name': message.guild.name });
   const guild = guildRes.data.guild;
 
@@ -49,7 +49,7 @@ exports.run = async (client, message, args, level) => {
   // BAN
   if (key === "warningsban") {
     try {
-      const res = await axios.post('http://localhost:8000/guilds/set-ban', 
+      const res = await axios.post(`${process.env.BE_URL}/guilds/set-ban`, 
       {'discord_id': message.guild.id, 'name': message.guild.name, 'warningsBan': action });
 
       message.channel.send(res.data.message);
@@ -65,7 +65,7 @@ exports.run = async (client, message, args, level) => {
   // MUTE
   if (key === "warningsmute") {
     try {
-      const res = await axios.post('http://localhost:8000/guilds/set-mute', 
+      const res = await axios.post(`${process.env.BE_URL}/guilds/set-mute`, 
       {'discord_id': message.guild.id, 'name': message.guild.name, 'warningsMute': action });
 
       message.channel.send(res.data.message);
@@ -81,7 +81,7 @@ exports.run = async (client, message, args, level) => {
   // LEVEL
   if (key === "level") {
     try {
-      const res = await axios.post('http://localhost:8000/guilds/set-level', 
+      const res = await axios.post(`${process.env.BE_URL}/guilds/set-level`, 
       {'discord_id': message.guild.id, 'name': message.guild.name, 'levelEnabled': action });
 
       message.channel.send(res.data.message);
@@ -97,7 +97,7 @@ exports.run = async (client, message, args, level) => {
   // LEAVE
   if (key === "leave") {
     try {
-      const res = await axios.post('http://localhost:8000/guilds/set-leave', 
+      const res = await axios.post(`${process.env.BE_URL}/guilds/set-leave`, 
       {'discord_id': message.guild.id, 'name': message.guild.name, 'leaveEnabled': action });
 
       message.channel.send(res.data.message);
@@ -112,7 +112,7 @@ exports.run = async (client, message, args, level) => {
 
   if (key === "leavemessage") {
     try {
-      const res = await axios.post('http://localhost:8000/guilds/set-leave-message', 
+      const res = await axios.post(`${process.env.BE_URL}/guilds/set-leave-message`, 
       {'discord_id': message.guild.id, 'name': message.guild.name, 'leaveMessage': action });
 
       message.channel.send(res.data.message);
@@ -124,7 +124,7 @@ exports.run = async (client, message, args, level) => {
 
   if (key === "leavechannel") {
     try {
-      const res = await axios.post('http://localhost:8000/guilds/set-leave-channel', 
+      const res = await axios.post(`${process.env.BE_URL}/guilds/set-leave-channel`, 
       {'discord_id': message.guild.id, 'name': message.guild.name, 'leaveChannel': action });
 
       message.channel.send(res.data.message);
@@ -136,7 +136,7 @@ exports.run = async (client, message, args, level) => {
   // WELCOME
   if (key === "welcome") {
     try {
-      const res = await axios.post('http://localhost:8000/guilds/set-welcome', 
+      const res = await axios.post(`${process.env.BE_URL}/guilds/set-welcome`, 
       {'discord_id': message.guild.id, 'name': message.guild.name, 'welcomeEnabled': action });
 
       message.channel.send(res.data.message);
@@ -151,7 +151,7 @@ exports.run = async (client, message, args, level) => {
 
   if (key === "welcomemessage") {
     try {
-      const res = await axios.post('http://localhost:8000/guilds/set-welcome-message', 
+      const res = await axios.post(`${process.env.BE_URL}/guilds/set-welcome-message`, 
       {'discord_id': message.guild.id, 'name': message.guild.name, 'welcomeMessage': action });
 
       message.channel.send(res.data.message);
@@ -162,7 +162,7 @@ exports.run = async (client, message, args, level) => {
 
   if (key === "welcomeimgmessage") {
     try {
-      const res = await axios.post('http://localhost:8000/guilds/set-welcome-img-message', 
+      const res = await axios.post(`${process.env.BE_URL}/guilds/set-welcome-img-message`, 
       {'discord_id': message.guild.id, 'name': message.guild.name, 'welcomeMessage': action });
 
       message.channel.send(res.data.message);
@@ -173,7 +173,7 @@ exports.run = async (client, message, args, level) => {
 
   if (key === "welcomechannel") {
     try {
-      const res = await axios.post('http://localhost:8000/guilds/set-welcome-channel', 
+      const res = await axios.post(`${process.env.BE_URL}/guilds/set-welcome-channel`, 
       {'discord_id': message.guild.id, 'name': message.guild.name, 'welcomeChannel': action });
 
       message.channel.send(res.data.message);
@@ -185,7 +185,7 @@ exports.run = async (client, message, args, level) => {
   // MODLOG
   if (key === "modlog") {
     try {
-      const res = await axios.post('http://localhost:8000/guilds/set-modlog', 
+      const res = await axios.post(`${process.env.BE_URL}/guilds/set-modlog`, 
       {'discord_id': message.guild.id, 'name': message.guild.name, 'modlog': action });
 
       message.channel.send(res.data.message);
@@ -200,7 +200,7 @@ exports.run = async (client, message, args, level) => {
 
   if (key === "modlogchannel") {
     try {
-      const res = await axios.post('http://localhost:8000/guilds/set-modlog-channel', 
+      const res = await axios.post(`${process.env.BE_URL}/guilds/set-modlog-channel`, 
       {'discord_id': message.guild.id, 'name': message.guild.name, 'modlogChannel': action });
 
       message.channel.send(res.data.message);
@@ -212,7 +212,7 @@ exports.run = async (client, message, args, level) => {
   // MOD ROLE
   if (key === "modrole") {
     try {
-      const res = await axios.post('http://localhost:8000/guilds/set-modrole', 
+      const res = await axios.post(`${process.env.BE_URL}/guilds/set-modrole`, 
       {'discord_id': message.guild.id, 'name': message.guild.name, 'modrole': action });
 
       message.channel.send(res.data.message);
@@ -224,7 +224,7 @@ exports.run = async (client, message, args, level) => {
   // ADMIN ROLE
   if (key === "adminrole") {
     try {
-      const res = await axios.post('http://localhost:8000/guilds/set-adminrole', 
+      const res = await axios.post(`${process.env.BE_URL}/guilds/set-adminrole`, 
       {'discord_id': message.guild.id, 'name': message.guild.name, 'adminrole': action });
 
       message.channel.send(res.data.message);
@@ -236,7 +236,7 @@ exports.run = async (client, message, args, level) => {
   // PREFIX
   if (key === "prefix") {
     try {
-      const res = await axios.post('http://localhost:8000/guilds/set-prefix', 
+      const res = await axios.post(`${process.env.BE_URL}/guilds/set-prefix`, 
       {'discord_id': message.guild.id, 'name': message.guild.name, 'prefix': action });
 
 

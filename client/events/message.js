@@ -10,12 +10,12 @@ module.exports = async (client, message) => {
   if (message.author.bot) return;
 
   // Grab the profile for the server
-  const guildRes = await axios.post('http://localhost:8000/guilds/profile', 
+  const guildRes = await axios.post(`${process.env.BE_URL}/guilds/profile`, 
     {'discord_id': message.guild.id, 'name': message.guild.name });
   const guild = guildRes.data.guild;
 
   // Grab the message author's profile
-  const userRes = await axios.post('http://localhost:8000/users/profile', 
+  const userRes = await axios.post(`${process.env.BE_URL}/users/profile`, 
     {'discord_id': message.author.id, 'name': message.author.username});
   const author = userRes.data.user;
 
@@ -29,7 +29,7 @@ module.exports = async (client, message) => {
   // Send user data to gain XP (XP is calculated on server-side)
   // TODO: SET AUTHORIZATION
   if (message.content.length > 10) {
-    const xpRes = await axios.post('http://localhost:8000/users/gainxp', 
+    const xpRes = await axios.post(`${process.env.BE_URL}/users/gainxp`, 
     {'discord_id': message.author.id, 'name': message.author.username});
 
   // Check levels in the response
@@ -47,7 +47,7 @@ module.exports = async (client, message) => {
   // If a user was mentioned, get their profile info and check if the
   // user is AFK. If AFK, send the user's AFK message.
   if (user) {
-    const mentionedUser = await axios.post('http://localhost:8000/users/profile', {'discord_id': user.user.id, 'name': user.user.username});
+    const mentionedUser = await axios.post(`${process.env.BE_URL}/users/profile`, {'discord_id': user.user.id, 'name': user.user.username});
     const mentionedProfile = mentionedUser.data.user;
 
     if (mentionedProfile.afk) {
@@ -71,7 +71,7 @@ module.exports = async (client, message) => {
   // If the author is AFK, set as back and return message
   try {
     if (author.afk) {
-      const profileResults = await axios.post('http://localhost:8000/users/setafk', {
+      const profileResults = await axios.post(`${process.env.BE_URL}/users/setafk`, {
         "discord_id": message.author.id,
         "name": message.author.username,
         "afk_value": false

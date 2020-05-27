@@ -19,7 +19,7 @@ exports.run = async (client, message, args, level) => {
     if (reason === '') reason = 'No reason given'
 
     try {
-        const res = await axios.post('http://localhost:8000/guilds/set-warn', {'discord_id': message.guild.id, 'name': message.guild.name, warnUser: user.user.id, warning: reason });
+        const res = await axios.post(`${process.env.BE_URL}/guilds/set-warn`, {'discord_id': message.guild.id, 'name': message.guild.name, warnUser: user.user.id, warning: reason });
 
     // Configure embed
     let embed = new MessageEmbed()
@@ -29,7 +29,7 @@ exports.run = async (client, message, args, level) => {
         .setTimestamp();
 
     // Get guild profile
-    const guildRes = await axios.post('http://localhost:8000/guilds/profile', 
+    const guildRes = await axios.post(`${process.env.BE_URL}/guilds/profile`, 
     {'discord_id': message.guild.id, 'name': message.guild.name });
     const guild = guildRes.data.guild;
 

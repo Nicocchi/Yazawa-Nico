@@ -9,9 +9,9 @@ exports.run = async (client, message, args, level) => {
         try {
             let res = null;
             if (args[0] === 'greeting' && message.member.hasPermission("ADMINISTRATOR")) {
-                res = await axios.post('http://localhost:8000/guilds/set-greeting-image', {'discord_id': message.guild.id, 'name': message.guild.name, 'imageUrl': attachments.array()[0].url});
+                res = await axios.post(`${process.env.BE_URL}/guilds/set-greeting-image`, {'discord_id': message.guild.id, 'name': message.guild.name, 'imageUrl': attachments.array()[0].url});
             } else {
-                res = await axios.post('http://localhost:8000/users/setprofileimage', {'discord_id': message.author.id, 'name': message.author.username, 'imageUrl': attachments.array()[0].url});
+                res = await axios.post(`${process.env.BE_URL}/users/setprofileimage`, {'discord_id': message.author.id, 'name': message.author.username, 'imageUrl': attachments.array()[0].url});
             }
 
             const profile = res.data;

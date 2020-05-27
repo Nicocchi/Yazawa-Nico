@@ -7,7 +7,7 @@ exports.run = async (client, message, args, level) => {
     let msg = args.join(" ");
     if (msg) {
         try {
-            const res = await axios.post('http://localhost:8000/users/set-pfinfo', {'discord_id': message.author.id, 'name': message.author.username, 'pfinfo': msg});
+            const res = await axios.post(`${process.env.BE_URL}/users/set-pfinfo`, {'discord_id': message.author.id, 'name': message.author.username, 'pfinfo': msg});
             const profile = res.data;
 
             message.channel.send(profile.message);

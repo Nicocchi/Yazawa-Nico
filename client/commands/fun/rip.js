@@ -5,7 +5,7 @@ const axios = require("axios");
 exports.run = async (client, message, args, level) => {
   try {
     // Set the rip
-    const res = await axios.post('http://localhost:8000/globals/rip', {'discord_id': message.guild.id, 'name': message.guild.name, 'rip': 1 });
+    const res = await axios.post(`${process.env.BE_URL}/globals/rip`, {'discord_id': message.guild.id, 'name': message.guild.name, 'rip': 1 });
     const global = res.data;
 
     // Send message

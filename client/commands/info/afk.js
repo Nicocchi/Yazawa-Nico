@@ -9,7 +9,7 @@ exports.run = async (client, message, args, level) => {
     msg = "I am AFK right now.";
   }
 
-  const res = await axios.post('http://localhost:8000/users/setafkmessage', {'discord_id': message.author.id, 'name': message.author.username, 'afkMessage': msg});
+  const res = await axios.post(`${process.env.BE_URL}/users/setafkmessage`, {'discord_id': message.author.id, 'name': message.author.username, 'afkMessage': msg});
   
   message.channel.send(`${message.author.username}, marking you as away with the msg: "${msg}"`);
 };

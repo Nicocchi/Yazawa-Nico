@@ -33,7 +33,7 @@ exports.run = async (client, message, args, level) => {
         .setTimestamp();
 
     // Get guild profile
-    const guildRes = await axios.post('http://localhost:8000/guilds/profile', 
+    const guildRes = await axios.post(`${process.env.BE_URL}/guilds/profile`, 
     {'discord_id': message.guild.id, 'name': message.guild.name });
     const guild = guildRes.data.guild;
 

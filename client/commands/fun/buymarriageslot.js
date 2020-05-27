@@ -12,7 +12,7 @@ exports.run = async (client, message, args, level) => {
   }
   try {
     // Set the marriage proposal
-    const res = await axios.post('http://localhost:8000/users/buymarriageslot', {'discord_id': message.author.id, 'name': message.author.username });
+    const res = await axios.post(`${process.env.BE_URL}/users/buymarriageslot`, {'discord_id': message.author.id, 'name': message.author.username });
     const userProfile = res.data;
 
     message.channel.send(userProfile.message);

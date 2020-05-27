@@ -6,7 +6,7 @@ const moment = require('moment');
 module.exports = async (client, channel) => {
   try {
     // Load the guild's settings
-    const guildRes = await axios.post('http://localhost:8000/guilds/profile', 
+    const guildRes = await axios.post(`${process.env.BE_URL}/guilds/profile`, 
     {'discord_id': channel.guild.id, 'name': channel.guild.name });
     const guild = guildRes.data.guild;
 
