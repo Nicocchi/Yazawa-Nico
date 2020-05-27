@@ -23,9 +23,6 @@ module.exports = async (client, message) => {
 
     const { executor, target, extra } = deletionLog;
 
-    console.log(deletionLog)
-    console.log(target.id, message.author.id)
-
     if (target.id === message.author.id) {
       console.log(`A message by ${message.author.tag} was deleted by ${executor.tag}.`);
     }	else {
