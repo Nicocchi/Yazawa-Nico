@@ -9,8 +9,6 @@ const oauth = new DiscordOauth2();
 
 module.exports = {
     login: async (req, res, next) => {
-        console.log("========================================================================")
-        console.log(redirect);
         res.redirect(
             `https://discord.com/api/oauth2/authorize?client_id=${CLIENT_ID}&redirect_uri=${redirect}&response_type=code&scope=identify%20guilds`
         );

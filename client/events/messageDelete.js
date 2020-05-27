@@ -6,6 +6,7 @@ const moment = require('moment');
 
 module.exports = async (client, message) => {
   try {
+    console.log(message.member.id)
     if (message.member.id === client.user.id) return;
     // Load the guild's settings
     const guildRes = await axios.post(`${process.env.BE_URL}/guilds/profile`, 
@@ -22,7 +23,8 @@ module.exports = async (client, message) => {
 
     const { executor, target, extra } = deletionLog;
 
-    // console.log(deletionLog)
+    console.log(deletionLog)
+    console.log(target.id, message.author.id)
 
     if (target.id === message.author.id) {
       console.log(`A message by ${message.author.tag} was deleted by ${executor.tag}.`);

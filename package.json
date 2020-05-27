@@ -4,7 +4,7 @@
   "description": "Backend server for Yazawa Nico Discord bot",
   "main": "server/index.js",
   "scripts": {
-    "server-dev": "cross-env NODE_ENV=prod nodemon index.js",
+    "server-dev": "nodemon index.js --prefix server",
     "client-dev": "npm run start-dev --prefix client",
     "start-dev": "concurrently \"npm run server-dev npm\" \"npm run client-dev\"",
     "start-server": "node index.js",
@@ -41,7 +41,7 @@
     "jikan-node": "1.2.0",
     "joi": "14.3.1",
     "jsonwebtoken": "^8.5.1",
-    "moment": "^2.24.0",
+    "moment": "^2.26.0",
     "mongoose": "5.7.5",
     "morgan": "1.9.1",
     "puppeteer": "1.17.0"
