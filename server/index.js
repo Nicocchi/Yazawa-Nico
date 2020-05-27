@@ -6,7 +6,7 @@ const port = process.env.PORT || 8000;
 
 https.createServer({
     key: fs.readFileSync('yazawanico_fun.key'),
-    cert: fs.readFileSync('yazawanico_fun.cert')
+    cert: fs.readFileSync('yazawanico_fun.crt')
 }, app).listen(port, function () {
     console.log(`Server listening at ${port}`);
 })
