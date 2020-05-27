@@ -9,6 +9,8 @@ const oauth = new DiscordOauth2();
 
 module.exports = {
     login: async (req, res, next) => {
+        console.log("========================================================================")
+        console.log(redirect);
         res.redirect(
             `https://discord.com/api/oauth2/authorize?client_id=${CLIENT_ID}&redirect_uri=${redirect}&response_type=code&scope=identify%20guilds`
         );
@@ -38,7 +40,7 @@ module.exports = {
                 // const json = res.json();
                 // console.log(response.data.access_token);
                 const token = jwt.sign(response.data.access_token, process.env.JWT_SECRET)
-                res.redirect(`http://localhost:3000/?token=${token}`);
+                res.redirect(`${process.env.FE_URL}/?token=${token}`);
             }).catch(err => {
                 console.log(err);
             })
