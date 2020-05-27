@@ -6,7 +6,6 @@ const moment = require('moment');
 
 module.exports = async (client, message) => {
   try {
-    console.log(message.member.id)
     if (message.member.id === client.user.id) return;
     // Load the guild's settings
     const guildRes = await axios.post(`${process.env.BE_URL}/guilds/profile`, 
