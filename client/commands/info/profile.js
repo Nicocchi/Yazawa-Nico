@@ -231,7 +231,7 @@ exports.run = async (client, message, args, level) => {
 
         await start();
 
-        // console.log("Marriages", marriages)
+        console.log("Marriages", marriages)
 
         ctx.font = "40px sans-serif";
         ctx.fillStyle = "#ffffff";
