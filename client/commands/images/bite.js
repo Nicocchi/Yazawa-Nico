@@ -12,7 +12,7 @@ exports.run = async (client, message, args, level) => {
         var msg = `${message.author.username} is biting thin air`;
       } else {
         var msg = "_ _";
-        const nicofight = client.emojis.cache.find(emo => {console.log(emo.id); return emo.name === 'nicofight'})
+        const nicofight = client.emojis.cache.find(emo => emo.name === 'nicofight')
         user.id === client.user.id ? message.channel.send(`${nicofight} Oi... Don't touch me!`) : `${message.author.username} is biting ${user.user.username}!`;
       }
 

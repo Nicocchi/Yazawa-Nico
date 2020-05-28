@@ -14,7 +14,7 @@ exports.run = async (client, message, args, level) => {
         } is congratulating themself... Aww, let Nico give you a Nico Nii~`;
       } else {
         var msg = "_ _";
-        const aniconii = client.emojis.cache.find(emo => {console.log(emo.id); return emo.name === 'aniconii'})
+        const aniconii = client.emojis.cache.find(emo => emo.name === 'aniconii')
         user.id === client.user.id ? message.channel.send(`${aniconii} Aww thank you! It's because I'm the #1 idol in the universe!`) : `${message.author.username} is congratulating ${
           user.user.username
         }!`;
