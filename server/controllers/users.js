@@ -241,8 +241,8 @@ module.exports = {
             authorSentProposals.push(mentioned_id);
             userProposals.push(discord_id);
 
-            console.log(authorSentProposals);
-            console.log(userProposals);
+            // console.log(authorSentProposals);
+            // console.log(userProposals);
 
             // Update the database
             User.findOneAndUpdate(
@@ -427,7 +427,7 @@ module.exports = {
 
     },
     divorce: async (req, res, next) => {
-        const { discord_id, user, name, mentioned_id, mentioned_name } = req.value.body;
+        const { discord_id, user, mentioned_id, mentioned_name } = req.value.body;
 
         // Gather the mentioned user from the database
         let foundUser = await User.findOne({ "local.discord_id": mentioned_id });
