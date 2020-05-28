@@ -219,17 +219,19 @@ exports.run = async (client, message, args, level) => {
 
         const start = async () => {
             await asyncForEach(txt1, async (mg) => {
+                console.log("MG", mg);
                 const res1 = await axios.post(`${process.env.BE_URL}/users/profile`, {
-                    discord_id: mg,
-                    name: member.username,
+                    discord_id: mg
                 });
                 const prof = await res1.data.user;
-                // console.log(prof.name);
+                console.log(prof);
                 await marriages.push(prof.name);
             });
         };
 
         await start();
+
+        console.log("Marriages", marriages)
 
         ctx.font = "40px sans-serif";
         ctx.fillStyle = "#ffffff";
