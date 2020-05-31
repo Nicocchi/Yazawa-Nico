@@ -29,6 +29,7 @@ module.exports = {
         const code = req.query.code;
         const creds = btoa(`${CLIENT_ID}:${CLIENT_SECRET}`);
         const jwt = require('jsonwebtoken');
+        console.log(process.env.FE_URL)
         axios({
                 method: 'POST',
                 url: `https://discordapp.com/api/oauth2/token?grant_type=authorization_code&code=${code}&redirect_uri=${redirect}`,
@@ -38,7 +39,7 @@ module.exports = {
                 // const json = res.json();
                 // console.log(response.data.access_token);
                 const token = jwt.sign(response.data.access_token, process.env.JWT_SECRET)
-                res.redirect(`${process.env.FE_URL}/?token=${token}`);
+                res.redirect(`${process.env.FE_URL}?token=${token}`);
             }).catch(err => {
                 console.log(err);
             })

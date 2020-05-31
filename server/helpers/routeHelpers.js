@@ -61,6 +61,8 @@ module.exports = {
             const { discord_id, name } = req.body;
             let foundGuild = await Guild.findOne({ "local.discord_id": discord_id });
 
+            if(!foundGuild && !name) return res.status(404).send({ message: "Guild does not exist"})
+            
             if (!foundGuild) {
                 const guild = {
                     discord_id,

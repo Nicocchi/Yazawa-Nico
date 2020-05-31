@@ -1,5 +1,5 @@
 // This event executes when a new member leaves a server.
-const Discord = require("discord.js");
+const {Discord, MessageEmbed, MessageAttachment } = require("discord.js");
 const axios = require('axios');
 const Canvas = require('canvas');
 const moment = require('moment');
