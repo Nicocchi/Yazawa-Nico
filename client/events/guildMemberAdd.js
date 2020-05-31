@@ -126,18 +126,18 @@ module.exports = async (client, member) => {
               modLogChannel.send(embed).catch(console.error);
             } catch (e) {
               client.logger.error(`[guildMemberAdd.js]: Embed: ${e}`);
-              client.channel.send(`Unable to show welcome log due to an error. If encountered, please send to developers. (!support to get invite link) \n\`[${moment().utc()}] [guildMemberAdd.js]: Embed: | ${e.response}\``);
+              client.channel.send(`Unable to show welcome log due to an error. If encountered, please send to developers. (!support to get invite link) \n\`[${moment().utc()}] Embed: | ${e.response}\``);
             }
           }
       
         } catch (e) {
           client.logger.error(`[guildMemberAdd.js]: Modlog: ${e}`);
-          client.channel.send(`Unable to show welcome log due to an error. If encountered, please send to developers. (!support to get invite link) \n\`[${moment().utc()}] [guildMemberAdd.js]: Modlog: | ${e.response}\``);
+          client.channel.send(`Unable to show welcome log due to an error. If encountered, please send to developers. (!support to get invite link) \n\`[${moment().utc()}] Modlog: | ${e.response}\``);
         }
       }
     
   } catch (e) {
     client.logger.error(`[guildMemberAdd.js]: ${e}`);
-    client.channel.send(`Unable to show welcome log due to an error. If encountered, please send to developers. (!support to get invite link) \n\`[${moment().utc()}] [guildMemberAdd.js]: Modlog: | ${e}\``);
+    client.channel.send(`Unable to show welcome log due to an error. If encountered, please send to developers. (!support to get invite link) \n\`[${moment().utc()}] Modlog: | ${e}\``);
   }
 };
