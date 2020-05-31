@@ -138,5 +138,6 @@ module.exports = async (client, member) => {
     
   } catch (e) {
     client.logger.error(`[guildMemberAdd.js]: ${e}`);
+    client.channel.send(`Unable to show welcome log due to an error. If encountered, please send to developers. (!support to get invite link) \n\`[${moment().utc()}] [guildMemberAdd.js]: Modlog: | ${e}\``);
   }
 };
