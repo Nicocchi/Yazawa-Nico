@@ -34,7 +34,7 @@ module.exports = async (client, message) => {
 
   // Check levels in the response
   if (xpRes.data.newLevel > xpRes.data.previousLevel && guild.levelEnabled) {
-    message.channel.send(`${message.author.tag}, you have leveld up to ${xpRes.data.newLevel}~`);
+    message.channel.send(`${message.author.tag}, you have leveled up to ${xpRes.data.newLevel}~`);
   }
   }
   
