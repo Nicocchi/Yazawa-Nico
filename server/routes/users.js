@@ -41,7 +41,7 @@ router.route('/buymarriageslot')
     .post(validateBody(schemas.authSchema), getSetUser(schemas.authSchema), UsersController.buyMarriageSlot);
 
 router.route('/setprofileimage')
-    .post(validateBody(schemas.authSchema), getSetUser(schemas.authSchema), UsersController.setProfileImage);
+    .post(validateBody(schemas.authSchema), getUser(schemas.authSchema), UsersController.setProfileImage);
 
 router.route('/set-pfinfo')
     .post(validateBody(schemas.authSchema), getSetUser(schemas.authSchema), UsersController.setProfileText);
