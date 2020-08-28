@@ -82,10 +82,8 @@ exports.run = async (client, message, args, level) => {
     ctx.fillRect(280, 350, 610, 370);
     
     // Draw avatar
-    console.log("DRAWING AVATAR");
     console.log(member);
     const avatar = await Canvas.loadImage(member.avatar);
-    console.log("AVATAR")
     ctx.drawImage(avatar, 30, 130, 220, 220);
 
     // Draw user's username
@@ -191,7 +189,6 @@ exports.run = async (client, message, args, level) => {
     ctx.textAlign = "start";
 
     const lines = fragmentText(txt, 530);
-    // console.log(lines);
 
     lines.forEach(function(line, i) {
         ctx.fillText(line, 330, (i + 1) * 30 + 600);
@@ -204,55 +201,52 @@ exports.run = async (client, message, args, level) => {
     ctx.textAlign = "start";
     ctx.fillText(`Marriages`, 50, 400);
 
-    // const txt1 = profile.marriages;
+    const txt1 = profile.marriages;
+    console.log('profile.marriages', txt1)
 
-    // if (profile.marriages.length > 0) {
-    //     let marriages = [];
+    if (profile.marriages.length > 0) {
+        let marriages = [];
 
-    //     async function asyncForEach(array, callback) {
-    //         for (let index = 0; index < array.length; index++) {
-    //             await callback(array[index], index, array);
-    //         }
-    //     }
+        async function asyncForEach(array, callback) {
+            for (let index = 0; index < array.length; index++) {
+                await callback(array[index], index, array);
+            }
+        }
 
-    //     const start = async () => {
-    //         await asyncForEach(txt1, async (mg) => {
-    //             // console.log("MG", mg);
-    //             const res1 = await axios.post(`${process.env.BE_URL}/users/profile`, {
-    //                 discord_id: mg
-    //             });
-    //             const prof = await res1.data.user;
-    //             // console.log(prof);
-    //             await marriages.push(prof.name);
-    //         });
-    //     };
+        const start = async () => {
+            await asyncForEach(txt1, async (mg) => {
+                const res1 = await axios.post(`${process.env.BE_URL}/users/profile2`, {
+                    discord_id: mg
+                });
+                const prof = await res1.data.user;
+                await marriages.push(prof.name);
+            });
+        };
 
-    //     await start();
+        await start();
 
-    //     console.log("Marriages", marriages)
+        ctx.font = "40px sans-serif";
+        ctx.fillStyle = "#ffffff";
+        ctx.textAlign = "start";
+        ctx.fillText(`Marriages`, 50, 400);
 
-    //     ctx.font = "40px sans-serif";
-    //     ctx.fillStyle = "#ffffff";
-    //     ctx.textAlign = "start";
-    //     ctx.fillText(`Marriages`, 50, 400);
+        ctx.font = "30px sans-serif";
+        const start2 = async () => {
+            await asyncForEach(marriages, async (mg, i) => {
+                ctx.font = await applyText(canvas, mg, 40);
+                if (mg.length >= 14) mg = mg.slice(0, 14);
+                ctx.fillText(mg, 30, (i + 1) * 30 + 410);
+            });
+        };
 
-    //     ctx.font = "30px sans-serif";
-    //     const start2 = async () => {
-    //         await asyncForEach(marriages, async (mg, i) => {
-    //             ctx.font = await applyText(canvas, mg, 40);
-    //             if (mg.length >= 14) mg = mg.slice(0, 14);
-    //             ctx.fillText(mg, 30, (i + 1) * 30 + 410);
-    //         });
-    //     };
+        await start2();
+    } else {
+        ctx.font = await applyText(canvas, "No Marriages", 40);
+        ctx.fillText("No Marriages", 50, 450);
+    }
 
-    //     await start2();
-    // } else {
-    //     ctx.font = await applyText(canvas, "No Marriages", 40);
-    //     ctx.fillText("No Marriages", 50, 450);
-    // }
-
-    ctx.font = await applyText(canvas, "No Marriages", 40);
-    ctx.fillText("Maintance", 50, 450);
+    // ctx.font = await applyText(canvas, "No Marriages", 40);
+    // ctx.fillText("Maintance", 50, 450);
 
     const attachment = new MessageAttachment(canvas.toBuffer());
 

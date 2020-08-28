@@ -54,6 +54,28 @@ module.exports = {
             next();
         }
     },
+    getUser: (schema) => {
+        return async (req, res, next) => {
+
+            const { discord_id, name } = req.body;
+            let foundUser = await User.findOne({ "local.discord_id": discord_id });
+
+            if (!foundUser) {
+                const user = {
+                    discord_id,
+                    name
+                }
+        
+                foundUser = await createUser(user);
+            }
+
+            if (!req.value) { req.value = {}; }
+            req.value['body'] = req.body;
+            req.value['body']['user'] = foundUser.local;
+
+            next();
+        }
+    },
     // Return guild and create guild if guild does not exist
     getSetGuild: () => {
         return async (req, res, next) => {

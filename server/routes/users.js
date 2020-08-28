@@ -1,11 +1,14 @@
 const express = require('express');
 const router = require('express-promise-router')();
 
-const { validateBody, schemas, getSetUser } = require('../helpers/routeHelpers');
+const { validateBody, schemas, getSetUser, getUser } = require('../helpers/routeHelpers');
 const UsersController = require('../controllers/users');
 
 router.route('/profile')
     .post(validateBody(schemas.authSchema), getSetUser(schemas.authSchema), UsersController.profile);
+
+router.route('/profile2')
+    .post(validateBody(schemas.authSchema), getUser(schemas.authSchema), UsersController.profile);
 
 router.route('/gainxp')
     .post(validateBody(schemas.authSchema), getSetUser(schemas.authSchema), UsersController.gainXP);
