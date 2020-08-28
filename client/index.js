@@ -41,6 +41,7 @@ const init = async () => {
     "./commands/games",
     "./commands/images",
     "./commands/info",
+    "./commands/lovelive",
     "./commands/moderation",
     "./commands/set"
   ];
