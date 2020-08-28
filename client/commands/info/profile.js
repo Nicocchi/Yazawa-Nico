@@ -24,7 +24,8 @@ const applyText = async (canvas, text, fntSize, weight = "normal") => {
 };
 
 exports.run = async (client, message, args, level) => {
-    let member = message.guild.member(message.mentions.users.first());
+    let member = client.getUserFromMention(args[0])
+    console.log(member)
     if (!member) {
         member = {
             id: message.author.id,
@@ -34,21 +35,17 @@ exports.run = async (client, message, args, level) => {
     } else {
         member = {
             id: member.id,
-            username: member.user.username,
-            avatar: member.user.displayAvatarURL(),
+            username: member.username,
+            avatar: member.displayAvatarURL({ format: 'jpg'}),
         };
     }
 
-    // console.log("Member", member.username);
     // TODO: SET AUTHORIZATION
     const res = await axios.post(`${process.env.BE_URL}/users/profile`, {
         discord_id: member.id,
         name: member.username,
     });
-    // console.log('res =>', res.data.user);
-    // const bf = Buffer.from(profile.profileImage, 'binary').toString('base64');
     const profile = res.data.user;
-    // console.log("PROFILE", res);
 
     const canvas = Canvas.createCanvas(900, 730);
     const ctx = canvas.getContext("2d");
@@ -63,7 +60,6 @@ exports.run = async (client, message, args, level) => {
     ctx.shadowOffsetX = -20;
     ctx.shadowOffsetY = 20;
 
-    // const bgImage = await Canvas.loadImage(__dirname + '/Wallpaper.jpg');
     const bgImage = await Canvas.loadImage(profile.profileImage);
     ctx.drawImage(bgImage, 10, 10, canvas.width - 20, canvas.height - 20);
 
@@ -84,13 +80,16 @@ exports.run = async (client, message, args, level) => {
     // Right column
     ctx.fillStyle = "rgba(255, 255, 255, 0.7)";
     ctx.fillRect(280, 350, 610, 370);
-    console.log("DRAWING AVATAR");
-
+    
     // Draw avatar
-    const avatar = await Canvas.loadImage(message.member.user.displayAvatarURL({format: 'jpg'}));
+    console.log("DRAWING AVATAR");
+    console.log(member);
+    const avatar = await Canvas.loadImage(member.avatar);
+    console.log("AVATAR")
     ctx.drawImage(avatar, 30, 130, 220, 220);
 
     // Draw user's username
+    console.log("drawing username")
     ctx.font = await applyText(canvas, member.username, 80);
     ctx.fillStyle = "#ffffff";
     ctx.fillText(member.username, 360, 270);
@@ -114,9 +113,7 @@ exports.run = async (client, message, args, level) => {
     const curLvl = profile.level;
     const maxXP = curLvl * 600;
     const perc = (xp / maxXP) * 100;
-    // console.log(perc);
     const value = Math.floor(perc * 480) / 100;
-    // console.log(value);
 
     // Front bar
     ctx.fillStyle = "rgba(0, 118, 210, 0.7)";
@@ -201,6 +198,7 @@ exports.run = async (client, message, args, level) => {
     });
 
     // Draw Marriages
+    console.log("DRAWING MARRIAGES")
     ctx.font = "40px sans-serif";
     ctx.fillStyle = "#ffffff";
     ctx.textAlign = "start";
@@ -254,7 +252,7 @@ exports.run = async (client, message, args, level) => {
     // }
 
     ctx.font = await applyText(canvas, "No Marriages", 40);
-    ctx.fillText("No Marriages", 50, 450);
+    ctx.fillText("Maintance", 50, 450);
 
     const attachment = new MessageAttachment(canvas.toBuffer());
 
