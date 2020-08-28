@@ -27,6 +27,7 @@ exports.run = async (client, message, args, level) => {
     )
     .addField(`Version`, `v3.6`, true)
     .addField(`Core`, "`help`, `helpdm`", "`donate`", false)
+    .addField("Love Live", "`idol`", false)
     .addField(
       `Images`,
       "`angry`, `bad`, `badass`, `bite`, `blush`, `congrats`, `cry`, `cuddle`, `evil`, `excited`, `highfive`, `hug`, " +
