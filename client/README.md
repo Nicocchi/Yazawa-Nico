@@ -5,7 +5,9 @@ Yazawa Nico Multipurpose Discord Bot
     <img src="https://media.giphy.com/media/gQf1tsNi1mG40/source.gif">
 </p>
 
-[![Discord Bots](https://discordbots.org/api/widget/status/506839796921139203.svg)](https://discordbots.org/bot/506839796921139203)
+<a href="https://top.gg/bot/506839796921139203">
+    <img src="https://top.gg/api/widget/506839796921139203.svg" alt="Yazawa Nico" />
+</a>
 [![Discord Bots](https://discordbots.org/api/widget/servers/506839796921139203.svg)](https://discordbots.org/bot/506839796921139203)
 [![Discord Bots](https://discordbots.org/api/widget/upvotes/506839796921139203.svg)](https://discordbots.org/bot/506839796921139203)
 [![Discord Bots](https://discordbots.org/api/widget/lib/506839796921139203.svg)](https://discordbots.org/bot/506839796921139203)
