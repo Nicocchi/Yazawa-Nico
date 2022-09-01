@@ -1,97 +1,35 @@
 require("dotenv").config();
 const fs = require("node:fs");
-const { Client, Collection, GatewayIntentBits, Routes } = require("discord.js");
+const {
+  Client,
+  Collection,
+  GatewayIntentBits,
+  Routes,
+  Partials,
+} = require("discord.js");
 const { REST } = require("@discordjs/rest");
-
-const Enmap = require("enmap");
 
 // Create a new client instance
 const client = new Client({
   disableEveryone: true,
-  intents: [GatewayIntentBits.GuildMembers],
+  intents: [GatewayIntentBits.GuildMembers, GatewayIntentBits.Guilds],
+  partials: [Partials.Message, Partials.Channel, Partials.Reaction],
 });
 
-client.config = require("./config.js");
-client.logger = require("./modules/Logger");
-
-// logs, elavation features, etc.
-require("./modules/functions.js")(client);
-
-// Aliases & commands
-client.commands = new Enmap();
-client.aliases = new Enmap();
-
-client.settings = new Enmap({ name: "settings" });
-
-client.talkedRecently = new Set();
-
-// Load normal commands into memory as a collection
-
-// An array to store the base directory of the commands
-const cmdDirs = [
+// Load commands
+const commandDirs = [
+  "./commands",
   "./commands/core",
-  "./commands/currency",
   "./commands/fun",
-  "./commands/games",
-  "./commands/images",
-  "./commands/info",
-  "./commands/lovelive",
-  "./commands/moderation",
-  "./commands/set",
+  "./commands/general",
 ];
-
-// Loop thru the directories and then load the commands
-cmdDirs.forEach(async (dir) => {
-  // Read each file in the directory
-  const cmdFiles = fs.readdirSync(dir);
-
-  // Log the process
-  client.logger.log(
-    `Loading a total of ${cmdFiles.length} commands in ${dir.substr(11)}`,
-    "title"
-  );
-
-  // Loop thru each file in the directory and then load the command into the client
-  cmdFiles.forEach((f) => {
-    // If the file is not a js file, return
-    if (!f.endsWith(".js")) return;
-
-    // Loads the file into the client with the command's name and directory
-    const response = client.loadCommand(f, dir);
-    if (response) client.logger.log(response);
-  });
-});
-
-// Load events, which will include message & ready event
-const evtFiles = fs.readdirSync("./events/");
-client.logger.log(`Loading a total of ${evtFiles.length} events.`);
-evtFiles.forEach((file) => {
-  const eventName = file.split(".")[0];
-  client.logger.log(`Loading Event: ${eventName}`);
-  const event = require(`./events/${file}`);
-
-  // Bind the client to any event, before the existing arguments
-  client.on(eventName, event.bind(null, client));
-});
-
-// Generate a cache of client permissions
-client.levelCache = {};
-for (let i = 0; i < client.config.permLevels.length; i++) {
-  const thisLevel = client.config.permLevels[i];
-  client.levelCache[thisLevel.name] = thisLevel.level;
-}
-
-client.logger.log(`Loading slash commands`)
-
-// Load slash commands
-const slashCommandDirs = ["./slash_commands", "./slash_commands/core"];
 
 let commandFiles = [];
 
-for (const directory in slashCommandDirs) {
-  fs.readdirSync(slashCommandDirs[directory]).forEach((file) => {
+for (const directory in commandDirs) {
+  fs.readdirSync(commandDirs[directory]).forEach((file) => {
     if (file.endsWith(".js")) {
-      let fullFilename = `${slashCommandDirs[directory]}/${file}`;
+      let fullFilename = `${commandDirs[directory]}/${file}`;
       commandFiles.push(fullFilename);
     }
   });
@@ -138,99 +76,24 @@ client.once("ready", () => {
 });
 
 client.on("interactionCreate", async (interaction) => {
-  if (!interaction.isChatInputCommand()) return;
+  if (interaction.isChatInputCommand()) {
+    const command = client.commands.get(interaction.commandName);
 
-  const command = client.commands.get(interaction.commandName);
+    if (!command) return;
 
-  if (!command) return;
-
-  try {
-    await command.execute(interaction);
-  } catch (error) {
-    console.error(error);
-    await interaction.reply({
-      content: "An error occured while executing this command!",
-      ephemeral: true,
-    });
+    try {
+      await command.execute(interaction);
+    } catch (error) {
+      console.error(error);
+      await interaction.reply({
+        content: "An error occured while executing this command!",
+        ephemeral: true,
+      });
+    }
   }
+
+  return;
 });
 
 // Login to Discord with token
 client.login(process.env.TOKEN);
-
-// const { promisify } = require("util");
-// const readdir = promisify(require("fs").readdir);
-// const Enmap = require("enmap");
-// client.config = require("./config.js");
-
-// // Logger
-// client.logger = require("./modules/Logger");
-
-// // logs, elavation features, etc.
-// require("./modules/functions.js")(client);
-
-// // Aliases & commands
-// client.commands = new Enmap();
-// client.aliases = new Enmap();
-
-// client.settings = new Enmap({ name: "settings" });
-
-// client.talkedRecently = new Set();
-
-// // Queue used to hold guild music queue
-// client.queue = new Map();
-
-// const init = async () => {
-  // // Load commands into memory as a collection
-  // // An array to store the base directory of the commands
-  // const cmdDirs = [
-  //   "./commands/core",
-  //   "./commands/currency",
-  //   "./commands/fun",
-  //   "./commands/games",
-  //   "./commands/images",
-  //   "./commands/info",
-  //   "./commands/lovelive",
-  //   "./commands/moderation",
-  //   "./commands/set",
-  // ];
-  // Loop thru the directories and then load the commands
-  // cmdDirs.forEach(async (dir) => {
-  //   // Read each file in the directory
-  //   const cmdFiles = await readdir(dir);
-  //   // Log the process
-  //   client.logger.log(
-  //     `Loading a total of ${cmdFiles.length} commands in ${dir.substr(11)}`,
-  //     "title"
-  //   );
-  //   // Loop thru each file in the directory and then load the command into the client
-  //   cmdFiles.forEach((f) => {
-  //     // If the file is not a js file, return
-  //     if (!f.endsWith(".js")) return;
-  //     // Loads the file into the client with the command's name and directory
-  //     const response = client.loadCommand(f, dir);
-  //     if (response) client.logger.log(response);
-  //   });
-  // });
-  // Load events, which will include message & ready event
-  // const evtFiles = await readdir("./events/");
-  // client.logger.log(`Loading a total of ${evtFiles.length} events.`);
-  // evtFiles.forEach((file) => {
-  //   const eventName = file.split(".")[0];
-  //   client.logger.log(`Loading Event: ${eventName}`);
-  //   const event = require(`./events/${file}`);
-  // Bind the client to any event, before the existing arguments
-  //   client.on(eventName, event.bind(null, client));
-  // });
-  // Generate a cache of client permissions
-  // client.levelCache = {};
-  // for (let i = 0; i < client.config.permLevels.length; i++) {
-  //   const thisLevel = client.config.permLevels[i];
-  //   client.levelCache[thisLevel.name] = thisLevel.level;
-  // }
-  // Login the client
-  // client.login(client.config.token);
-  // End top-level async/await func
-// };
-
-// init();

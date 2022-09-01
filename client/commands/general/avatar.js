@@ -12,10 +12,10 @@ module.exports = {
   async execute(interaction) {
     const user = interaction.options.getUser("user");
     if (user)
-      return interaction.reply(
+      return interaction.chanel.send(
         `${user.username}'s avatar: ${user.displayAvatarURL({ dynamic: true })}`
       );
-    return interaction.reply(
+    return interaction.channel.send(
       `Your avatar: ${interaction.user.displayAvatarURL()}`
     );
   },

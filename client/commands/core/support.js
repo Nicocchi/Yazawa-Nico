@@ -1,24 +1,17 @@
-//  Description: Displays all the available commands for your permission level.
-//  Usage: prefix arg1 arg2
-const Discord = require("discord.js");
-const axios = require('axios');
-const moment = require('moment');
+const { SlashCommandBuilder, hyperlink } = require("discord.js");
 
-exports.run = async (client, message, args, level) => {
+const link = "https://discord.gg/cs9Sv8N"
 
-  message.channel.send('Join our support server! https://discord.gg/cs9Sv8N');
-};
-
-exports.conf = {
-  enabled: "true",
-  guildOnly: "false",
-  aliases: [],
-  permLevel: "User"
-};
-
-exports.help = {
-  name: "support",
-  category: "System",
-  description: "Get invite to support server",
-  usage: "support"
+module.exports = {
+  data: new SlashCommandBuilder()
+    .setName("support")
+    .setDescription("Join the community server!"),
+  async execute(interaction) {
+    return interaction.channel.send(
+      {
+          content: hyperlink("Need help? Or want to join the community? Join our server!", link),
+          ephemeral: true
+      }
+    );
+  },
 };

@@ -12,7 +12,7 @@ module.exports = {
     ),
 
   async execute(interaction) {
-    return interaction.reply({
+    return interaction.channel.send({
         content: interaction.options.getString("message")
     });
   },

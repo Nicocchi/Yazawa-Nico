@@ -1,23 +1,17 @@
-//  Description: Displays all the available commands for your permission level.
-//  Usage: prefix arg1 arg2
-const axios = require('axios');
-const moment = require('moment');
+const { SlashCommandBuilder, hyperlink } = require("discord.js");
 
-exports.run = async (client, message, args, level) => {
+const link = "https://discord.com/api/oauth2/authorize?client_id=506978703721627648&permissions=8&scope=applications.commands%20bot"
 
-  message.channel.send('Invite Yazawa Nico to your server! https://discordapp.com/oauth2/authorize?client_id=506839796921139203&scope=bot&permissions=2146827775]');
-};
-
-exports.conf = {
-  enabled: "true",
-  guildOnly: "false",
-  aliases: [],
-  permLevel: "User"
-};
-
-exports.help = {
-  name: "invite",
-  category: "System",
-  description: "Invite bot to your server",
-  usage: "invite"
+module.exports = {
+  data: new SlashCommandBuilder()
+    .setName("invite")
+    .setDescription("Invite the #1 idol in the universe!"),
+  async execute(interaction) {
+    return interaction.channel.send(
+      {
+          content: hyperlink("Invite the worlds #1 idol!", link),
+          ephemeral: true
+      }
+    );
+  },
 };
