@@ -74,3 +74,7 @@ _Secrets
 
 # next.js build output
 .next
+
+client/data/enmap.sqlite-wal
+client/data/enmap.sqlite-shm
+client/data/enmap.sqlite
