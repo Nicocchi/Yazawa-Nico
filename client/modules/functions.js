@@ -1,15 +1,25 @@
-const Discord = require("discord.js");
-const ytdl = require("ytdl-core");
-const moment = require("moment");
-const axios = require("axios");
-
-module.exports = parseJSON = file => {
+/**
+ * Return a random value from the array from a given JSON
+ * @param file - the location of the JSON file
+ * @returns {Promise<any | any[] | V | V[] | number>}
+ */
+module.exports = parseJSON = (file) => {
   const fs = require("fs");
   let data = fs.readFileSync(file, "utf8");
   data = data.trim();
   const arr = JSON.parse(data).file;
   const result = arr[Math.floor(Math.random() * arr.length)];
   return result;
+};
+
+/**
+ * Return a random number from the given minimum and maximum
+ * @param min - minimum amount
+ * @param max - maximum mount
+ * @returns {number}
+ */
+module.exports = randomNumber = (min, max) => {
+  return Math.round(Math.random() * (max - min) + min);
 };
 
 // module.exports = client => {
@@ -271,7 +281,7 @@ module.exports = parseJSON = file => {
 //           };
 
 //           // console.log("[FUNCTIONS.js] -> QUEUE_CONSTRUCT", queueConstruct);
-          
+
 //           client.queue.set(message.guild.id, queueConstruct);
 
 //           queueConstruct.songs.push(song);
@@ -285,11 +295,11 @@ module.exports = parseJSON = file => {
 //             client.queue.delete(message.guild.id);
 //             return message.channel.send(`Unable to play song due to an error. If encountered, please send to developers. (!support to get invite link) \n\`[${moment().utc()}] Play | ${e}\``);
 //           }
-      
+
 //         } catch (error) {
 //           return message.channel.send(`Unable to retrieve playlist due to an error. If encountered, please send to developers. (!support to get invite link) \n\`[${moment().utc()}] Retrieve Playlist | ${error}\``);
 //         }
-        
+
 //       } else {
 //         serverQueue.songs.push(song);
 //         if (playlist) return;
