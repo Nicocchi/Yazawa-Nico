@@ -8,11 +8,6 @@ Yazawa Nico Multipurpose Discord Bot
 <a href="https://top.gg/bot/506839796921139203">
     <img src="https://top.gg/api/widget/506839796921139203.svg" alt="Yazawa Nico" />
 </a>
-[![Discord Bots](https://discordbots.org/api/widget/servers/506839796921139203.svg)](https://discordbots.org/bot/506839796921139203)
-[![Discord Bots](https://discordbots.org/api/widget/upvotes/506839796921139203.svg)](https://discordbots.org/bot/506839796921139203)
-[![Discord Bots](https://discordbots.org/api/widget/lib/506839796921139203.svg)](https://discordbots.org/bot/506839796921139203)
-[![Discord Bots](https://discordbots.org/api/widget/owner/506839796921139203.svg)](https://discordbots.org/bot/506839796921139203)
-[![Discord](https://discordapp.com/api/guilds/506841738594484226/embed.png)](https://discord.gg/cs9Sv8N)
 
 ## About Yazawa Nico
 Yazawa Nico is a multipurpose bot with moderation, custom prefix, basic leveling, games and fun commands.
@@ -23,6 +18,14 @@ Yazawa Nico is a multipurpose bot with moderation, custom prefix, basic leveling
 
 ## Like the bot? Give us a vote!
 <a href="https://discordbots.org/bot/506839796921139203">Vote</a>
+
+# [BREAKING CHANGES]
+
+As per Discord's new features and API changes, I will need to update my bot to work with the new changes. As the bot has been dorment for quite a while, I will make the time now to update the bot. I will take this opportunity to also change some much needed issues such as XP gain, no way to spend loveca, roles feature, etc. 
+
+As I hate to continue to reset things, as I've learned more about servers and javascript and coding in general, there is a lot I can do to make this bot better, scalable, faster, and overall, less prone to breaking changes. The major changes that will be affected are related to user profiles as I think they are in much needed updates.
+
+As such, the bot will currently be down until I finish these updates. Sorry for any inconveniences.
 
 ## Main Features
 
