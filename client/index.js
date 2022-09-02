@@ -7,7 +7,12 @@ const { deployCommands } = require("./deploy-commands.js");
 // Create a new client instance
 const client = new Client({
   disableEveryone: true,
-  intents: [GatewayIntentBits.GuildMembers, GatewayIntentBits.Guilds],
+  intents: [
+    GatewayIntentBits.Guilds,
+    GatewayIntentBits.GuildMembers,
+    GatewayIntentBits.GuildMessages,
+    GatewayIntentBits.MessageContent,
+  ],
   partials: [Partials.Message, Partials.Channel, Partials.Reaction],
 });
 
