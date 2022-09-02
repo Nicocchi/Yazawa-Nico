@@ -1,4 +1,4 @@
-const { SlashCommandBuilder } = require("discord.js");
+const { SlashCommandBuilder, EmbedBuilder, hyperlink } = require("discord.js");
 
 module.exports = {
   data: new SlashCommandBuilder()
@@ -11,12 +11,30 @@ module.exports = {
     ),
   async execute(interaction) {
     const user = interaction.options.getUser("user");
-    if (user)
-      return interaction.chanel.send(
-        `${user.username}'s avatar: ${user.displayAvatarURL({ dynamic: true })}`
-      );
-    return interaction.channel.send(
-      `Your avatar: ${interaction.user.displayAvatarURL()}`
-    );
+    if (user) {
+      const embed = new EmbedBuilder()
+        .setColor("#FF4D9C")
+        .setImage(user.displayAvatarURL({ size: 4096, dynamic: true }))
+        .setAuthor({
+          name: `${user.username}'s avatar`,
+          url: user.displayAvatarURL({ size: 4096, dynamic: true }),
+        });
+
+      return interaction.reply({
+        embeds: [embed],
+      });
+    }
+    
+    const embed = new EmbedBuilder()
+      .setColor("#FF4D9C")
+      .setImage(user.displayAvatarURL({ size: 4096, dynamic: true }))
+      .setAuthor({
+        name: `${user.username}'s avatar`,
+        url: user.displayAvatarURL({ size: 4096, dynamic: true }),
+      });
+
+    return interaction.reply({
+      embeds: [embed],
+    });
   },
 };

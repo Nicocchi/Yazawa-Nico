@@ -5,6 +5,7 @@ module.exports = {
     .setName("ping")
     .setDescription("Replies with Pong!"),
   async execute(interaction) {
-    return interaction.channel.send("Pong!");
+    await interaction.deferReply()
+    return interaction.editReply("Pong!");
   },
 };

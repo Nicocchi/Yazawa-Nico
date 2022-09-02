@@ -7,6 +7,7 @@ module.exports = {
     .setDescription("Gain equisite Love Live! knowledge!"),
   async execute(interaction) {
     const res = parseJSON("./JSON/facts.json");
-    return interaction.channel.send({ content: res });
+    await interaction.deferReply()
+    return interaction.editReply({ content: res });
   },
 };

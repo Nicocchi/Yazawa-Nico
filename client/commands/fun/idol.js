@@ -14,7 +14,7 @@ module.exports = {
     const unitRow = new ActionRowBuilder().addComponents(
       new SelectMenuBuilder()
         .setCustomId("unit")
-        .setPlaceholder("Nothing selected")
+        .setPlaceholder("Select a unit")
         .addOptions(
           {
             label: "μ's",
@@ -61,7 +61,7 @@ module.exports = {
     const museRow = new ActionRowBuilder().addComponents(
       new SelectMenuBuilder()
         .setCustomId("museIdols")
-        .setPlaceholder("Nothing selected")
+        .setPlaceholder("Select an idol")
         .addOptions(
           {
             label: "Kousaka Honoka 高坂 穂乃果",
@@ -114,7 +114,7 @@ module.exports = {
     const aqoursRow = new ActionRowBuilder().addComponents(
       new SelectMenuBuilder()
         .setCustomId("aqoursIdols")
-        .setPlaceholder("Nothing selected")
+        .setPlaceholder("Select an idol")
         .addOptions(
           {
             label: "Takami Chika 高海 千歌",
@@ -167,7 +167,7 @@ module.exports = {
     const nijigasakiRow = new ActionRowBuilder().addComponents(
       new SelectMenuBuilder()
         .setCustomId("nijigasakiIdols")
-        .setPlaceholder("Nothing selected")
+        .setPlaceholder("Select an idol")
         .addOptions(
           {
             label: "Uehara Ayumu 上原 步夢",
@@ -235,7 +235,7 @@ module.exports = {
     const leillaRow = new ActionRowBuilder().addComponents(
       new SelectMenuBuilder()
         .setCustomId("leillaIdols")
-        .setPlaceholder("Nothing selected")
+        .setPlaceholder("Select an idol")
         .addOptions(
           {
             label: "Shibuya Kanon 澁谷 かのん",
@@ -288,7 +288,7 @@ module.exports = {
     const ariseRow = new ActionRowBuilder().addComponents(
       new SelectMenuBuilder()
         .setCustomId("ariseIdols")
-        .setPlaceholder("Nothing selected")
+        .setPlaceholder("Select an idol")
         .addOptions(
           {
             label: "Kira Tsubasa 綺羅 ツバサ",
@@ -311,7 +311,7 @@ module.exports = {
     const saintSnowRow = new ActionRowBuilder().addComponents(
       new SelectMenuBuilder()
         .setCustomId("saintSnowIdols")
-        .setPlaceholder("Nothing selected")
+        .setPlaceholder("Select an idol")
         .addOptions(
           {
             label: "Kazuno Leah 鹿角 理亞",
@@ -329,7 +329,7 @@ module.exports = {
     const sunnyPaRow = new ActionRowBuilder().addComponents(
       new SelectMenuBuilder()
         .setCustomId("sunnyPaIdols")
-        .setPlaceholder("Nothing selected")
+        .setPlaceholder("Select an idol")
         .addOptions(
           {
             label: "Hiiragi Mao 柊 摩央",
@@ -347,7 +347,7 @@ module.exports = {
     const otherRow = new ActionRowBuilder().addComponents(
       new SelectMenuBuilder()
         .setCustomId("otherIdols")
-        .setPlaceholder("Nothing selected")
+        .setPlaceholder("Select an idol")
         .addOptions(
           {
             label: "Takasaki Yu 高咲 侑",
@@ -466,57 +466,49 @@ module.exports = {
 
         switch (value) {
           case "Muse":
-            await interaction.channel.send({
-              content: "Select an idol",
+            await interaction.editReply({
               components: [museRow],
             });
             break;
 
           case "Aqours":
-            await interaction.channel.send({
-              content: "Select an idol",
+            await interaction.editReply({
               components: [aqoursRow],
             });
             break;
 
           case "Nijigasaki":
-            await interaction.channel.send({
-              content: "Select an idol",
+            await interaction.editReply({
               components: [nijigasakiRow],
             });
             break;
 
           case "Leilla":
-            await interaction.channel.send({
-              content: "Select an idol",
+            await interaction.editReply({
               components: [leillaRow],
             });
             break;
 
           case "A-Rise":
-            await interaction.channel.send({
-              content: "Select an idol",
+            await interaction.editReply({
               components: [ariseRow],
             });
             break;
 
           case "Saint Snow":
-            await interaction.channel.send({
-              content: "Select an idol",
+            await interaction.editReply({
               components: [saintSnowRow],
             });
             break;
 
           case "Sunny Passion":
-            await interaction.channel.send({
-              content: "Select an idol",
+            await interaction.editReply({
               components: [sunnyPaRow],
             });
             break;
 
           case "Other":
-            await interaction.channel.send({
-              content: "Select an idol",
+            await interaction.editReply({
               components: [otherRow],
             });
             break;
@@ -637,11 +629,11 @@ module.exports = {
                 ephemeral: true,
               });
             }
+            break;
         }
       });
 
       await interaction.reply({
-        content: "Select a unit",
         components: [unitRow],
       });
     } catch (error) {

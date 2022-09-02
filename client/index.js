@@ -20,6 +20,7 @@ const client = new Client({
 const commandDirs = [
   "./commands",
   "./commands/core",
+  "./commands/currency",
   "./commands/fun",
   "./commands/general",
 ];

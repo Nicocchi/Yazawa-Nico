@@ -7,13 +7,15 @@ const moment = require('moment');
 module.exports = {
     validateBody: (schema) => {
         return (req, res, next) => {
-            const result = Joi.validate(req.body, schema);
-            if (result.error) {
-                return res.status(400).json(result.error);
+            // const schema = Joi.object({ discord_id: Joi.string(), name: Joi.string(), rip: Joi.number() });
+            console.log(req.body)
+            const validation = schema.validate(req.body);
+            if (validation.error) {
+                return res.status(400).json(validation.error);
             }
 
             if (!req.value) { req.value = {}; }
-            req.value['body'] = result.value;
+            req.value['body'] = validation.value;
             // console.log('[routeHelpers.js] VALIDATE_BODY\n', req.value);
             next();
         }
