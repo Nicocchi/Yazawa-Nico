@@ -1,17 +1,26 @@
-const { SlashCommandBuilder, hyperlink } = require("discord.js");
+const {
+  SlashCommandBuilder,
+  ActionRowBuilder,
+  ButtonBuilder,
+  ButtonStyle,
+} = require("discord.js");
 
-const link = "https://discord.gg/cs9Sv8N"
+const link = "https://discord.gg/cs9Sv8N";
 
 module.exports = {
   data: new SlashCommandBuilder()
     .setName("support")
     .setDescription("Join the community server!"),
   async execute(interaction) {
-    return interaction.channel.send(
-      {
-          content: hyperlink("Need help? Or want to join the community? Join our server!", link),
-          ephemeral: true
-      }
+    const row = new ActionRowBuilder().addComponents(
+      new ButtonBuilder()
+        .setStyle(ButtonStyle.Link)
+        .setLabel("Join ♡＼(￣▽￣)／♡")
+        .setURL(link)
     );
+    return interaction.reply({
+      components: [row],
+      ephemeral: true,
+    });
   },
 };

@@ -1,17 +1,27 @@
-const { SlashCommandBuilder, hyperlink } = require("discord.js");
+const {
+  SlashCommandBuilder,
+  ActionRowBuilder,
+  ButtonBuilder,
+  ButtonStyle,
+} = require("discord.js");
 
-const link = "https://discord.com/api/oauth2/authorize?client_id=506978703721627648&permissions=8&scope=applications.commands%20bot"
+const link =
+  "https://discord.com/api/oauth2/authorize?client_id=506978703721627648&permissions=8&scope=applications.commands%20bot";
 
 module.exports = {
   data: new SlashCommandBuilder()
     .setName("invite")
     .setDescription("Invite the #1 idol in the universe!"),
   async execute(interaction) {
-    return interaction.channel.send(
-      {
-          content: hyperlink("Invite the worlds #1 idol!", link),
-          ephemeral: true
-      }
+    const row = new ActionRowBuilder().addComponents(
+      new ButtonBuilder()
+        .setStyle(ButtonStyle.Link)
+        .setLabel("Invite (´｡• ᵕ •｡`) ♡")
+        .setURL(link)
     );
+    return interaction.reply({
+      components: [row],
+      ephemeral: true,
+    });
   },
 };
