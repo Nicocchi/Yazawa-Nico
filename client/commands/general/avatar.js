@@ -10,14 +10,14 @@ module.exports = {
       option.setName("user").setDescription("The user's avatar to show")
     ),
   async execute(interaction) {
-    const user = interaction.options.getUser("user");
-    if (user) {
+    const target = interaction.options.getUser("user");
+    if (target) {
       const embed = new EmbedBuilder()
         .setColor("#FF4D9C")
-        .setImage(user.displayAvatarURL({ size: 4096, dynamic: true }))
+        .setImage(target.displayAvatarURL({ size: 4096, dynamic: true }))
         .setAuthor({
-          name: `${user.username}'s avatar`,
-          url: user.displayAvatarURL({ size: 4096, dynamic: true }),
+          name: `${target.username}'s avatar`,
+          url: target.displayAvatarURL({ size: 4096, dynamic: true }),
         });
 
       return interaction.reply({
@@ -27,10 +27,10 @@ module.exports = {
     
     const embed = new EmbedBuilder()
       .setColor("#FF4D9C")
-      .setImage(user.displayAvatarURL({ size: 4096, dynamic: true }))
+      .setImage(interaction.user.displayAvatarURL({ size: 4096, dynamic: true }))
       .setAuthor({
-        name: `${user.username}'s avatar`,
-        url: user.displayAvatarURL({ size: 4096, dynamic: true }),
+        name: `${interaction.user.username}'s avatar`,
+        url: interaction.user.displayAvatarURL({ size: 4096, dynamic: true }),
       });
 
     return interaction.reply({
