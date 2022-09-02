@@ -1,42 +1,37 @@
-const DBL = require("dblapi.js");
 require("dotenv").config();
+const { Routes } = require("discord.js");
+const { REST } = require("@discordjs/rest");
+const { commands } = require("../deploy-commands");
 
-module.exports = async client => {
-  // Log that the bot is online
-  client.logger.log(
-    `${client.user.tag}, ready to serve ${client.users.cache.size} users in ${
-      client.guilds.cache.size
-    } servers.`,
-    "ready"
-  );
+module.exports = {
+  name: "ready",
+  once: true,
+  execute(client) {
+    console.log(`Ready! Logged in as ${client.user.tag}`);
 
-  // Make the bot have an activity
-  client.user.setActivity(
-    `${client.config.defaultSettings.prefix}help | ${
-      client.guilds.cache.size
-    } servers`,
-    { type: "PLAYING" }
-  );
+    const CLIENT_ID = client.user.id;
 
-  const debug = process.env.DEBUG || "true";
+    const rest = new REST({ version: "10" }).setToken(process.env.TOKEN);
 
-  if (debug === "true") return client.logger.log("DEBUG MODE");
+    (async () => {
+      try {
+        console.log("Registering (/) commands.");
 
-  // Set up DBL API
-  const token = process.env.DBL_TOKEN || "DBL Token";
-  const dbl = new DBL(token, client);
-
-  // Post stats every 30 minutes
-  setInterval(() => {
-    client.user.setActivity(
-      `${client.config.defaultSettings.prefix}help | ${
-        client.guilds.cache.size
-      } servers`,
-      { type: "PLAYING" }
-    );
-    dbl.postStats(client.guilds.size);
-    client.logger.log(
-      `Server count posted. Currently serving in ${client.guilds.size} servers!`
-    );
-  }, 1800000);
+        if (process.env.ENV === "production") {
+          await rest.put(Routes.applicationCommands(CLIENT_ID), {
+            body: commands,
+          });
+          console.log("Successfully registered (/) commands globally");
+        } else {
+          await rest.put(
+            Routes.applicationGuildCommands(CLIENT_ID, process.env.GUILD_ID),
+            { body: commands }
+          );
+          console.log("Successfully registered (/) commands locally");
+        }
+      } catch (err) {
+        if (err) console.error(err);
+      }
+    })();
+  },
 };
