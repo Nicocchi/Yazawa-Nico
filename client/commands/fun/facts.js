@@ -1,5 +1,5 @@
 const { SlashCommandBuilder } = require("discord.js");
-const parseJSON = require("../../modules/functions");
+const { parseJSON } = require("../../modules/functions.js");
 
 module.exports = {
   data: new SlashCommandBuilder()
@@ -7,7 +7,6 @@ module.exports = {
     .setDescription("Gain equisite Love Live! knowledge!"),
   async execute(interaction) {
     const res = parseJSON("./JSON/facts.json");
-    await interaction.deferReply()
-    return interaction.editReply({ content: res });
+    return interaction.reply({ content: res });
   },
 };

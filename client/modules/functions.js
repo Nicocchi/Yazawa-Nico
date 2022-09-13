@@ -1,11 +1,11 @@
 /**
  * Return a random value from the array from a given JSON
- * @param file - the location of the JSON file
+ * @param filepath - the location of the JSON file
  * @returns {Promise<any | any[] | V | V[] | number>}
  */
-module.exports = parseJSON = (file) => {
+const parseJSON = (filepath) => {
   const fs = require("fs");
-  let data = fs.readFileSync(file, "utf8");
+  let data = fs.readFileSync(filepath, "utf8");
   data = data.trim();
   const arr = JSON.parse(data).file;
   const result = arr[Math.floor(Math.random() * arr.length)];
@@ -18,9 +18,14 @@ module.exports = parseJSON = (file) => {
  * @param max - maximum mount
  * @returns {number}
  */
-module.exports = randomNumber = (min, max) => {
+const randomNumber = (min, max) => {
   return Math.round(Math.random() * (max - min) + min);
 };
+
+module.exports = {
+  parseJSON,
+  randomNumber
+}
 
 // module.exports = client => {
 //   /**

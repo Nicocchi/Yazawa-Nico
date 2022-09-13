@@ -9,6 +9,7 @@ module.exports.deployCommands = (client) => {
     "./commands/currency",
     "./commands/fun",
     "./commands/general",
+    "./commands/images",
   ];
 
   let commandFiles = [];
