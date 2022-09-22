@@ -7,7 +7,7 @@
     "server-dev": "nodemon index.js --prefix server",
     "client-dev": "npm run start-dev --prefix client",
     "start-dev": "concurrently \"npm run server-dev npm\" \"npm run client-dev\"",
-    "start-server": "node index.js",
+    "start-server": "node index.js --prefix server ",
     "start-client": "npm run start --prefix client",
     "test": "cross-env NODE_ENV=test mocha --exit ../__tests__/server/**/*.test.js",
     "report": "cross-env NODE_ENV=test nyc --reporter=lcov mocha --exit ../__tests__/server/**/*.test.js",
