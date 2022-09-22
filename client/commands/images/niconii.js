@@ -4,12 +4,12 @@ const { parseJSON } = require("../../modules/functions.js");
 
 module.exports = {
   data: new SlashCommandBuilder()
-    .setName("hug")
+    .setName("niconii")
     .setDescription(
       "<:niconi:506940178204721162>"
     ),
   async execute(interaction) {
-    const res = parseJSON("./JSON/hug.json");
+    const res = parseJSON("./JSON/niconii.json");
     let msg = `Nico Nico Nii ~ Anata no heart ni Nico Nico Nii ~ Egao todokeru Yazawa Nico~ Nico Nii te oboeteru Love Nico~`;
     
     const embed = new EmbedBuilder()

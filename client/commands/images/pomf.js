@@ -7,20 +7,18 @@ module.exports = {
     .setName("pomf")
     .setDescription("(つ✧ω✧)つ")
     .addUserOption((option) =>
-      option.setName("user").setDescription("The user to pomf")
-    ).addUserOption((option) =>
-    option.setName("user").setDescription("The user to highfive")
-  ),
+      option.setName("user").setDescription("The user to highfive")
+    ),
   async execute(interaction) {
     const res = parseJSON("./JSON/washi.json");
     const target = interaction.options.getUser("user");
     let msg = `You are pomfing nothing...`;
     if (target) {
-        if (target.id === client.id) {
-            msg = "Oi... Don't you dare touch me you hentai!"
-        } else {
-            msg = `${interaction.user.username} is pomfing ${target.username}`
-        }
+      if (target.id === client.id) {
+        msg = "Oi... Don't you dare touch me you hentai!";
+      } else {
+        msg = `${interaction.user.username} is pomfing ${target.username}`;
+      }
     }
 
     const embed = new EmbedBuilder()
