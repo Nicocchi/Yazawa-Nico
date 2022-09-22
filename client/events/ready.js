@@ -2,7 +2,7 @@ require("dotenv").config();
 const { Routes } = require("discord.js");
 const { REST } = require("@discordjs/rest");
 const { commands } = require("../deploy-commands");
-const { AutoPoster } = require("topgg-autoposter");
+// const { AutoPoster } = require("topgg-autoposter");
 
 module.exports = {
   name: "ready",
@@ -11,7 +11,7 @@ module.exports = {
     console.log(`Ready! Logged in as ${client.user.tag}`);
 
     const CLIENT_ID = client.user.id;
-    const ap = AutoPoster(`${process.env.TOPGG_TOKEN}`, client);
+    // const ap = AutoPoster(`${process.env.TOPGG_TOKEN}`, client);
 
     const rest = new REST({ version: "10" }).setToken(process.env.TOKEN);
 
@@ -32,10 +32,10 @@ module.exports = {
           console.log("Successfully registered (/) commands locally");
         }
 
-        ap.on("posted", (stats) => {
-          console.log(`Posted stats to Top.gg! ${stats.serverCount} servers`);
-          client.user.setActivity(`Serving ${stats.serverCount} servers~`);
-        });
+        // ap.on("posted", (stats) => {
+        //   console.log(`Posted stats to Top.gg! ${stats.serverCount} servers`);
+        //   client.user.setActivity(`Serving ${stats.serverCount} servers~`);
+        // });
       } catch (err) {
         if (err) console.error(err);
       }
