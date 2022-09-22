@@ -5,8 +5,7 @@ const {
   ButtonStyle,
 } = require("discord.js");
 
-const link =
-  "https://discord.com/api/oauth2/authorize?client_id=506978703721627648&permissions=8&scope=applications.commands%20bot";
+const link = `https://discord.com/api/oauth2/authorize?client_id=${process.env.APPLICATION_ID}&permissions=8&scope=applications.commands%20bot`;
 
 module.exports = {
   data: new SlashCommandBuilder()
