@@ -8,6 +8,7 @@ module.exports.deployCommands = (client) => {
     "./commands/core",
     "./commands/currency",
     "./commands/fun",
+    "./commands/games",
     "./commands/general",
     "./commands/images",
   ];
