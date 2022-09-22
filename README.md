@@ -93,6 +93,15 @@ Now you can edit the config.json file and run the bot locally
 
 ### Note
 
+## ENV
+TOKEN = Bot TOken
+OWNER_ID = Discord ID
+APPLICATION_ID = Bot Client ID
+GUILD_ID = Test server guild ID
+ENV = development environment
+BE_URL = backend url
+TOPGG_TOKEN = Top.gg bot token
+
 This is a fan-made project. All rights to the character Yazawa Nico are owned by the Love Live School Idol Project and parent/affiliate companies.
 
 ``(c) Love Live School Idol Project for Yazawa Nico``
